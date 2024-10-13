@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'doctor/styles.css' %}">
+    <title>Add Patient</title>
+</head>
+<body>
+    <h2>Add Patient</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label>First Name:</label><input type="text" name="first_name" required><br>
+        <label>Middle Name:</label><input type="text" name="middle_name"><br>
+        <label>Last Name:</label><input type="text" name="last_name" required><br>
+        <label>Age:</label><input type="number" name="age" required><br>
+
+        <label>Gender:</label><input type="text" name="gender" required><br>
+        <label>Contact Information:</label><input type="text" name="contact_information" required><br>
+        <label>Medical History:</label><textarea name="medical_history" required></textarea><br>    
+        <button type="submit">Add Patient</button>
+    </form>
+
+    <br>
+    <a href="{% url 'logout' %}">Logout</a>
+
+
+</body>
+</html>

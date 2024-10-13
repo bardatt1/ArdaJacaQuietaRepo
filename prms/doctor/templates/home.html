@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'doctor/styles.css' %}">
+    <title>Home</title>
+</head>
+<body>
+    <h2>Welcome, Dr. {{ doctor.first_name }} {{ doctor.last_name }}</h2>
+    <h3>Specialization: {{ doctor.specialization }}</h3>
+    <h3>Patients:</h3>
+    <ul>
+        {% for patient in patients %}
+            <li>{{ patient.first_name }} {{ patient.last_name }} - Age: {{ patient.age }}</li>
+        {% empty %}
+            <p>No patients found.</p>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add_patient' %}">Add New Patient</a>
+    <br>
+    <a   a href="{% url 'logout' %}">Logout</a>
+
+</body>
+</html>

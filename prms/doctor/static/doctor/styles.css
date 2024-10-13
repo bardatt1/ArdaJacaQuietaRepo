@@ -1,0 +1,117 @@
+/* styles.css */
+
+/* Global Styles */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4; /* Light gray background */
+    color: #333; /* Dark gray text */
+    margin: 0;
+    padding: 20px;
+  }
+  
+  /* Typography */
+  
+  h2 {
+    color: #2c3e50; /* Dark blue for headings */
+    margin: 20px 0 10px; /* Add spacing above and below */
+    font-size: 1.8em; /* Increase size for better visibility */
+  }
+  
+  h3 {
+    color: #2980b9; /* Blue for subheadings */
+    margin: 15px 0 5px; /* Add spacing above and below */
+    font-size: 1.5em; /* Increase size for better visibility */
+  }
+  
+  /* Form Styles */
+  
+  form {
+    background-color: #ffffff; /* White background for the form */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* More pronounced shadow */
+    margin-bottom: 20px;
+  }
+  
+  /* Labels */
+  
+  label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold; /* Bold labels for emphasis */
+  }
+  
+  /* Input Styles */
+  
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="date"],
+  textarea {
+    width: 100%; /* Full width with padding */
+    padding: 10px;
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 4px;
+    margin-bottom: 15px;
+    transition: border-color 0.3s; /* Smooth transition for focus state */
+  }
+  
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  input[type="email"]:focus,
+  input[type="date"]:focus,
+  textarea:focus {
+    border-color: #2980b9; /* Blue border on focus */
+    outline: none; /* Remove default outline */
+  }
+  
+  /* Button Styles */
+  
+  button {
+    background-color: #2980b9; /* Blue button */
+    color: #ffffff; /* White text */
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s; /* Smooth transition for hover */
+  }
+  
+  button:hover {
+    background-color: #1f6f9f; /* Darker blue on hover */
+  }
+  
+  /* Link Styles */
+  
+  a {
+    color: #2980b9; /* Blue links */
+    text-decoration: none;
+    transition: color 0.3s; /* Smooth transition for hover */
+  }
+  
+  a:hover {
+    text-decoration: underline; /* Underline links on hover */
+    color: #1f6f9f; /* Darker color on hover */
+  }
+  
+  /* List Styles */
+  
+  ul {
+    list-style-type: none; /* Remove bullet points from lists */
+    padding: 0;
+  }
+  
+  ul li {
+    background: #e9ecef; /* Light gray background for list items */
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    transition: background-color 0.3s; /* Smooth transition for hover */
+  }
+  
+  ul li:hover {
+    background: #d5d5d5; /* Darker gray on hover */
+  }
+  
