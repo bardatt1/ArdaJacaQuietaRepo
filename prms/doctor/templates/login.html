@@ -15,12 +15,23 @@
         <div class="form-section">
             <h2>PATIENT RECORD</h2>
             <p>Management System</p>
-            <form action="/login" method="post">
+
+            <!-- Display error messages -->
+            {% if messages %}
+                <div class="alert">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form action="/login/" method="post">
+                {% csrf_token %}
                 <label for="username">Username:</label>
-                <input type="text" id="username" name="username">
+                <input type="text" id="username" name="username" required>
                 
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password">
+                <input type="password" id="password" name="password" required>
                 
                 <button type="submit">Login</button>
                 

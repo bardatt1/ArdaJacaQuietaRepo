@@ -1,10 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Doctor, Patient
 from django.contrib.auth.hashers import make_password, check_password
 from django.urls import reverse
-
-
 
 def registration_step1(request):
     if request.method == 'POST':
@@ -22,7 +20,6 @@ def registration_step1(request):
         return redirect(reverse('registration_step2'))
 
     return render(request, 'registration_step1.html')
-
 
 def registration_step2(request):
     # Retrieve and print session data
@@ -54,56 +51,50 @@ def registration_step2(request):
         phone_number_work = request.POST.get('phone_number_work')
 
         # Try creating the doctor instance
-        try:
-            doctor = Doctor.objects.create(
-                username=username,
-                password=password,
-                email=email,
-                first_name=first_name,
-                middle_name=middle_name,
-                last_name=last_name,
-                birthday=birthday,
-                gender=gender,
-                specialization=specialization,
-                # Fill in other required fields as per model
-            )
-
-            # Clear session and redirect
-            request.session.flush()
-            return redirect('registration_complete')
-
-        except Exception as e:
-            print(f"Error creating Doctor instance: {e}")
-            return render(request, 'registration_step2.html', {"error": "There was an error with registration."})
-
+        doctor = Doctor.objects.create(
+            username=username,
+            password=password,
+            email=email,
+            first_name=first_name,
+            middle_name=middle_name,
+            last_name=last_name,
+            birthday=birthday,
+            gender=gender,
+            specialization=specialization,
+            # Fill in other required fields as per model
+        )
+        return redirect('registration_complete')
+    
     return render(request, 'registration_step2.html')
-
 
 def registration_complete(request):
     return render(request, 'registration_complete.html')
 
 def doctor_login_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
         # Check if the doctor exists in the database
         try:
             doctor = Doctor.objects.get(username=username)
+            # Check password
             if check_password(password, doctor.password):
                 request.session['doctor_id'] = doctor.id
-                return redirect('home')
+                return redirect("home")  # Redirect to a home or dashboard page
             else:
-                messages.error(request, 'Invalid password.')
+                messages.error(request, "Invalid username or password")  # This line adds the message
         except Doctor.DoesNotExist:
-            messages.error(request, 'Doctor not found. Please register first.')
-    return render(request, 'login.html')
+            messages.error(request, "Doctor not found. Please register first.")
+
+    return render(request, "login.html") # Ensure this matches your login template filename
 
 def doctor_home_view(request):
-    if 'doctor_id' not in request.session:
+    doctor_id = request.session.get('doctor_id')
+    if doctor_id is None:
         return redirect('login')
-    
-    doctor = Doctor.objects.get(id=request.session['doctor_id'])
+
+    doctor = get_object_or_404(Doctor, id=doctor_id)
     patients = doctor.patients.all()
     return render(request, 'home.html', {'doctor': doctor, 'patients': patients})
 
@@ -130,12 +121,8 @@ def add_patient_view(request):
         return redirect('home')
     return render(request, 'add_patient.html')
 
-
 def doctor_logout_view(request):
     if 'doctor_id' in request.session:
         del request.session['doctor_id']  # Clear the doctor_id from the session
         messages.success(request, 'You have been logged out successfully.')
     return redirect('login')
-
-def index(request):
-    return render(request, 'index.html')

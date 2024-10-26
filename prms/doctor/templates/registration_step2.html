@@ -8,9 +8,10 @@
     <title>Registration - Step 2</title>
 </head>
 <body>
-    <h2>Doctor Registration - Step 2</h2>
     <form action="{% url 'registration_step2' %}" method="post">
         {% csrf_token %}
+        <img src="{% static 'images/register_img.png' %}" alt="Registration Image">
+        <h2>Doctor Registration - Step 2</h2>
 
         <label>Specialization:</label>
         <input type="text" name="specialization" required><br>
@@ -28,17 +29,15 @@
         <input type="text" name="social_security_number" required><br>
 
         <label>Home Phone Number:</label>
-        <input type="tel" name="phone_number_home" required><br>
+        <input type="text" name="phone_number_home" required><br>
 
         <label>Work Phone Number:</label>
-        <input type="tel" name="phone_number_work" required><br>
+        <input type="text" name="phone_number_work" required><br>
 
         <button type="submit">Complete Registration</button>
+        <button type="button" class="back-button" onclick="history.back()">Back</button>
+
     </form>
 
-    <form action="{% url 'registration_step1' %}" method="get">
-        <button type="submit">Back</button>
-    </form>
-    
 </body>
 </html>
