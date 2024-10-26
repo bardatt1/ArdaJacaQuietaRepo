@@ -83,3 +83,6 @@ def doctor_logout_view(request):
         del request.session['doctor_id']  # Clear the doctor_id from the session
         messages.success(request, 'You have been logged out successfully.')
     return redirect('login')
+
+def index(request):
+    return render(request, 'index.html')
