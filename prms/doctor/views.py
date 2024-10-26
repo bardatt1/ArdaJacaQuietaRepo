@@ -2,32 +2,85 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Doctor, Patient
 from django.contrib.auth.hashers import make_password, check_password
+from django.urls import reverse
 
-def doctor_register_view(request):
+
+
+def registration_step1(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        email = request.POST['email']
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        specialization = request.POST['specialization']
+        # Store form data in session
+        request.session['first_name'] = request.POST.get('first_name')
+        request.session['middle_name'] = request.POST.get('middle_name')
+        request.session['last_name'] = request.POST.get('last_name')
+        request.session['birthday'] = request.POST.get('birthday')
+        request.session['gender'] = request.POST.get('gender')
+        request.session['email'] = request.POST.get('email')
+        request.session['username'] = request.POST.get('username')
+        request.session['password'] = request.POST.get('password')
 
-        # Check if the username already exists
-        if Doctor.objects.filter(username=username).exists():
-            messages.error(request, 'Username already exists. Please choose a different one.')
-        else:
-            # Create the new doctor
-            Doctor.objects.create(
+        # Redirect to Step 2
+        return redirect(reverse('registration_step2'))
+
+    return render(request, 'registration_step1.html')
+
+
+def registration_step2(request):
+    # Retrieve and print session data
+    print(f"Session Data - Username: {request.session.get('username')}, First Name: {request.session.get('first_name')}, Last Name: {request.session.get('last_name')}")
+
+    if request.method == 'POST':
+        # Retrieve step 1 data from the session
+        first_name = request.session.get('first_name')
+        middle_name = request.session.get('middle_name')
+        last_name = request.session.get('last_name')
+        birthday = request.session.get('birthday')
+        gender = request.session.get('gender')
+        email = request.session.get('email')
+        username = request.session.get('username')
+        password = make_password(request.session.get('password'))
+
+        # Confirm that username is not None
+        if not username:
+            print("Error: Username is missing from the session.")
+            return render(request, 'registration_step1.html', {"error": "Username is required."})
+
+        # Retrieve step 2 form data
+        specialization = request.POST.get('specialization')
+        chart_number = request.POST.get('chart_number')
+        health_care_number = request.POST.get('health_care_number')
+        current_address = request.POST.get('current_address')
+        social_security_number = request.POST.get('social_security_number')
+        phone_number_home = request.POST.get('phone_number_home')
+        phone_number_work = request.POST.get('phone_number_work')
+
+        # Try creating the doctor instance
+        try:
+            doctor = Doctor.objects.create(
                 username=username,
-                password=make_password(password),  # Hash the password
+                password=password,
                 email=email,
                 first_name=first_name,
+                middle_name=middle_name,
                 last_name=last_name,
+                birthday=birthday,
+                gender=gender,
                 specialization=specialization,
+                # Fill in other required fields as per model
             )
-            messages.success(request, 'Registration successful! Please log in.')
-            return redirect('login')
-    return render(request, 'registration.html')
+
+            # Clear session and redirect
+            request.session.flush()
+            return redirect('registration_complete')
+
+        except Exception as e:
+            print(f"Error creating Doctor instance: {e}")
+            return render(request, 'registration_step2.html', {"error": "There was an error with registration."})
+
+    return render(request, 'registration_step2.html')
+
+
+def registration_complete(request):
+    return render(request, 'registration_complete.html')
 
 def doctor_login_view(request):
     if request.method == 'POST':

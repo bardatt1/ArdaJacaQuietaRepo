@@ -5,7 +5,10 @@ class Doctor(models.Model):
     password = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=50, blank=True, null=True)
     last_name = models.CharField(max_length=50)
+    birthday = models.DateField(null=True, blank=True)
+    gender = models.CharField(max_length=10, null=True, blank=True)
     specialization = models.CharField(max_length=100)
 
     def __str__(self):

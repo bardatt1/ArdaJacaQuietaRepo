@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'registration.css' %}">
+    <title>Registration - Step 2</title>
+</head>
+<body>
+    <h2>Doctor Registration - Step 2</h2>
+    <form action="{% url 'registration_step2' %}" method="post">
+        {% csrf_token %}
+
+        <label>Specialization:</label>
+        <input type="text" name="specialization" required><br>
+
+        <label>Chart Number:</label>
+        <input type="text" name="chart_number" required><br>
+
+        <label>Health Care Number:</label>
+        <input type="text" name="health_care_number" required><br>
+
+        <label>Current Address:</label>
+        <input type="text" name="current_address" required><br>
+
+        <label>Social Security Number:</label>
+        <input type="text" name="social_security_number" required><br>
+
+        <label>Home Phone Number:</label>
+        <input type="tel" name="phone_number_home" required><br>
+
+        <label>Work Phone Number:</label>
+        <input type="tel" name="phone_number_work" required><br>
+
+        <button type="submit">Complete Registration</button>
+    </form>
+
+    <form action="{% url 'registration_step1' %}" method="get">
+        <button type="submit">Back</button>
+    </form>
+    
+</body>
+</html>

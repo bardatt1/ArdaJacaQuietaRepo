@@ -1,0 +1,102 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e0f2f1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container styles */
+form {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    width: 90%;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    text-align: center;
+    color: #00796b;
+    margin-bottom: 20px;
+}
+
+/* Label styles */
+label {
+    width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #00796b;
+}
+
+/* Input styles */
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+input[type="date"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Button styles */
+button {
+    background-color: #00bfa5;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #00796b;
+}
+
+/* Form section styles */
+form img {
+    width: 100%;
+    max-height: 300px;
+    border-radius: 8px 8px 0 0;
+}
+
+form .form-section {
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Two-column layout for inputs */
+.two-column {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.two-column input {
+    width: calc(50% - 5px);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .two-column {
+        flex-direction: column;
+    }
+
+    .two-column input {
+        width: 100%;
+    }
+}
