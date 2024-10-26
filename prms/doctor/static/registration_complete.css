@@ -1,0 +1,55 @@
+/* Reset basic styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fullscreen settings */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #d8f9ff; /* Lightest background color */
+    color: #333; /* Text color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    margin: 0;
+}
+
+/* Container for the message */
+.message-container {
+    text-align: center; /* Center the text */
+    background-color: #ffffff; /* White background for the message */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 40px; /* Padding around the text */
+    width: 90vw; /* Responsive width */
+    max-width: 600px; /* Maximum width for larger screens */
+}
+
+/* Heading Styles */
+h2 {
+    font-size: 2.5em; /* Larger font for title */
+    color: #0042c5; /* Use your first color for the heading */
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+/* Paragraph Styles */
+p {
+    font-size: 1.2em; /* Slightly larger font for the paragraph */
+    color: #333; /* Text color */
+    margin-bottom: 30px; /* Space below the paragraph */
+}
+
+/* Link Styles */
+a {
+    color: #074a97; /* Use your second color for links */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s; /* Smooth color transition */
+}
+
+a:hover {
+    color: #8aecff; /* Change to your third color on hover */
+    text-decoration: underline; /* Underline on hover */
+}
