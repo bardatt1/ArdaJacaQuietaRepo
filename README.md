@@ -4,8 +4,11 @@ This repository is intended for our project in information management 2 course.
 
 Members: 
   Brett Westley A. Arda
+  
   Angelo C. Quieta
+  
   Luis Miguel A. Jaca
+  
 
 
 The following are links related for our output.
