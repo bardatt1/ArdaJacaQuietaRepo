@@ -1,3 +1,15 @@
+PATIENT RECORD MANAGEMENT SYSTEM
+
+This repository is intended for our project in information management 2 course.
+
+Members: 
+  Brett Westley A. Arda
+  Angelo C. Quieta
+  Luis Miguel A. Jaca
+
+
+The following are links related for our output.
+
 ERD (Patient Record Management System)
 
 Link: https://online.visual-paradigm.com/share.jsp?id=333534383939322d31
