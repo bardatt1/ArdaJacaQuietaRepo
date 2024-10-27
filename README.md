@@ -2,7 +2,7 @@ PATIENT RECORD MANAGEMENT SYSTEM
 
 This repository is intended for our project in information management 2 course.
 
-
+------------------------------------------------------------------------------
 
 Members: 
   Brett Westley A. Arda
@@ -12,7 +12,7 @@ Members:
   Luis Miguel A. Jaca
 
 
-  
+------------------------------------------------------------------------------
 
 
 The following are links related for our output.
