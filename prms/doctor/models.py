@@ -23,3 +23,12 @@ class Patient(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+class Appointment(models.Model):
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='appointments')
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    appointment_date = models.DateTimeField()
+    details = models.TextField()
+
+    def __str__(self):
+        return f"Appointment with {self.patient} on {self.appointment_date.strftime('%Y-%m-%d %H:%M')}"

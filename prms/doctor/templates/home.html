@@ -1,27 +1,56 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'doctor/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'home.css' %}">
     <title>Home</title>
 </head>
 <body>
-    <h2>Welcome, Dr. {{ doctor.first_name }} {{ doctor.last_name }}</h2>
-    <h3>Specialization: {{ doctor.specialization }}</h3>
-    <h3>Patients:</h3>
-    <ul>
-        {% for patient in patients %}
-            <li>{{ patient.first_name }} {{ patient.last_name }} - Age: {{ patient.age }}</li>
-        {% empty %}
-            <p>No patients found.</p>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'add_patient' %}">Add New Patient</a>
-    <br>
-    <a   a href="{% url 'logout' %}">Logout</a>
+    <header>
+        <h1>Patient Record Management System (PRMS)</h1>
+    </header>
 
+    <section class="profile-section">
+        <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture" class="profile-picture">
+        <h2>Good Afternoon, Dr. {{ doctor.first_name }} {{ doctor.last_name }}!</h2>
+    </section>
+
+    <main class="content-container">
+        <div class="card appointments-card">
+            <h3>Appointments</h3>
+            <p>No Appointments for today</p>
+            <p>Upcoming Appointment: September 9, 2024</p>
+            <a href="{% url 'appointments' %}" class="view-link">VIEW ALL APPOINTMENTS</a>
+        </div>
+
+        <div class="card patients-card">
+            <h3>Patients</h3>
+            <ul>
+                {% for patient in patients %}
+                    <li>{{ patient.first_name }} {{ patient.last_name }}</li>
+                {% empty %}
+                    <p>No Patients Found.</p>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'patients' %}" class="view-link">VIEW ALL PATIENTS</a>
+        </div>
+
+        <div class="card activities-card">
+            <h3>Recent Activities</h3>
+            <p>You changed your password on 09/03/2024 at 2:32PM</p>
+            <p>Added a document for Brett Arda</p>
+            <a href="{% url 'activities' %}" class="view-link">VIEW ALL RECENT ACTIVITIES</a>
+        </div>
+    </main>
+
+    <div class="add-button-container">
+        <a href="{% url 'add_patient' %}" class="add-patient-btn">ADD A PATIENT</a>
+    </div>
+
+    <footer>
+        <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+    </footer>
 </body>
 </html>

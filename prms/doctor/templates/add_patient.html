@@ -5,27 +5,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'doctor/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'add_patient.css' %}">
     <title>Add Patient</title>
 </head>
 <body>
-    <h2>Add Patient</h2>
-    <form method="post">
-        {% csrf_token %}
-        <label>First Name:</label><input type="text" name="first_name" required><br>
-        <label>Middle Name:</label><input type="text" name="middle_name"><br>
-        <label>Last Name:</label><input type="text" name="last_name" required><br>
-        <label>Age:</label><input type="number" name="age" required><br>
+    <header class="prms-header">
+        <a href="{% url 'home' %}" class="back-button">← Back</a>
+        <div class="prms-title">Patient Record Management System (PRMS)</div>
+        <div></div>
+    </header>
 
-        <label>Gender:</label><input type="text" name="gender" required><br>
-        <label>Contact Information:</label><input type="text" name="contact_information" required><br>
-        <label>Medical History:</label><textarea name="medical_history" required></textarea><br>    
-        <button type="submit">Add Patient</button>
-    </form>
+    <div class="main-container">
+        <div class="image-section">
+            <img src="{% static 'images/nurse.png' %}" alt="Healthcare Professional" class="nurse-image">
+            <div class="image-background"></div>
+        </div>
 
-    <br>
-    <a href="{% url 'logout' %}">Logout</a>
+        <div class="form-section">
+            <h2 class="section-title">PATIENT DETAILS</h2>
+            
+            <div class="form-container">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">First Name</label>
+                            <input type="text" name="first_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Middle Name</label>
+                            <input type="text" name="middle_name">
+                        </div>
+                        <div class="form-group">
+                            <label class="required">Last Name</label>
+                            <input type="text" name="last_name" required>
+                        </div>
+                    </div>
 
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">Age</label>
+                            <input type="number" name="age" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="required">Gender</label>
+                            <select name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
 
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">Contact Information</label>
+                            <input type="text" name="contact_information" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">Medical History</label>
+                            <textarea name="medical_history" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <a href="{% url 'logout' %}" class="logout-link">Logout</a>
 </body>
 </html>

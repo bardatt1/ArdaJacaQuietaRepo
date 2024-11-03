@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f8ff;
+    color: #333;
+}
+
+header {
+    width: 100%;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #333;
+}
+
+.profile-section {
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #e6f7ff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+}
+
+.profile-section img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    border: 2px solid #1e90ff;
+}
+
+.profile-section h2 {
+    margin-top: 10px;
+    font-size: 22px;
+    color: #333;
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 90%;
+    max-width: 1200px;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+.card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.card h3 {
+    color: #1e90ff;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+.card p {
+    font-size: 14px;
+    color: #333;
+}
+
+.card a.view-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #1e90ff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.card a.view-link:hover {
+    color: #104e8b;
+}
+
+.add-button-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.add-patient-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #00bfff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+.add-patient-btn:hover {
+    background-color: #1e90ff;
+}
+
+footer {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+}
+
+footer a.logout-link {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+footer a.logout-link:hover {
+    color: #104e8b;
+}
+
+@media (max-width: 768px) {
+    .content-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 80%;
+    }
+
+    .profile-section {
+        width: 100%;
+        margin: 0 20px;
+    }
+
+    header h1 {
+        font-size: 22px;
+    }
+}

@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointments</title>
+  <link rel="stylesheet" href="{% static 'appointments.css' %}">
+</head>
+<body>
+  <header class="header">
+    <button class="back-btn">⟵</button>
+    <h1 class="title">PRMS</h1>
+    <div class="profile">
+      <img src="profile.jpg" alt="Profile Picture" class="profile-pic">
+      <span class="profile-arrow">▼</span>
+    </div>
+  </header>
+
+  <main>
+    <h2 class="appointments-title">Appointments</h2>
+    
+    <section class="today-section">
+      <h3 class="today-title">Today</h3>
+      <div class="appointment-card">
+        <div class="patient-info">
+          <span class="patient-name">Brett</span>
+          <span class="patient-id">12-345-67</span>
+          <span class="patient-condition">Alzheimer's</span>
+        </div>
+        <div class="appointment-details">
+          <p>Time: <span>3:00pm</span></p>
+          <p>Details: <span>Monthly Checkup</span></p>
+        </div>
+      </div>
+    </section>
+    
+    <section class="calendar-section">
+      <div class="calendar-header">
+        <button class="nav-arrow">‹</button>
+        <h3>September 2024</h3>
+        <button class="nav-arrow">›</button>
+      </div>
+      <div class="calendar-grid">
+        <!-- Calendar days -->
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+        <div class="active-day">9</div>
+        <div>10</div>
+        <!-- ... Continue days as shown in the design ... -->
+        <div>30</div>
+        <div class="next-month-day">1</div>
+        <div class="next-month-day">2</div>
+        <div class="next-month-day">3</div>
+        <div class="next-month-day">4</div>
+        <div class="next-month-day">5</div>
+        <div class="next-month-day">6</div>
+      </div>
+    </section>
+
+    <section class="patients-section">
+      <div class="patient-card">
+        <span class="patient-name">Miguel</span>
+        <span class="patient-id">89-012-34</span>
+        <span class="patient-condition">Schizophrenia</span>
+      </div>
+      <div class="patient-card">
+        <span class="patient-name">Angelo</span>
+        <span class="patient-id">56-789-01</span>
+        <span class="patient-condition">PTSD</span>
+      </div>
+      <div class="patient-card">
+        <span class="patient-name">Derick</span>
+        <span class="patient-id">23-456-78</span>
+        <span class="patient-condition">OCD</span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
