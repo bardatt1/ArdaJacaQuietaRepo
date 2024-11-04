@@ -22,6 +22,9 @@ The following are links related for our output.
 ERD (Patient Record Management System)
 
 Link: https://online.visual-paradigm.com/share.jsp?id=333534383939322d31
+![image](https://github.com/user-attachments/assets/b2d250de-e43d-474c-912e-4d190ee60fd4)
+
+
 
 Functional Requirements
 
