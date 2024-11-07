@@ -9,7 +9,7 @@
 </head>
 <body>
     <header class="prms-header">
-        <a href="{% url 'home' %}" class="back-button">← Back to Home</a>
+        <a href="{% url 'home' %}" class="back-button" aria-label="Back to Home">← Back to Home</a>
         <h1 class="prms-title">Patient List</h1>
     </header>
     <div class="main-container">
@@ -19,10 +19,13 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Age</th>
-                            <th>Medical History</th>
-                            <th>Actions</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Sex</th>
+                            <th scope="col">Contact</th>
+                            <th scope="col">Medical History</th>
+                            <th scope="col">Date Added</th>
+                            <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,11 +33,18 @@
                         <tr>
                             <td>{{ patient.first_name }} {{ patient.last_name }}</td>
                             <td>{{ patient.age }}</td>
+                            <td>{{ patient.sex }}</td>
+                            <td>{{ patient.contact_information }}</td>
                             <td>{{ patient.medical_history }}</td>
+                            <td>{{ patient.created_at|date:"M d, Y" }}</td>
                             <td>
-                                <a href="{% url 'edit_patient' patient.id %}">Edit</a> | 
-                                <a href="{% url 'delete_patient' patient.id %}">Delete</a>
+                                <a href="{% url 'edit_patient' patient.id %}" aria-label="Edit {{ patient.first_name }} {{ patient.last_name }}">Edit</a> | 
+                                <a href="{% url 'delete_patient' patient.id %}" aria-label="Delete {{ patient.first_name }} {{ patient.last_name }}">Delete</a>
                             </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7">No patients found.</td>
                         </tr>
                         {% endfor %}
                     </tbody>

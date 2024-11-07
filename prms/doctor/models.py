@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Doctor(models.Model):
     username = models.CharField(max_length=100, unique=True)
@@ -19,8 +20,10 @@ class Patient(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     age = models.IntegerField()
+    sex = models.CharField(max_length=10, default="Unknown")
+    contact_information = models.CharField(max_length=50, default="Not Provided")
     medical_history = models.TextField()
-
+    created_at = models.DateTimeField(default=timezone.now)
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 

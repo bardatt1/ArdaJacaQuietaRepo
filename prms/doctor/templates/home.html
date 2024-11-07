@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> <!-- Added Google Fonts -->
     <link rel="stylesheet" href="{% static 'home.css' %}">
-    <title>Home</title>
+    <title>Patient Record Management System</title>
 </head>
 <body>
     <header>
@@ -18,31 +19,31 @@
     </section>
 
     <main class="content-container">
-        <div class="card appointments-card">
+        <article class="card appointments-card">
             <h3>Appointments</h3>
             <p>No Appointments for today</p>
             <p>Upcoming Appointment: September 9, 2024</p>
             <a href="{% url 'appointments' %}" class="view-link">VIEW ALL APPOINTMENTS</a>
-        </div>
+        </article>
 
-        <div class="card patients-card">
+        <article class="card patients-card">
             <h3>Patients</h3>
             <ul>
-                {% for patient in patients %}
+                {% for patient in patients|slice:":4" %}
                     <li>{{ patient.first_name }} {{ patient.last_name }}</li>
                 {% empty %}
                     <p>No Patients Found.</p>
                 {% endfor %}
             </ul>
             <a href="{% url 'patients' %}" class="view-link">VIEW ALL PATIENTS</a>
-        </div>
+        </article>
 
-        <div class="card activities-card">
+        <article class="card activities-card">
             <h3>Recent Activities</h3>
             <p>You changed your password on 09/03/2024 at 2:32PM</p>
             <p>Added a document for Brett Arda</p>
             <a href="{% url 'activities' %}" class="view-link">VIEW ALL RECENT ACTIVITIES</a>
-        </div>
+        </article>
     </main>
 
     <div class="add-button-container">
