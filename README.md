@@ -1,17 +1,19 @@
-PRMS (Patient Record Management System)
-About The Project
+**PRMS (Patient Record Management System)
+About The Project**
 ![prms home](https://github.com/user-attachments/assets/a1292461-cfbe-495d-ba1a-76f588a69e1a)
-PRMS is a patient record management system designed to streamline the process of managing patient appointments, records, and recent activities in a healthcare setting. The user-friendly interface makes it easy to monitor daily tasks and organize patient information, helping healthcare professionals manage their schedules more effectively.
+PRMS is a Patient Record Management System designed to streamline the process of managing patient appointments, records, and recent activities within a healthcare setting. With a user-friendly interface, PRMS helps healthcare professionals organize daily tasks, track patient information, and manage schedules efficiently.
 
-Key Features:
-Appointments: Quickly view upcoming appointments or see if there are any scheduled for today.
-Patient Records: Access a list of patients and view their details easily.
-Recent Activities: Keep track of recent actions, such as password changes, document uploads, and appointment settings.
-Why PRMS?
-Efficiency: Helps you focus on providing quality care by reducing the time spent on administrative tasks.
-Ease of Use: A simple, intuitive interface that makes it easy to navigate and manage patient data.
-Organized: Provides a clear overview of all appointments, patients, and activities in one place.
+**Key Features**
+    **Appointments:** Quickly view upcoming appointments or check if there are any scheduled for today.
+    **Patient Records:** Access a list of patients and easily view their details.
+    **Recent Activities**: Keep track of recent actions, including password changes, document uploads, and appointment settings.
 
+**Why PRMS?**
+    **Efficiency:** Allows healthcare professionals to focus on providing quality care by reducing the time spent on administrative tasks.
+    **Ease of Use:** Features a simple, intuitive interface for navigating and managing patient data.
+    **Organization:** Provides a comprehensive overview of all appointments, patients, and activities in one convenient location.
+
+------------------------------------------------------------------------------
 
 Getting Started
 To get a local copy up and running, follow these steps:
