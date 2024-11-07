@@ -140,15 +140,15 @@ def edit_patient_view(request, patient_id):
     
     return render(request, 'edit_patient.html', {'patient': patient})
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from .models import Patient
+
 def delete_patient_view(request, patient_id):
-    """View to delete a patient."""
-    if 'doctor_id' not in request.session:
-        return redirect('login')
-    patient = get_object_or_404(Patient, id=patient_id, doctor_id=request.session['doctor_id'])
-
+    """Handle patient deletion."""
+    patient = get_object_or_404(Patient, id=patient_id)
     if request.method == 'POST':
-        patient.delete()
-        messages.success(request, 'Patient deleted successfully.')
+        patient.delete()  # Delete the patient record from the database
+        messages.success(request, f"Patient {patient.first_name} {patient.last_name} has been successfully deleted.")
         return redirect('patients')
-
     return render(request, 'confirm_delete_patient.html', {'patient': patient})
