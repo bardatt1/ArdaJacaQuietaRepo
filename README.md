@@ -4,11 +4,13 @@ About The Project**
 PRMS is a Patient Record Management System designed to streamline the process of managing patient appointments, records, and recent activities within a healthcare setting. With a user-friendly interface, PRMS helps healthcare professionals organize daily tasks, track patient information, and manage schedules efficiently.
 
 **Key Features**
+
     **Appointments:** Quickly view upcoming appointments or check if there are any scheduled for today.
     **Patient Records:** Access a list of patients and easily view their details.
     **Recent Activities**: Keep track of recent actions, including password changes, document uploads, and appointment settings.
 
 **Why PRMS?**
+
     **Efficiency:** Allows healthcare professionals to focus on providing quality care by reducing the time spent on administrative tasks.
     **Ease of Use:** Features a simple, intuitive interface for navigating and managing patient data.
     **Organization:** Provides a comprehensive overview of all appointments, patients, and activities in one convenient location.
@@ -20,24 +22,17 @@ To get a local copy up and running, follow these steps:
 
 Clone the repository:
 
-bash
-Copy code
 git clone https://github.com/yourusername/PRMS.git
 Navigate to the project directory:
 
-bash
-Copy code
 cd PRMS
 Install dependencies (if applicable):
 
-bash
-Copy code
 npm install
 Start the application:
 
-bash
-Copy code
 npm start
+
 Usage
 View Appointments: See all upcoming and current appointments.
 Manage Patients: Add, edit, or remove patient details.
