@@ -88,7 +88,6 @@ def add_patient_view(request):
             age=age,
             medical_history=medical_history,
         )
-        messages.success(request, 'Patient added successfully.')
         return redirect('home')
     return render(request, 'add_patient.html')
 
