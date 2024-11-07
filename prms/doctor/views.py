@@ -145,7 +145,6 @@ def edit_patient_view(request, patient_id):
         patient.contact_information = request.POST['contact_information']
         patient.medical_history = request.POST['medical_history']
         patient.save()
-        messages.success(request, 'Patient details updated successfully.')
         return redirect('patients')
     
     return render(request, 'edit_patient.html', {'patient': patient})
@@ -156,7 +155,6 @@ def delete_patient_view(request, patient_id):
     
     if request.method == 'POST':
         patient.delete()
-        messages.success(request, f"Patient {patient.first_name} {patient.last_name} deleted.")
         return redirect('patients')
     
     return render(request, 'confirm_delete_patient.html', {'patient': patient})
