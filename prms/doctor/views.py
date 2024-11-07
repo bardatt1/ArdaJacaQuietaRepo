@@ -78,15 +78,21 @@ def add_patient_view(request):
         return redirect('login')
     if request.method == 'POST':
         first_name = request.POST['first_name']
+        middle_name = request.POST['middle_name']
         last_name = request.POST['last_name']
         age = request.POST['age']
+        sex = request.POST['sex']
+        contact_information = request.POST['contact_information']
         medical_history = request.POST['medical_history']
         doctor = Doctor.objects.get(id=request.session['doctor_id'])
         Patient.objects.create(
             doctor=doctor,
             first_name=first_name,
+            middle_name=middle_name,
             last_name=last_name,
             age=age,
+            sex=sex,
+            contact_information=contact_information,
             medical_history=medical_history,
         )
         return redirect('home')
@@ -132,6 +138,7 @@ def edit_patient_view(request, patient_id):
     
     if request.method == 'POST':
         patient.first_name = request.POST['first_name']
+        patient.middle_name = request.POST['middle_name']
         patient.last_name = request.POST['last_name']
         patient.age = request.POST['age']
         patient.sex = request.POST['sex']

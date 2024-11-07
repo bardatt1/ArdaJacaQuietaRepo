@@ -16,12 +16,18 @@ class Doctor(models.Model):
         return f"Dr. {self.first_name} {self.last_name} ({self.specialization})"
 
 class Patient(models.Model):
+    SEX_CHOICES = [
+        ('', 'Select Sex'),  # This will show as the default option
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+    ]
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='patients')
     first_name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     age = models.IntegerField()
-    sex = models.CharField(max_length=10, default="Unknown")
-    contact_information = models.CharField(max_length=50, default="Not Provided")
+    sex = models.CharField(max_length=6, choices=SEX_CHOICES, blank=False)
+    contact_information = models.CharField(max_length=255, blank=True, default="Not provided")
     medical_history = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
     def __str__(self):

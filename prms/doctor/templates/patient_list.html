@@ -31,15 +31,15 @@
                     <tbody>
                         {% for patient in patients %}
                         <tr>
-                            <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+                            <td>{{ patient.first_name }} {{ patient.middle_name}} {{ patient.last_name }}</td>
                             <td>{{ patient.age }}</td>
                             <td>{{ patient.sex }}</td>
                             <td>{{ patient.contact_information }}</td>
                             <td>{{ patient.medical_history }}</td>
                             <td>{{ patient.created_at|date:"M d, Y" }}</td>
                             <td>
-                                <a href="{% url 'edit_patient' patient.id %}" aria-label="Edit {{ patient.first_name }} {{ patient.last_name }}">Edit</a> | 
-                                <a href="{% url 'delete_patient' patient.id %}" aria-label="Delete {{ patient.first_name }} {{ patient.last_name }}">Delete</a>
+                                <a href="{% url 'edit_patient' patient.id %}" aria-label="Edit {{ patient.first_name }} {{patient.middle_name}} {{ patient.last_name }}">Edit</a> | 
+                                <a href="{% url 'delete_patient' patient.id %}" aria-label="Delete {{ patient.first_name }} {{patient.middle_name}} {{ patient.last_name }}">Delete</a>
                             </td>
                         </tr>
                         {% empty %}

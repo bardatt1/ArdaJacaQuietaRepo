@@ -23,6 +23,10 @@
                         <input type="text" id="first_name" name="first_name" value="{{ patient.first_name }}" required>
                     </div>
                     <div class="form-group">
+                        <label for="middle_name">Middle Name</label>
+                        <input type="text" id="middle_name" name="middle_name" value="{{ patient.middle_name }}">
+                    </div>
+                    <div class="form-group">
                         <label for="last_name">Last Name</label>
                         <input type="text" id="last_name" name="last_name" value="{{ patient.last_name }}" required>
                     </div>
@@ -33,9 +37,11 @@
                     <div class="form-group">
                         <label for="sex">Sex</label>
                         <select id="sex" name="sex" required>
+                            <option value="" {% if patient.sex == "" %}selected{% endif %}>Select Sex</option>
                             <option value="Male" {% if patient.sex == "Male" %}selected{% endif %}>Male</option>
                             <option value="Female" {% if patient.sex == "Female" %}selected{% endif %}>Female</option>
                         </select>
+                    </div>
                     </div>
                     <div class="form-group">
                         <label for="contact_information">Contact Information</label>
@@ -47,7 +53,7 @@
                     </div>
                     <div class="form-actions">
                         <button type="submit">Save Changes</button>
-                        <a href="{% url 'patients' %}" class="logout-link">Cancel</a>
+                        <a href="{% url 'patients' %}" class="cancel-link">Cancel</a>
                     </div>
                 </form>
             </div>

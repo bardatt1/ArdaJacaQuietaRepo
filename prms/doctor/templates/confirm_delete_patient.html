@@ -16,7 +16,7 @@
         <section class="form-section">
             <h2 class="section-title">Confirm Deletion</h2>
             <div class="form-container">
-                <p>Are you sure you want to delete <strong>{{ patient.first_name }} {{ patient.last_name }}</strong>?</p>
+                <p>Are you sure you want to delete <strong>{{ patient.first_name }} {{ patient.middle_name }}{{ patient.last_name }}</strong>?</p>
                 <form method="post" id="delete-form">
                     {% csrf_token %}
                     <div class="form-actions">

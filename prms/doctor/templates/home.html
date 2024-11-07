@@ -30,7 +30,7 @@
             <h3>Patients</h3>
             <ul>
                 {% for patient in patients|slice:":4" %}
-                    <li>{{ patient.first_name }} {{ patient.last_name }}</li>
+                    <li>{{ patient.first_name }} {{ patient.middle_name }} {{ patient.last_name }}</li>
                 {% empty %}
                     <p>No Patients Found.</p>
                 {% endfor %}
