@@ -69,9 +69,8 @@ Functional Requirements
 Link: https://docs.google.com/document/d/13RZnyNKqr1mL-kNR-INykyKSOTDruZDBoEm8RC0F2cY/edit?usp=sharing
 
 Gannt Chart
+Link: https://cebuinstituteoftechnology-my.sharepoint.com/:x:/g/personal/angelo_quieta_cit_edu/Ee6RDhXs7u1FvVxjdS4Up_MBmye3_MB2JnvckHyP__cj8g?e=g8jlOg
 
-[Link: https://docs.google.com/spreadsheets/d/1vexl6V3M5UsKucRgzKqrz1Ywz_8Ca6jw58DzI6cxKAI/edit?usp=sharing](https://cebuinstituteoftechnology-my.sharepoint.com/:x:/g/personal/angelo_quieta_cit_edu/Ee6RDhXs7u1FvVxjdS4Up_MBmye3_MB2JnvckHyP__cj8g?e=g8jlOg
-)
 
 UI/UX Design
 
