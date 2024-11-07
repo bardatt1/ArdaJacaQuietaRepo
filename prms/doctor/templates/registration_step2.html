@@ -1,43 +1,54 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'registration.css' %}">
-    <title>Registration - Step 2</title>
+    <title>Doctor Registration - Step 2</title>
 </head>
 <body>
-    <form action="{% url 'registration_step2' %}" method="post">
-        {% csrf_token %}
-        <img src="{% static 'images/register_img.png' %}" alt="Registration Image">
-        <h2>Doctor Registration - Step 2</h2>
-
-        <label>Specialization:</label>
-        <input type="text" name="specialization" required><br>
-
-        <label>Chart Number:</label>
-        <input type="text" name="chart_number" required><br>
-
-        <label>Health Care Number:</label>
-        <input type="text" name="health_care_number" required><br>
-
-        <label>Current Address:</label>
-        <input type="text" name="current_address" required><br>
-
-        <label>Social Security Number:</label>
-        <input type="text" name="social_security_number" required><br>
-
-        <label>Home Phone Number:</label>
-        <input type="text" name="phone_number_home" required><br>
-
-        <label>Work Phone Number:</label>
-        <input type="text" name="phone_number_work" required><br>
-
-        <button type="submit">Complete Registration</button>
-        <button type="button" class="back-button" onclick="history.back()">Back</button>
-
-    </form>
-
+    <div class="registration-card">
+        <form action="{% url 'registration_step2' %}" method="post">
+            {% csrf_token %}
+            <div class="header-section">
+                <img src="{% static 'images/register_img.png' %}" alt="Registration Image">
+                <h2>Doctor Registration - Step 2</h2>
+            </div>
+            <div class="form-group">
+                <label>Specialization</label>
+                <input type="text" name="specialization" required>
+            </div>
+            <div class="form-group">
+                <label>Chart Number</label>
+                <input type="text" name="chart_number" required>
+            </div>
+            <div class="form-group">
+                <label>Health Care Number</label>
+                <input type="text" name="health_care_number" required>
+            </div>
+            <div class="form-group">
+                <label>Current Address</label>
+                <input type="text" name="current_address" required>
+            </div>
+            <div class="form-group">
+                <label>Social Security Number</label>
+                <input type="text" name="social_security_number" required>
+            </div>
+            <div class="form-group">
+                <label>Home Phone Number</label>
+                <input type="text" name="phone_number_home" required>
+            </div>
+            <div class="form-group">
+                <label>Work Phone Number</label>
+                <input type="text" name="phone_number_work" required>
+            </div>
+            <div class="button-group">
+                <button type="submit">Complete Registration</button>
+                <button type="button" class="back-button" onclick="history.back()">Back</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

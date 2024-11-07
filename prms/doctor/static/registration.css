@@ -1,109 +1,139 @@
-/* General styles */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #e0f7fa;
+/* Global styles */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 100vh;  /* Ensures the container takes up the full viewport height */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
 }
 
-/* Form container styles */
-form {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    max-width: 600px;
+/* Card container */
+.registration-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     width: 100%;
-    padding: 30px;
+    max-width: 700px;
+    padding: 20px;
     margin: 20px;
+}
+
+/* Header section */
+.header-section {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 20px;
 }
 
-/* Header and text styling */
-h2 {
-    color: #0097a7;
-    margin-bottom: 20px;
-    font-size: 24px;
+.header-section img {
+    width: auto;
+    max-width: 600px; /* Increased max-width for larger screens */
+    height: auto;
+    margin-bottom: 10px;
+}
+
+
+.header-section h2 {
+    font-size: 1.8em;
+    color: #1d72b8;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 15px;
 }
 
 label {
-    font-weight: bold;
-    color: #00796b;
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 5px;
+    font-weight: 600;
+    color: #1d72b8;
 }
 
-/* Input and select styling */
-input[type="text"], 
-input[type="email"], 
-input[type="password"], 
-input[type="date"], 
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
 select {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #b0bec5;
-    border-radius: 5px;
-    font-size: 14px;
-    background-color: #fafafa;
+    margin-top: 5px;
+    font-size: 1em;
+    border: 1px solid #d1d9e6;
+    border-radius: 8px;
+    background-color: #f9fafc;
+    color: #555;
+    transition: all 0.2s;
 }
 
-/* Primary button styling */
-button {
-    background-color: #00796b;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    padding: 12px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    width: 100%;
+input:focus,
+select:focus {
+    border-color: #1d72b8;
+    outline: none;
+    box-shadow: 0 0 4px rgba(29, 114, 184, 0.3);
+}
+
+/* Two-column layout */
+.two-column {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+/* Button styling */
+.button-group {
+    display: flex;
+    justify-content: space-between;
     margin-top: 20px;
 }
 
-button:hover {
-    background-color: #004d40;
+button {
+    flex: 1;
+    padding: 12px;
+    font-size: 1em;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin: 5px;
 }
 
-/* Specific styling for the back button */
+button[type="submit"] {
+    background-color: #1d72b8;
+}
+
+button[type="submit"]:hover {
+    background-color: #145a8b;
+}
+
 .back-button {
-    background-color: #ff8a65;
-    margin-top: 10px;
+    background-color: #e57373;
 }
 
 .back-button:hover {
-    background-color: #d84315;
+    background-color: #b23c3c;
 }
 
-/* Two-column layout for inputs */
-.two-column {
-    display: flex;
-    gap: 40px;
-    width: 100%;
-}
-
-.two-column input {
-    width: 100%;
-}
-
-/* Media Queries */
+/* Media Query for Smaller Screens */
 @media (max-width: 768px) {
-    .two-column {
-        flex-direction: column;
+    .registration-card {
+        padding: 15px;
     }
-}
 
-/* Additional CSS for image alignment */
-form img {
-    width: 100%;
-    max-height: 400px;
-    border-radius: 10px 10px 0 0;
-    margin-bottom: 20px;
+    .header-section img {
+        max-width: 150px;
+    }
 }

@@ -17,46 +17,60 @@ body {
     margin: 0;
 }
 
-/* Container takes up more space horizontally */
+/* Container styling */
 .login-container {
     display: flex;
-    width: 90vw; /* Use 90% of the screen width */
-    max-width: 1200px; /* Cap the maximum width for large screens */
+    width: 85vw;
+    max-width: 1100px;
     background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
 
 /* Image Section */
 .image-section {
     width: 50%;
-    background-image: url("{% static 'images/doctor_img.png' %}"); 
+    background-image: url("{% static 'images/doctor_img.png' %}");
     background-size: cover;
     background-position: center;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+}
+
+.doctor-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0 0 0 12px;
 }
 
 /* Form Section */
 .form-section {
     width: 50%;
-    padding: 60px; /* Increase padding for more space */
+    padding: 50px 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #e3f2fd;
+    background: linear-gradient(135deg, #e3f2fd, #b0e1ff);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: inset -10px 0 20px rgba(0, 0, 0, 0.05);
 }
 
 .form-section h2 {
-    font-size: 2.5em; /* Larger font for title */
+    font-size: 2.5em;
     color: #2c3e50;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .form-section p {
-    font-size: 1.2em;
+    font-size: 1.1em;
     color: #333;
     margin-bottom: 30px;
 }
@@ -64,56 +78,62 @@ body {
 /* Label Styles */
 .form-section label {
     font-weight: bold;
-    color: #333;
-    margin-bottom: 8px;
+    color: #555;
+    margin-bottom: 6px;
+    display: block;
 }
 
 /* Input Styles */
 .form-section input[type="text"],
 .form-section input[type="password"] {
     width: 100%;
-    padding: 15px;
+    padding: 14px;
     margin-bottom: 20px;
-    border-radius: 4px;
+    border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 1em;
-    transition: border-color 0.3s;
+    transition: all 0.3s;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .form-section input[type="text"]:focus,
 .form-section input[type="password"]:focus {
     border-color: #2980b9;
     outline: none;
+    box-shadow: 0 4px 8px rgba(41, 128, 185, 0.3);
 }
 
 /* Button Styles */
 .form-section button {
-    padding: 15px;
-    font-size: 18px;
+    padding: 14px;
+    font-size: 1.1em;
     color: #ffffff;
     background-color: #2980b9;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .form-section button:hover {
     background-color: #1f6f9f;
+    box-shadow: 0 5px 10px rgba(31, 111, 159, 0.4);
 }
 
 /* Additional Links */
 .links, .signup {
-    margin-top: 15px;
-    font-size: 1em;
+    margin-top: 20px;
+    font-size: 0.95em;
+    text-align: center;
 }
 
 .links a,
 .signup a {
     color: #2980b9;
     text-decoration: none;
+    margin: 0 5px;
     transition: color 0.3s;
-    margin-right: 10px;
 }
 
 .links a:hover,
@@ -122,11 +142,13 @@ body {
     text-decoration: underline;
 }
 
+/* Alert box for error messages */
 .alert {
-    background-color: #f8d7da; /* Light red background */
-    color: #721c24; /* Dark red text */
+    background-color: #f8d7da;
+    color: #721c24;
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #f5c6cb; /* Border color */
+    border: 1px solid #f5c6cb;
     border-radius: 5px;
+    text-align: center;
 }
