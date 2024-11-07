@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Patient</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'patient_list_edit_delete.css' %}">
+</head>
+<body>
+    <header class="prms-header">
+        <a href="{% url 'patients' %}" class="back-button">← Back to Patient List</a>
+        <h1 class="prms-title">Delete Patient</h1>
+    </header>
+    <div class="main-container">
+        <section class="form-section">
+            <h2 class="section-title">Confirm Deletion</h2>
+            <div class="form-container">
+                <p>Are you sure you want to delete <strong>{{ patient.first_name }} {{ patient.last_name }}</strong>?</p>
+                <form method="post" id="delete-form">
+                    {% csrf_token %}
+                    <div class="form-actions">
+                        <button type="submit" style="background-color: red;">Yes, Delete</button>
+                        <a href="{% url 'patients' %}" class="logout-link">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+</body>
+</html>

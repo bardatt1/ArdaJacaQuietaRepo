@@ -122,3 +122,33 @@ def activities_view(request):
     doctor = get_object_or_404(Doctor, id=doctor_id)
     activities = doctor.activities.all()  
     return render(request, 'activities.html', {'doctor': doctor, 'activities': activities})
+
+def edit_patient_view(request, patient_id):
+    """View to edit a patient's details."""
+    if 'doctor_id' not in request.session:
+        return redirect('login')
+    patient = get_object_or_404(Patient, id=patient_id, doctor_id=request.session['doctor_id'])
+
+    if request.method == 'POST':
+        patient.first_name = request.POST['first_name']
+        patient.last_name = request.POST['last_name']
+        patient.age = request.POST['age']
+        patient.medical_history = request.POST['medical_history']
+        patient.save()
+        messages.success(request, 'Patient details updated successfully.')
+        return redirect('patients')
+    
+    return render(request, 'edit_patient.html', {'patient': patient})
+
+def delete_patient_view(request, patient_id):
+    """View to delete a patient."""
+    if 'doctor_id' not in request.session:
+        return redirect('login')
+    patient = get_object_or_404(Patient, id=patient_id, doctor_id=request.session['doctor_id'])
+
+    if request.method == 'POST':
+        patient.delete()
+        messages.success(request, 'Patient deleted successfully.')
+        return redirect('patients')
+
+    return render(request, 'confirm_delete_patient.html', {'patient': patient})

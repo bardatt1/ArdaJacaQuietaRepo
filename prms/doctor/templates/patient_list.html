@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient List</title>
+    <link rel="stylesheet" href="{% static 'patient_list_edit_delete.css' %}">
+</head>
+<body>
+    <header class="prms-header">
+        <a href="{% url 'home' %}" class="back-button">← Back to Home</a>
+        <h1 class="prms-title">Patient List</h1>
+    </header>
+    <div class="main-container">
+        <section class="form-section">
+            <h2 class="section-title">All Patients</h2>
+            <div class="form-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Medical History</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for patient in patients %}
+                        <tr>
+                            <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+                            <td>{{ patient.age }}</td>
+                            <td>{{ patient.medical_history }}</td>
+                            <td>
+                                <a href="{% url 'edit_patient' patient.id %}">Edit</a> | 
+                                <a href="{% url 'delete_patient' patient.id %}">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-actions">
+                <a href="{% url 'add_patient' %}" class="button">Add New Patient</a>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
