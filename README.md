@@ -13,22 +13,6 @@ Ease of Use: A simple, intuitive interface that makes it easy to navigate and ma
 Organized: Provides a clear overview of all appointments, patients, and activities in one place.
 
 
-Memory updated
-Here's a README template for your PRMS project.
-
-PRMS (Patient Record Management System)
-About The Project
-
-PRMS is a patient record management system designed to streamline the process of managing patient appointments, records, and recent activities in a healthcare setting. The user-friendly interface makes it easy to monitor daily tasks and organize patient information, helping healthcare professionals manage their schedules more effectively.
-
-Key Features:
-Appointments: Quickly view upcoming appointments or see if there are any scheduled for today.
-Patient Records: Access a list of patients and view their details easily.
-Recent Activities: Keep track of recent actions, such as password changes, document uploads, and appointment settings.
-Why PRMS?
-Efficiency: Helps you focus on providing quality care by reducing the time spent on administrative tasks.
-Ease of Use: A simple, intuitive interface that makes it easy to navigate and manage patient data.
-Organized: Provides a clear overview of all appointments, patients, and activities in one place.
 Getting Started
 To get a local copy up and running, follow these steps:
 
