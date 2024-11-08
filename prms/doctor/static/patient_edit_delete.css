@@ -1,0 +1,112 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.prms-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+.prms-title {
+    font-size: 24px;
+    color: #333;
+}
+
+.back-button {
+    position: absolute;
+    left: 20px;
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+    color: #004080;
+}
+
+/* Main Container */
+.main-container {
+    max-width: 600px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Section */
+.section-title {
+    font-size: 20px;
+    color: #0045d1;
+    margin-bottom: 15px;
+}
+
+.simple-form .form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: none;
+    height: 80px;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #0066cc;
+}
+
+/* Actions */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.save-button {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 3px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.save-button:hover {
+    background-color: #004080;
+}
+
+.cancel-link {
+    font-size: 14px;
+    color: #999;
+    text-decoration: none;
+}
+
+.cancel-link:hover {
+    color: #666;
+}

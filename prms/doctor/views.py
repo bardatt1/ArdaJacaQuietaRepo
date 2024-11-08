@@ -3,7 +3,6 @@ from django.contrib import messages
 from .models import Doctor, Patient, Appointment
 from django.contrib.auth.hashers import make_password, check_password
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_exempt
 
 def registration_step1(request):
     if request.method == 'POST':
@@ -70,7 +69,7 @@ def doctor_home_view(request):
     if doctor_id is None:
         return redirect('login')
     doctor = get_object_or_404(Doctor, id=doctor_id)
-    patients = doctor.patients.all().order_by('-created_at')
+    patients = doctor.patients.all()
     return render(request, 'home.html', {'doctor': doctor, 'patients': patients})
 
 def add_patient_view(request):
@@ -78,21 +77,15 @@ def add_patient_view(request):
         return redirect('login')
     if request.method == 'POST':
         first_name = request.POST['first_name']
-        middle_name = request.POST['middle_name']
         last_name = request.POST['last_name']
         age = request.POST['age']
-        sex = request.POST['sex']
-        contact_information = request.POST['contact_information']
         medical_history = request.POST['medical_history']
         doctor = Doctor.objects.get(id=request.session['doctor_id'])
         Patient.objects.create(
             doctor=doctor,
             first_name=first_name,
-            middle_name=middle_name,
             last_name=last_name,
             age=age,
-            sex=sex,
-            contact_information=contact_information,
             medical_history=medical_history,
         )
         return redirect('home')
@@ -118,7 +111,7 @@ def patient_list_view(request):
     if doctor_id is None:
         return redirect('login')
     doctor = get_object_or_404(Doctor, id=doctor_id)
-    patients = doctor.patients.all().order_by('-created_at')
+    patients = doctor.patients.all()
     return render(request, 'patient_list.html', {'doctor': doctor, 'patients': patients})
 
 def activities_view(request):
@@ -131,30 +124,31 @@ def activities_view(request):
     return render(request, 'activities.html', {'doctor': doctor, 'activities': activities})
 
 def edit_patient_view(request, patient_id):
+    """View to edit a patient's details."""
     if 'doctor_id' not in request.session:
         return redirect('login')
-    
     patient = get_object_or_404(Patient, id=patient_id, doctor_id=request.session['doctor_id'])
-    
+
     if request.method == 'POST':
         patient.first_name = request.POST['first_name']
-        patient.middle_name = request.POST['middle_name']
         patient.last_name = request.POST['last_name']
         patient.age = request.POST['age']
-        patient.sex = request.POST['sex']
-        patient.contact_information = request.POST['contact_information']
         patient.medical_history = request.POST['medical_history']
         patient.save()
+        messages.success(request, 'Patient details updated successfully.')
         return redirect('patients')
     
     return render(request, 'edit_patient.html', {'patient': patient})
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from .models import Patient
 
 def delete_patient_view(request, patient_id):
-    patient = get_object_or_404(Patient, id=patient_id, doctor_id=request.session.get('doctor_id'))
-    
+    """Handle patient deletion."""
+    patient = get_object_or_404(Patient, id=patient_id)
     if request.method == 'POST':
-        patient.delete()
+        patient.delete()  # Delete the patient record from the database
+        messages.success(request, f"Patient {patient.first_name} {patient.last_name} has been successfully deleted.")
         return redirect('patients')
-    
     return render(request, 'confirm_delete_patient.html', {'patient': patient})

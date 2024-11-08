@@ -5,16 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient List</title>
-    <link rel="stylesheet" href="{% static 'patient_list_edit_delete.css' %}">
+    <link rel="stylesheet" href="{% static 'patient_list.css' %}">
 </head>
 <body>
     <header class="prms-header">
         <a href="{% url 'home' %}" class="back-button" aria-label="Back to Home">← Back to Home</a>
-        <h1 class="prms-title">Patient List</h1>
+        <h1 class="prms-title">Patient Record Management System (PRMS)</h1>
     </header>
     <div class="main-container">
         <section class="form-section">
-            <h2 class="section-title">All Patients</h2>
+            <div class="actions-header">
+                <h2 class="section-title">All Patients</h2>
+                <a href="{% url 'add_patient' %}" class="button">Add New Patient</a>
+            </div>
             <div class="form-container">
                 <table>
                     <thead>
@@ -31,7 +34,7 @@
                     <tbody>
                         {% for patient in patients %}
                         <tr>
-                            <td>{{ patient.first_name }} {{ patient.middle_name}} {{ patient.last_name }}</td>
+                            <td>{{ patient.first_name }} {{ patient.middle_name }} {{ patient.last_name }}</td>
                             <td>{{ patient.age }}</td>
                             <td>{{ patient.sex }}</td>
                             <td>{{ patient.contact_information }}</td>
@@ -49,9 +52,6 @@
                         {% endfor %}
                     </tbody>
                 </table>
-            </div>
-            <div class="form-actions">
-                <a href="{% url 'add_patient' %}" class="button">Add New Patient</a>
             </div>
         </section>
     </div>

@@ -5,58 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Patient</title>
-    <link rel="stylesheet" href="{% static 'patient_list_edit_delete.css' %}">
+    <link rel="stylesheet" href="{% static 'patient_edit_delete.css' %}">
 </head>
 <body>
     <header class="prms-header">
         <a href="{% url 'patients' %}" class="back-button">← Back to Patient List</a>
-        <h1 class="prms-title">Edit Patient</h1>
+        <h1 class="prms-title">Patient Record Management System (PRMS)</h1>
     </header>
     <div class="main-container">
         <section class="form-section">
             <h2 class="section-title">Edit Patient Details</h2>
-            <div class="form-container">
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="first_name">First Name</label>
-                        <input type="text" id="first_name" name="first_name" value="{{ patient.first_name }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="middle_name">Middle Name</label>
-                        <input type="text" id="middle_name" name="middle_name" value="{{ patient.middle_name }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="last_name">Last Name</label>
-                        <input type="text" id="last_name" name="last_name" value="{{ patient.last_name }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="age">Age</label>
-                        <input type="number" id="age" name="age" value="{{ patient.age }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="sex">Sex</label>
-                        <select id="sex" name="sex" required>
-                            <option value="" {% if patient.sex == "" %}selected{% endif %}>Select Sex</option>
-                            <option value="Male" {% if patient.sex == "Male" %}selected{% endif %}>Male</option>
-                            <option value="Female" {% if patient.sex == "Female" %}selected{% endif %}>Female</option>
-                        </select>
-                    </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="contact_information">Contact Information</label>
-                        <input type="text" id="contact_information" name="contact_information" value="{{ patient.contact_information }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="medical_history">Medical History</label>
-                        <textarea id="medical_history" name="medical_history" required>{{ patient.medical_history }}</textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit">Save Changes</button>
-                        <a href="{% url 'patients' %}" class="cancel-link">Cancel</a>
-                    </div>
-                </form>
-            </div>
+            <form method="post" class="simple-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ patient.first_name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="middle_name">Middle Name</label>
+                    <input type="text" id="middle_name" name="middle_name" value="{{ patient.middle_name }}">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ patient.last_name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" value="{{ patient.age }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="sex">Sex</label>
+                    <select id="sex" name="sex" required>
+                        <option value="">Select</option>
+                        <option value="Male" {% if patient.sex == "Male" %}selected{% endif %}>Male</option>
+                        <option value="Female" {% if patient.sex == "Female" %}selected{% endif %}>Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="contact_information">Contact</label>
+                    <input type="text" id="contact_information" name="contact_information" value="{{ patient.contact_information }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="medical_history">Medical History</label>
+                    <textarea id="medical_history" name="medical_history" required>{{ patient.medical_history }}</textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="button save-button">Save</button>
+                    <a href="{% url 'patients' %}" class="cancel-link">Cancel</a>
+                </div>
+            </form>
         </section>
     </div>
 </body>
