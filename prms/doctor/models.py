@@ -27,7 +27,7 @@ class Patient(models.Model):
     last_name = models.CharField(max_length=50)
     age = models.IntegerField()
     sex = models.CharField(max_length=6, choices=SEX_CHOICES, blank=False)
-    contact_information = models.CharField(max_length=255, blank=True, default="Not provided")
+    phone_number = models.CharField(max_length=255, blank=True, default="Not provided")
     medical_history = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
     def __str__(self):
