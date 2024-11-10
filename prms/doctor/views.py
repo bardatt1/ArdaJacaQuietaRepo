@@ -158,6 +158,5 @@ def delete_patient_view(request, patient_id):
     patient = get_object_or_404(Patient, id=patient_id)
     if request.method == 'POST':
         patient.delete()  # Delete the patient record from the database
-        messages.success(request, f"Patient {patient.first_name} {patient.last_name} has been successfully deleted.")
         return redirect('patients')
     return render(request, 'confirm_delete_patient.html', {'patient': patient})
