@@ -1,5 +1,5 @@
-**PRMS (Patient Record Management System)
-About The Project**
+##**PRMS (Patient Record Management System)
+###About The Project**
 
 ![prms home](https://github.com/user-attachments/assets/a1292461-cfbe-495d-ba1a-76f588a69e1a)
 
@@ -48,6 +48,11 @@ Members:
   Angelo C. Quieta
   
   Luis Miguel A. Jaca
+
+
+------------------------------------------------------------------------------
+
+
 
 
 ------------------------------------------------------------------------------
