@@ -3,6 +3,9 @@ from django.contrib import messages
 from .models import Doctor, Patient, Appointment
 from django.contrib.auth.hashers import make_password, check_password
 from django.urls import reverse
+from .forms import DoctorProfileEditForm
+from .models import Patient
+
 
 def registration_step1(request):
     if request.method == 'POST':
@@ -149,10 +152,6 @@ def edit_patient_view(request, patient_id):
     
     return render(request, 'edit_patient.html', {'patient': patient})
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from .models import Patient
-
 def delete_patient_view(request, patient_id):
     """Handle patient deletion."""
     patient = get_object_or_404(Patient, id=patient_id)
@@ -160,3 +159,28 @@ def delete_patient_view(request, patient_id):
         patient.delete()  # Delete the patient record from the database
         return redirect('patients')
     return render(request, 'confirm_delete_patient.html', {'patient': patient})
+
+def doctor_profile_view(request):
+    doctor_id = request.session.get('doctor_id')
+    if doctor_id is None:
+        return redirect('login')
+    doctor = get_object_or_404(Doctor, id=doctor_id)
+    return render(request, 'doctor_profile.html', {'doctor': doctor})
+
+def edit_doctor_profile_view(request):
+    doctor_id = request.session.get('doctor_id')
+    if doctor_id is None:
+        return redirect('login')
+    
+    doctor = get_object_or_404(Doctor, id=doctor_id)
+    
+    if request.method == 'POST':
+        form = DoctorProfileEditForm(request.POST, instance=doctor)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated successfully.')
+            return redirect('doctor_profile')  # Redirect to the profile view after updating
+    else:
+        form = DoctorProfileEditForm(instance=doctor)
+    
+    return render(request, 'edit_doctor_profile.html', {'form': form, 'doctor': doctor})

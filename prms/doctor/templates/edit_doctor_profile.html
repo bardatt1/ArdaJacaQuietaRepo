@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="{% static 'edit_doctor_profile.css' %}">
+</head>
+<body>
+
+<div class="profile-header">
+    <h1>PRMS</h1>
+</div>
+
+<div class="profile-container">
+    <div class="left-section">
+        <h2>Edit Profile</h2>
+        <div class="profile-info">
+            <h3>Dr. John Cruise</h3>
+            <p class="role">Neurologist</p>
+            <p class="hospital">Mary General Hospital</p>
+            <div class="profile-picture">
+                <img src="{% static 'path/to/profile_picture.jpg' %}" alt="Profile Picture">
+            </div>
+        </div>
+    </div>
+
+    <div class="right-section">
+        <h4>PROFILE DETAILS:</h4>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save-btn">Save Changes</button>
+            <a href="{% url 'doctor_profile' %}" class="cancel-btn">Cancel</a>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

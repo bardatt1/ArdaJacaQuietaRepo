@@ -1,0 +1,117 @@
+/* General styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e6f2ff;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-header {
+    background-color: #fff;
+    padding: 15px;
+    text-align: center;
+    font-size: 24px;
+    color: #285ac7;
+    font-weight: bold;
+}
+
+.profile-container {
+    display: flex;
+    max-width: 1000px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Left Section */
+.left-section {
+    width: 50%;
+    padding: 20px;
+    background-color: #f1f7ff;
+    text-align: center;
+}
+
+.left-section h2 {
+    color: #285ac7;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile-info h3 {
+    color: #285ac7;
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.profile-info .role,
+.profile-info .hospital {
+    color: #707070;
+    font-size: 18px;
+}
+
+.profile-picture img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    margin-top: 20px;
+}
+
+/* Right Section */
+.right-section {
+    width: 50%;
+    padding: 20px;
+}
+
+.right-section h4 {
+    color: #707070;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.right-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.right-section form input[type="text"],
+.right-section form input[type="email"],
+.right-section form input[type="password"],
+.right-section form input[type="date"],
+.right-section form select {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.right-section .save-btn {
+    padding: 10px;
+    background-color: #285ac7;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.right-section .save-btn:hover {
+    background-color: #1a3e85;
+}
+
+.right-section .cancel-btn {
+    display: inline-block;
+    margin-top: 15px;
+    color: #285ac7;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.right-section .cancel-btn:hover {
+    text-decoration: underline;
+}

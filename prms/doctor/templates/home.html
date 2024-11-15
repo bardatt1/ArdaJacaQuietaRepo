@@ -14,7 +14,7 @@
     </header>
 
     <section class="profile-section">
-        <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture" class="profile-picture">
+        <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture" onclick="window.location.href='http://127.0.0.1:8000/profile/';" class="profile-picture">
         <h2>Good Afternoon, Dr. {{ doctor.first_name }} {{ doctor.last_name }}!</h2>
     </section>
 
