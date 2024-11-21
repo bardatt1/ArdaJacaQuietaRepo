@@ -1,36 +1,42 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient List</title>
+    {% load static %}
     <link rel="stylesheet" href="{% static 'patient_list.css' %}">
+
 </head>
 <body>
+    <!-- Header Section -->
     <header class="prms-header">
-        <img src="{% static 'images/back-button.png' %}" alt="back" class="back-btn" onclick="window.history.back();">
-        <div class="prms-title" onclick="window.location.href='http://127.0.0.1:8000/home/';">Patient Record Management System (PRMS)</div>
-        <div></div>
+        <div class="header-content">
+            <img src="{% static 'images/back-button.png' %}" alt="Back" class="back-btn" onclick="window.history.back();">
+            <h1 class="prms-title" onclick="window.location.href='http://127.0.0.1:8000/home/';">
+                Patient Record Management System
+            </h1>
+        </div>
     </header>
 
+    <!-- Main Content -->
     <div class="main-container">
         <section class="form-section">
             <div class="actions-header">
                 <h2 class="section-title">All Patients</h2>
-                <a href="{% url 'add_patient' %}" class="button">Add New Patient</a>
+                <a href="{% url 'add_patient' %}" class="button">+ Add New Patient</a>
             </div>
             <div class="form-container">
                 <table>
                     <thead>
                         <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Sex</th>
-                            <th scope="col">Contact</th>
-                            <th scope="col">Medical History</th>
-                            <th scope="col">Date Added</th>
-                            <th scope="col">Actions</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Sex</th>
+                            <th>Contact</th>
+                            <th>Medical History</th>
+                            <th>Date Added</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,14 +48,14 @@
                             <td>{{ patient.phone_number }}</td>
                             <td>{{ patient.medical_history }}</td>
                             <td>{{ patient.created_at|date:"M d, Y" }}</td>
-                            <td>
-                                <a href="{% url 'edit_patient' patient.id %}" aria-label="Edit {{ patient.first_name }} {{patient.middle_name}} {{ patient.last_name }}">Edit</a> | 
-                                <a href="{% url 'delete_patient' patient.id %}" aria-label="Delete {{ patient.first_name }} {{patient.middle_name}} {{ patient.last_name }}">Delete</a>
+                            <td class="action-buttons">
+                                <a href="{% url 'edit_patient' patient.id %}" class="edit-btn" title="Edit {{ patient.first_name }}">Edit</a>
+                                <a href="{% url 'delete_patient' patient.id %}" class="delete-btn" title="Delete {{ patient.first_name }}">Delete</a>
                             </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="7">No patients found.</td>
+                            <td colspan="7" class="no-data">No patients found.</td>
                         </tr>
                         {% endfor %}
                     </tbody>

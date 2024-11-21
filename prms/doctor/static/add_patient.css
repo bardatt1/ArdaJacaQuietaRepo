@@ -17,9 +17,33 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 30px;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background-color: #0045d1;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-right {
+    text-align: right;
+}
+
+
+.header-center {
+    text-align: center;
+    flex: 1;
+    cursor: pointer;
+}
+
+.prms-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
 
 .back-button {
     color: #666;
@@ -30,10 +54,9 @@ body {
     font-size: 16px;
 }
 
-.prms-title {
-    color: #0045d1;
-    font-size: 28px;
-    font-weight: bold;
+.back-button {
+    width: 30px;
+    cursor: pointer;
 }
 
 /* Main content container */
@@ -167,16 +190,17 @@ button[type="submit"]:hover {
 
 /* Logout link */
 .logout-link {
-    display: inline-block;
-    margin-top: 20px;
-    color: #666;
+    color: white;
     text-decoration: none;
     font-size: 14px;
-    padding: 20px 40px;
+    padding: 10px 20px;
+    background-color: #00b0e6;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
 .logout-link:hover {
-    color: #0045d1;
+    background-color: #008dbf;
 }
 
 /* Responsive design */
@@ -196,12 +220,14 @@ button[type="submit"]:hover {
 }
 
 @media (max-width: 768px) {
-    .form-row {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
     .prms-header {
+        flex-direction: column;
+        align-items: flex-start;
         padding: 15px;
+    }
+
+    .header-left,
+    .header-right {
+        margin-bottom: 10px;
     }
 }

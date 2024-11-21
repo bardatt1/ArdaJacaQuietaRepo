@@ -1,40 +1,52 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
 }
-
 /* Header Styles */
 .prms-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px 30px;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    border-bottom: 2px solid #003399;
-    position: relative;
+    background-color: #0045d1;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 
 .prms-title {
-    color: #0045d1;
-    font-size: 28px;
+    font-size: 20px;
     font-weight: bold;
-    text-align: center;
+    cursor: pointer;
+    margin: 0;
 }
 
-.back-button {
-    position: absolute;
-    left: 30px;
-    font-size: 16px;
-    color: #666;
-    text-decoration: none;
-}
-
-.back-button:hover {
+.prms-title:hover {
     text-decoration: underline;
-    color: #004080;
 }
+
+.back-btn {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    cursor: pointer;
+    filter: brightness(0) invert(1); /* Ensures icon looks good on dark backgrounds */
+    transition: transform 0.2s;
+}
+
+.back-btn:hover {
+    transform: scale(1.1);
+}
+
 
 /* Main Container */
 .main-container {
@@ -59,6 +71,13 @@ body {
     font-size: 24px;
     font-weight: bold;
     margin: 0;
+}
+
+.no-data {
+    text-align: center;
+    font-size: 16px;
+    color: gray;
+    padding: 20px;
 }
 
 .button {
@@ -182,4 +201,36 @@ input:focus, select:focus, textarea:focus {
 .cancel-link:hover {
     color: #d63636;
     text-decoration: underline;
+}
+
+/* Button Styles */
+.edit-btn, .delete-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    margin-right: 5px; /* Space between buttons */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Edit Button Styles */
+.edit-btn {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Delete Button Styles */
+.delete-btn {
+    background-color: #dc3545; /* Bootstrap danger color */
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
 }

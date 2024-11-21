@@ -11,7 +11,8 @@ class Doctor(models.Model):
     birthday = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=10, null=True, blank=True)
     specialization = models.CharField(max_length=100)
-
+    hospital_assigned = models.CharField(max_length=255, blank=True, default="")
+    
     def __str__(self):
         return f"Dr. {self.first_name} {self.last_name} ({self.specialization})"
 

@@ -17,18 +17,22 @@
     <div class="left-section">
         <h2>Edit Profile</h2>
         <div class="profile-info">
-            <h3>Dr. John Cruise</h3>
-            <p class="role">Neurologist</p>
-            <p class="hospital">Mary General Hospital</p>
+            <h3>Dr. {{ doctor.first_name }} {{ doctor.last_name }}</h3>
+            <p class="role">{{ doctor.specialization }}</p>
+            <p class="hospital">{{ doctor.hospital_assigned }}</p>
             <div class="profile-picture">
-                <img src="{% static 'path/to/profile_picture.jpg' %}" alt="Profile Picture">
+                {% if doctor.profile_picture %}
+                    <img src="{{ doctor.profile_picture.url }}" alt="Profile Picture">
+                {% else %}
+                    <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture">
+                {% endif %}
             </div>
         </div>
     </div>
 
     <div class="right-section">
         <h4>PROFILE DETAILS:</h4>
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="save-btn">Save Changes</button>

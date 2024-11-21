@@ -1,14 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Doctor, Patient, Appointment
 from django.contrib.auth.hashers import make_password, check_password
 from django.urls import reverse
+from .models import Doctor, Patient, Appointment
 from .forms import DoctorProfileEditForm
-from .models import Patient
 
+# Helper function to ensure a doctor is logged in
+def doctor_logged_in(request):
+    doctor_id = request.session.get('doctor_id')
+    if not doctor_id:
+        return redirect('login')
+    return doctor_id
 
 def registration_step1(request):
     if request.method == 'POST':
+        # Store form data in session
         request.session['first_name'] = request.POST.get('first_name')
         request.session['middle_name'] = request.POST.get('middle_name')
         request.session['last_name'] = request.POST.get('last_name')
@@ -17,12 +23,15 @@ def registration_step1(request):
         request.session['email'] = request.POST.get('email')
         request.session['username'] = request.POST.get('username')
         request.session['password'] = request.POST.get('password')
+        request.session['hospital_assigned'] = request.POST.get('hospital_assigned')
         return redirect(reverse('registration_step2'))
     return render(request, 'registration_step1.html')
 
 def registration_step2(request):
+    # Check if session data exists and process it
     print(f"Session Data - Username: {request.session.get('username')}, First Name: {request.session.get('first_name')}, Last Name: {request.session.get('last_name')}")
     if request.method == 'POST':
+        # Get session data for doctor registration
         first_name = request.session.get('first_name')
         middle_name = request.session.get('middle_name')
         last_name = request.session.get('last_name')
@@ -31,11 +40,14 @@ def registration_step2(request):
         email = request.session.get('email')
         username = request.session.get('username')
         password = make_password(request.session.get('password'))
+        hospital_assigned = request.session.get('hospital_assigned')
+        
         if not username:
-            print("Error: Username is missing from the session.")
             return render(request, 'registration_step1.html', {"error": "Username is required."})
+
+        # Register doctor
         specialization = request.POST.get('specialization')
-        doctor = Doctor.objects.create(
+        Doctor.objects.create(
             username=username,
             password=password,
             email=email,
@@ -45,6 +57,7 @@ def registration_step2(request):
             birthday=birthday,
             gender=gender,
             specialization=specialization,
+            hospital_assigned=hospital_assigned,
         )
         return redirect('registration_complete')
     return render(request, 'registration_step2.html')
@@ -60,25 +73,23 @@ def doctor_login_view(request):
             doctor = Doctor.objects.get(username=username)
             if check_password(password, doctor.password):
                 request.session['doctor_id'] = doctor.id
-                return redirect("home")  
+                return redirect("home")
             else:
-                messages.error(request, "Invalid username or password")  
+                messages.error(request, "Invalid username or password")
         except Doctor.DoesNotExist:
             messages.error(request, "Doctor not found. Please register first.")
-    return render(request, "login.html") 
+    return render(request, "login.html")
 
 def doctor_home_view(request):
-    doctor_id = request.session.get('doctor_id')
-    if doctor_id is None:
-        return redirect('login')
+    doctor_id = doctor_logged_in(request)  # Ensure doctor is logged in
     doctor = get_object_or_404(Doctor, id=doctor_id)
     patients = doctor.patients.all()
     return render(request, 'home.html', {'doctor': doctor, 'patients': patients})
 
 def add_patient_view(request):
-    if 'doctor_id' not in request.session:
-        return redirect('login')
+    doctor_id = doctor_logged_in(request)  # Ensure doctor is logged in
     if request.method == 'POST':
+        # Add patient
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         middle_name = request.POST['middle_name']
@@ -86,7 +97,7 @@ def add_patient_view(request):
         sex = request.POST['sex']
         phone_number = request.POST['phone_number']
         medical_history = request.POST['medical_history']
-        doctor = Doctor.objects.get(id=request.session['doctor_id'])
+        doctor = Doctor.objects.get(id=doctor_id)
         Patient.objects.create(
             doctor=doctor,
             first_name=first_name,
@@ -102,43 +113,33 @@ def add_patient_view(request):
 
 def doctor_logout_view(request):
     if 'doctor_id' in request.session:
-        del request.session['doctor_id']  
+        del request.session['doctor_id']
         messages.success(request, 'You have been logged out successfully.')
     return redirect('login')
 
 def appointments_view(request):
-    doctor_id = request.session.get('doctor_id')
-    if doctor_id is None:
-        return redirect('login')
+    doctor_id = doctor_logged_in(request)  # Ensure doctor is logged in
     doctor = get_object_or_404(Doctor, id=doctor_id)
-    appointments = doctor.appointments.all()  
+    appointments = doctor.appointments.all()
     return render(request, 'appointments.html', {'doctor': doctor, 'appointments': appointments})
 
 def patient_list_view(request):
-    """View to list all patients associated with the logged-in doctor."""
-    doctor_id = request.session.get('doctor_id')
-    if doctor_id is None:
-        return redirect('login')
+    doctor_id = doctor_logged_in(request)  # Ensure doctor is logged in
     doctor = get_object_or_404(Doctor, id=doctor_id)
     patients = doctor.patients.all()
     return render(request, 'patient_list.html', {'doctor': doctor, 'patients': patients})
 
 def activities_view(request):
-    """View to display recent activities for the doctor."""
-    doctor_id = request.session.get('doctor_id')
-    if doctor_id is None:
-        return redirect('login')
+    doctor_id = doctor_logged_in(request)  # Ensure doctor is logged in
     doctor = get_object_or_404(Doctor, id=doctor_id)
-    activities = doctor.activities.all()  
+    activities = doctor.activities.all()
     return render(request, 'activities.html', {'doctor': doctor, 'activities': activities})
 
 def edit_patient_view(request, patient_id):
-    """View to edit a patient's details."""
-    if 'doctor_id' not in request.session:
-        return redirect('login')
-    patient = get_object_or_404(Patient, id=patient_id, doctor_id=request.session['doctor_id'])
-
+    doctor_id = doctor_logged_in(request)  # Ensure doctor is logged in
+    patient = get_object_or_404(Patient, id=patient_id, doctor_id=doctor_id)
     if request.method == 'POST':
+        # Update patient details
         patient.first_name = request.POST['first_name']
         patient.middle_name = request.POST['middle_name']
         patient.last_name = request.POST['last_name']
@@ -149,11 +150,9 @@ def edit_patient_view(request, patient_id):
         patient.save()
         messages.success(request, 'Patient details updated successfully.')
         return redirect('patients')
-    
     return render(request, 'edit_patient.html', {'patient': patient})
 
 def delete_patient_view(request, patient_id):
-    """Handle patient deletion."""
     patient = get_object_or_404(Patient, id=patient_id)
     if request.method == 'POST':
         patient.delete()  # Delete the patient record from the database
@@ -161,25 +160,20 @@ def delete_patient_view(request, patient_id):
     return render(request, 'confirm_delete_patient.html', {'patient': patient})
 
 def doctor_profile_view(request):
-    doctor_id = request.session.get('doctor_id')
-    if doctor_id is None:
-        return redirect('login')
+    doctor_id = doctor_logged_in(request)  # Ensure doctor is logged in
     doctor = get_object_or_404(Doctor, id=doctor_id)
     return render(request, 'doctor_profile.html', {'doctor': doctor})
 
 def edit_doctor_profile_view(request):
-    doctor_id = request.session.get('doctor_id')
-    if doctor_id is None:
-        return redirect('login')
-    
+    doctor_id = doctor_logged_in(request)  # Ensure doctor is logged in
     doctor = get_object_or_404(Doctor, id=doctor_id)
-    
+
     if request.method == 'POST':
         form = DoctorProfileEditForm(request.POST, instance=doctor)
         if form.is_valid():
             form.save()
             messages.success(request, 'Your profile has been updated successfully.')
-            return redirect('doctor_profile')  # Redirect to the profile view after updating
+            return redirect('doctor_profile')
     else:
         form = DoctorProfileEditForm(instance=doctor)
     

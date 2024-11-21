@@ -4,21 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> <!-- Added Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'home.css' %}">
-    <title>Patient Record Management System</title>
+    <title>{% block title %}Patient Record Management System{% endblock %}</title>
 </head>
 <body>
+    <!-- Header -->
     <header>
         <h1>Patient Record Management System (PRMS)</h1>
     </header>
 
+    <!-- Profile Section -->
+    {% block profile %}
     <section class="profile-section">
         <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture" onclick="window.location.href='http://127.0.0.1:8000/profile/';" class="profile-picture">
         <h2>Good Afternoon, Dr. {{ doctor.first_name }} {{ doctor.last_name }}!</h2>
     </section>
+    {% endblock %}
 
+    <!-- Main Content -->
     <main class="content-container">
+        {% block content %}
+        <!-- Default content for home.html -->
         <article class="card appointments-card">
             <h3>Appointments</h3>
             <p>No Appointments for today</p>
@@ -44,12 +51,17 @@
             <p>Added a document for Brett Arda</p>
             <a href="{% url 'activities' %}" class="view-link">VIEW ALL RECENT ACTIVITIES</a>
         </article>
+        {% endblock %}
     </main>
 
+    <!-- Add Button -->
+    {% block add_button %}
     <div class="add-button-container">
         <a href="{% url 'add_patient' %}" class="add-patient-btn">ADD A PATIENT</a>
     </div>
+    {% endblock %}
 
+    <!-- Footer -->
     <footer>
         <a href="{% url 'logout' %}" class="logout-link">Logout</a>
     </footer>
