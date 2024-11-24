@@ -84,7 +84,7 @@ def doctor_home_view(request):
     doctor_id = doctor_logged_in(request)
     doctor = get_object_or_404(Doctor, id=doctor_id)
     patients = doctor.patients.all()
-    activities = doctor.activities.order_by('-timestamp')[:5]  # Fetch the latest 5 activities
+    activities = doctor.activities.order_by('-timestamp')[:3]  # Fetch the latest 3 activities
     return render(request, 'home.html', {'doctor': doctor, 'patients': patients, 'activities': activities})
 
 def add_patient_view(request):
@@ -154,7 +154,6 @@ def edit_doctor_profile_view(request):
                 doctor=doctor,
                 description="Updated profile information."
             )
-            messages.success(request, 'Your profile has been updated successfully.')
             return redirect('doctor_profile')
     else:
         form = DoctorProfileEditForm(instance=doctor)
@@ -172,7 +171,6 @@ def delete_patient_view(request, patient_id):
         )
         
         patient.delete()  # Delete the patient record from the database
-        messages.success(request, f"Patient {patient.first_name} {patient.last_name} has been deleted.")
         return redirect('patients')
     
     return render(request, 'confirm_delete_patient.html', {'patient': patient})
@@ -202,8 +200,6 @@ def edit_patient_view(request, patient_id):
             doctor=patient.doctor,
             description=f"Updated patient details for {patient.first_name} {patient.last_name}."
         )
-        
-        messages.success(request, 'Patient details updated successfully.')
         return redirect('patients')  # Redirect to patient list or other page
     
     return render(request, 'edit_patient.html', {'patient': patient})

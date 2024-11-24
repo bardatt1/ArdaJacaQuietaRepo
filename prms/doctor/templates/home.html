@@ -18,7 +18,15 @@
     {% block profile %}
     <section class="profile-section">
         <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture" onclick="window.location.href='http://127.0.0.1:8000/profile/';" class="profile-picture">
-        <h2>Good Afternoon, Dr. {{ doctor.first_name }} {{ doctor.last_name }}!</h2>
+        
+        {% now "H" as current_time %}
+        {% if current_time|add:"0"|floatformat:0 < 12 %}
+            <h2>Good Morning, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Ready to make a difference today?</h2>
+        {% elif current_time|add:"0"|floatformat:0 < 18 %}
+            <h2>Good Afternoon, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Let's continue to provide excellent care!</h2>
+        {% else %}
+            <h2>Good Evening, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Reflect on today's achievements!</h2>
+        {% endif %}
     </section>
     {% endblock %}
 
