@@ -24,17 +24,13 @@ Getting Started
 To get a local copy up and running, follow these steps:
 
 Clone the repository:
-
 git clone https://github.com/yourusername/PRMS.git
+
 Navigate to the project directory:
-
 cd PRMS
-Install dependencies (if applicable):
 
-npm install
 Start the application:
-
-npm start
+py manage.py runserver
 
 Usage
 View Appointments: See all upcoming and current appointments.
