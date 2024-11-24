@@ -32,7 +32,7 @@ cd PRMS
 Start the application:
 py manage.py runserver
 
-Usage
+Usage:
 View Appointments: See all upcoming and current appointments.
 Manage Patients: Add, edit, or remove patient details.
 Track Activities: View recent system activities and changes.
