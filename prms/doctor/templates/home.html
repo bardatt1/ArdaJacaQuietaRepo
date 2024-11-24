@@ -47,10 +47,16 @@
 
         <article class="card activities-card">
             <h3>Recent Activities</h3>
-            <p>You changed your password on 09/03/2024 at 2:32PM</p>
-            <p>Added a document for Brett Arda</p>
+            <ul>
+                {% for activity in activities %}
+                    <li>{{ activity.description }} <br><small>{{ activity.timestamp|date:"M d, Y H:i" }}</small></li>
+                {% empty %}
+                    <li>No recent activities found.</li>
+                {% endfor %}
+            </ul>
             <a href="{% url 'activities' %}" class="view-link">VIEW ALL RECENT ACTIVITIES</a>
         </article>
+        
         {% endblock %}
     </main>
 

@@ -42,3 +42,12 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f"Appointment with {self.patient} on {self.appointment_date.strftime('%Y-%m-%d %H:%M')}"
+    
+class Activity(models.Model):
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='activities')
+    description = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Activity by {self.doctor.first_name} on {self.timestamp.strftime('%Y-%m-%d %H:%M')}"
+
