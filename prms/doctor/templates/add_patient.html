@@ -19,76 +19,78 @@
 </head>
 <body>
     <header class="prms-header">
-        <img src="{% static 'images/back-button.png' %}" alt="back" class="back-button" onclick="window.history.back();">
-        <div class="prms-title" onclick="window.location.href='http://127.0.0.1:8000/home/';">Patient Record Management System (PRMS)</div>
-        <div></div>
+        <div class="header-left">
+            <img src="{% static 'images/back-button.png' %}" alt="back" class="back-button" onclick="window.history.back();">
+        </div>
+        <div class="header-center prms-title" onclick="window.location.href='http://127.0.0.1:8000/home/';">
+            Patient Record Management System (PRMS)
+        </div>
+        <div class="header-right">
+            <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+        </div>
     </header>
 
     <div class="main-container">
-        <div class="image-section">
+        <div class="patient-container">
+          <div class="image-section">
             <img src="{% static 'images/nurse.png' %}" alt="Healthcare Professional" class="nurse-image">
-            <div class="image-background"></div>
-        </div>
-
-        <div class="form-section">
+          </div>
+          <div class="patient-details">
             <h2 class="section-title">PATIENT DETAILS</h2>
-            
             <div class="form-container">
-                <form method="post">
-                    {% csrf_token %}
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="required">First Name</label>
-                            <input type="text" name="first_name" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Middle Name</label>
-                            <input type="text" name="middle_name">
-                        </div>
-                        <div class="form-group">
-                            <label class="required">Last Name</label>
-                            <input type="text" name="last_name" required>
-                        </div>
-                    </div>
+              <form method="post">
+                {% csrf_token %}
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="required">First Name</label>
+                    <input type="text" name="first_name" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Middle Name</label>
+                    <input type="text" name="middle_name">
+                  </div>
+                  <div class="form-group">
+                    <label class="required">Last Name</label>
+                    <input type="text" name="last_name" required>
+                  </div>
+                </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="required">Age</label>
-                            <input type="number" name="age" required>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="required">Age</label>
+                                <input type="number" name="age" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="required">Sex</label>
+                                <select name="sex" required>
+                                    <option value="">Select Sex</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="required">Sex</label>
-                            <select name="sex" required>  <!-- Corrected 'gender' to 'sex' -->
-                                <option value="">Select Sex</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="required">Phone Number</label>
-                            <input type="text" name="phone_number" required>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="required">Phone Number</label>
+                                <input type="text" name="phone_number" required>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="required">Medical History</label>
-                            <textarea name="medical_history" required></textarea>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="required">Medical History</label>
+                                <textarea name="medical_history" required></textarea>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-actions">
-                        <button type="submit">Add</button>
-                    </div>
-                </form>
+                        <div class="form-actions">
+                            <button type="submit">Add</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-
-    <a href="{% url 'logout' %}" class="logout-link">Logout</a>
 </body>
 </html>
