@@ -24,19 +24,15 @@ Getting Started
 To get a local copy up and running, follow these steps:
 
 Clone the repository:
-
 git clone https://github.com/yourusername/PRMS.git
+
 Navigate to the project directory:
-
 cd PRMS
-Install dependencies (if applicable):
 
-npm install
 Start the application:
+py manage.py runserver
 
-npm start
-
-Usage
+Usage:
 View Appointments: See all upcoming and current appointments.
 Manage Patients: Add, edit, or remove patient details.
 Track Activities: View recent system activities and changes.

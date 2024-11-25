@@ -27,7 +27,15 @@
     {% block profile %}
     <section class="profile-section">
         <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture" onclick="window.location.href='http://127.0.0.1:8000/profile/';" class="profile-picture">
-        <h2>Good Afternoon, Dr. {{ doctor.first_name }} {{ doctor.last_name }}!</h2>
+        
+        {% now "H" as current_time %}
+        {% if current_time|add:"0"|floatformat:0 < 12 %}
+            <h2>Good Morning, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Ready to make a difference today?</h2>
+        {% elif current_time|add:"0"|floatformat:0 < 18 %}
+            <h2>Good Afternoon, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Let's continue to provide excellent care!</h2>
+        {% else %}
+            <h2>Good Evening, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Reflect on today's achievements!</h2>
+        {% endif %}
     </section>
     {% endblock %}
 
@@ -56,10 +64,16 @@
 
         <article class="card activities-card">
             <h3>Recent Activities</h3>
-            <p>You changed your password on 09/03/2024 at 2:32PM</p>
-            <p>Added a document for Brett Arda</p>
+            <ul>
+                {% for activity in activities %}
+                    <li>{{ activity.description }} <br><small>{{ activity.timestamp|date:"M d, Y H:i" }}</small></li>
+                {% empty %}
+                    <li>No recent activities found.</li>
+                {% endfor %}
+            </ul>
             <a href="{% url 'activities' %}" class="view-link">VIEW ALL RECENT ACTIVITIES</a>
         </article>
+        
         {% endblock %}
     </main>
 
