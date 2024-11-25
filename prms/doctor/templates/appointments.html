@@ -22,27 +22,30 @@
     
     <section class="today-section">
       <h3 class="today-title">Today</h3>
+      {% for patient in patients %}
       <div class="appointment-card">
         <div class="patient-info">
-          <span class="patient-name">Brett</span>
-          <span class="patient-id">12-345-67</span>
-          <span class="patient-condition">Alzheimer's</span>
+          <span class="patient-name">{{ patient.first_name }} {{ patient.middle_name }} {{ patient.last_name }}</span>
+          <span class="patient-id">{{ patient.phone_number }}</span>
+          <span class="patient-condition">{{ patient.medical_history }}</span>
         </div>
         <div class="appointment-details">
           <p>Time: <span>3:00pm</span></p>
           <p>Details: <span>Monthly Checkup</span></p>
         </div>
       </div>
+      {% empty %}
+      <p>No appointments scheduled for today.</p>
+      {% endfor %}
     </section>
     
     <section class="calendar-section">
       <div class="calendar-header">
         <button class="nav-arrow">‹</button>
-        <h3>September 2024</h3>
+        <h3>April 2023</h3>
         <button class="nav-arrow">›</button>
       </div>
       <div class="calendar-grid">
-        <!-- Calendar days -->
         <div>1</div>
         <div>2</div>
         <div>3</div>
@@ -51,35 +54,41 @@
         <div>6</div>
         <div>7</div>
         <div>8</div>
-        <div class="active-day">9</div>
+        <div>9</div>
         <div>10</div>
-        <!-- ... Continue days as shown in the design ... -->
+        <div>11</div>
+        <div class="active-day">18</div>
+        <div>12</div>
+        <div>13</div>
+        <div>14</div>
+        <div>15</div>
+        <div>16</div>
+        <div>17</div>
+        <div>19</div>
+        <div>20</div>
+        <div>21</div>
+        <div>22</div>
+        <div>23</div>
+        <div>24</div>
+        <div>25</div>
+        <div>26</div>
+        <div>27</div>
+        <div>28</div>
+        <div>29</div>
         <div>30</div>
-        <div class="next-month-day">1</div>
-        <div class="next-month-day">2</div>
-        <div class="next-month-day">3</div>
-        <div class="next-month-day">4</div>
-        <div class="next-month-day">5</div>
-        <div class="next-month-day">6</div>
       </div>
     </section>
 
     <section class="patients-section">
+      {% for patient in patients %}
       <div class="patient-card">
-        <span class="patient-name">Miguel</span>
-        <span class="patient-id">89-012-34</span>
-        <span class="patient-condition">Schizophrenia</span>
+        <span class="patient-name">{{ patient.first_name }} {{ patient.middle_name }} {{ patient.last_name }}</span>
+        <span class="patient-id">{{ patient.phone_number }}</span>
+        <span class="patient-condition">{{ patient.medical_history }}</span>
       </div>
-      <div class="patient-card">
-        <span class="patient-name">Angelo</span>
-        <span class="patient-id">56-789-01</span>
-        <span class="patient-condition">PTSD</span>
-      </div>
-      <div class="patient-card">
-        <span class="patient-name">Derick</span>
-        <span class="patient-id">23-456-78</span>
-        <span class="patient-condition">OCD</span>
-      </div>
+      {% empty %}
+      <p>No patients found.</p>
+      {% endfor %}
     </section>
   </main>
 </body>

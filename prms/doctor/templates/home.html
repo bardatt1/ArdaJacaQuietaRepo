@@ -57,13 +57,26 @@
     <main class="content-container">
         {% now "Y" as year %}
         {% block content %}
-        <!-- Default content for home.html -->
         <article class="card appointments-card">
             <h3><i class="fas fa-calendar-check"></i> Appointments</h3>
-            <p>No Appointments for today</p>
-            <p>Upcoming Appointment: September 9, 2024</p>
+            {% if today_appointments %}
+              <p>Appointments for today:</p>
+              {% for appointment in today_appointments %}
+                <div class="appointment-item">
+                  <span class="patient-name">{{ appointment.patient.first_name }} {{ appointment.patient.middle_name }} {{ appointment.patient.last_name }}</span>
+                  <span class="appointment-time">{{ appointment.time }}</span>
+                </div>
+              {% endfor %}
+            {% else %}
+              <p>No appointments for today.</p>
+            {% endif %}
+            {% if next_appointment %}
+              <p>Upcoming Appointment: {{ next_appointment.date }}</p>
+            {% else %}
+              <p>No upcoming appointments.</p>
+            {% endif %}
             <a href="{% url 'appointments' %}" class="view-link">VIEW ALL APPOINTMENTS</a>
-        </article>
+          </article>
     
         <article class="card patients-card">
             <h3><i class="fas fa-user-injured"></i> Patients</h3>
