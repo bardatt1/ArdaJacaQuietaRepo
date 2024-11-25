@@ -6,6 +6,8 @@ from .models import Doctor, Patient, Appointment, Activity
 from .forms import DoctorProfileEditForm
 from datetime import datetime
 from django.db.models import Q
+from django.http import JsonResponse
+
 
 # Helper function to ensure a doctor is logged in
 def doctor_logged_in(request):
@@ -200,6 +202,18 @@ def activities_view(request):
 
     activities = activities.order_by('-timestamp')  # Sort activities by latest first
     return render(request, 'activities.html', {'activities': activities})
+
+def delete_all_activities_view(request):
+    doctor_id = doctor_logged_in(request)
+    doctor = get_object_or_404(Doctor, id=doctor_id)
+
+    if request.method == "POST":
+        # Delete all activities for the logged-in doctor
+        doctor.activities.all().delete()
+        messages.success(request, "All activities have been deleted.")
+        return redirect('activities')
+
+    return JsonResponse({"error": "Invalid request method."}, status=400)
 
 def edit_doctor_profile_view(request):
     doctor_id = doctor_logged_in(request)
