@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.urls import reverse
 from .models import Doctor, Patient, Appointment, Activity
 from .forms import DoctorProfileEditForm
+from datetime import datetime
 
 # Helper function to ensure a doctor is logged in
 def doctor_logged_in(request):
@@ -83,9 +84,18 @@ def doctor_login_view(request):
 def doctor_home_view(request):
     doctor_id = doctor_logged_in(request)
     doctor = get_object_or_404(Doctor, id=doctor_id)
+        # Determine the greeting message based on the current hour
+    current_hour = datetime.now().hour
+    if current_hour < 12:
+        greeting = "Good Morning"
+    elif current_hour < 18:
+        greeting = "Good Afternoon"
+    else:
+        greeting = "Good Evening"
+        
     patients = doctor.patients.all()
     activities = doctor.activities.order_by('-timestamp')[:3]  # Fetch the latest 3 activities
-    return render(request, 'home.html', {'doctor': doctor, 'patients': patients, 'activities': activities})
+    return render(request, 'home.html', {'doctor': doctor, 'patients': patients, 'activities': activities, 'greeting':greeting})
 
 def add_patient_view(request):
     doctor_id = doctor_logged_in(request)

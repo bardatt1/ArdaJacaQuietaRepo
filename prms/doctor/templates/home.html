@@ -18,29 +18,43 @@
     </style>
 </head>
 <body>
+    
     <!-- Header -->
     <header>
         <h1>Patient Record Management System (PRMS)</h1>
     </header>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+    <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'appointments' %}">Appointments</a></li>
+        <li><a href="{% url 'patients' %}">Patients</a></li>
+        <li><a href="{% url 'activities' %}">Recent Activities</a></li>
+        <li><a href="{% url 'doctor_profile' %}">Profile</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+</nav>
 
     <!-- Profile Section -->
     {% block profile %}
     <section class="profile-section">
         <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture" onclick="window.location.href='http://127.0.0.1:8000/profile/';" class="profile-picture">
         
-        {% now "H" as current_time %}
-        {% if current_time|add:"0"|floatformat:0 < 12 %}
-            <h2>Good Morning, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Ready to make a difference today?</h2>
-        {% elif current_time|add:"0"|floatformat:0 < 18 %}
-            <h2>Good Afternoon, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Let's continue to provide excellent care!</h2>
+        {% now "H" as current_hour %}
+        {% if current_hour < 12 %}
+        <h2>{{ greeting }}, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Ready to make a difference today?</h2>
+        {% elif current_hour < 18 %}
+        <h2>{{ greeting }}, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Let's continue to provide excellent care!</h2>
         {% else %}
-            <h2>Good Evening, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Reflect on today's achievements!</h2>
+        <h2>{{ greeting }}, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Reflect on today's achievements!</h2>
         {% endif %}
     </section>
     {% endblock %}
 
     <!-- Main Content -->
     <main class="content-container">
+        {% now "Y" as year %}
         {% block content %}
         <!-- Default content for home.html -->
         <article class="card appointments-card">
@@ -84,9 +98,9 @@
     </div>
     {% endblock %}
 
-    <!-- Footer -->
-    <footer>
-        <a href="{% url 'logout' %}" class="logout-link">Logout</a>
-    </footer>
+<!-- Footer -->
+<footer>
+    <p>&copy; {{ year }} Patient Record Management System. All Rights Reserved.</p>
+</footer>
 </body>
 </html>

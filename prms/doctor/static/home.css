@@ -9,6 +9,52 @@ body {
     background-color: #f4f9fc;
     color: #333;
     line-height: 1.6;
+    justify-content: space-between;
+
+}
+
+body, html {
+    height: 100%;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 220px;
+    background-color: #003366;
+    color: #ffffff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding-top: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.sidebar ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    display: block;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: #00509e;
+    transform: translateX(10px);
+    border-radius: 5px;
 }
 
 /* Header Styling */
@@ -26,6 +72,7 @@ header h1 {
     font-size: 26px;
     letter-spacing: 1px;
     font-weight: 500;
+    margin-left: 200px;
 }
 
 /* Profile Section Styling */
@@ -38,6 +85,7 @@ header h1 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     width: 90%;
     max-width: 600px;
+    margin-left: 200px;
 }
 
 .profile-section img {
@@ -65,10 +113,12 @@ header h1 {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width: 90%;
+    width: calc(100% - 220px);
     max-width: 1200px;
     margin-top: 30px;
     gap: 20px;
+    padding: 20px;
+    margin-left: 220px;
 }
 
 /* Card Styling */
@@ -135,6 +185,7 @@ header h1 {
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    margin-left: 200px;
 }
 
 .add-patient-btn:hover {
@@ -145,31 +196,26 @@ header h1 {
 /* Footer Styling */
 footer {
     margin-top: 40px;
-    padding: 10px 0;
+    padding: 15px 0;
     font-size: 14px;
-    color: #666;
+    color: #ffffff;
     text-align: center;
     width: 100%;
-    background-color: #f0f0f0;
+    background-color: #003366;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: 190px;
 }
 
-footer a.logout-link {
-    color: #0078d4;
-    font-weight: 500;
-    text-decoration: none;
-    transition: color 0.2s ease-in-out;
+footer p {
+    margin: 0;
+    font-size: 14px;
 }
-
-footer a.logout-link:hover {
-    color: #0056a3;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .content-container {
         flex-direction: column;
         align-items: center;
+        margin-left: 180px;
     }
 
     .card {
@@ -187,5 +233,14 @@ footer a.logout-link:hover {
 
     .add-patient-btn {
         width: 80%;
+    }
+
+    .sidebar {
+        width: 180px;
+    }
+
+    .sidebar ul li a {
+        font-size: 14px;
+        padding: 10px 15px;
     }
 }

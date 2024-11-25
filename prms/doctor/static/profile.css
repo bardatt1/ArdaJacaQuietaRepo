@@ -10,6 +10,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    margin-left: 220px; /* Offset to account for the sidebar */
 }
 
 .profile-header {
@@ -60,4 +61,44 @@ body {
 a {
     color: #1a4bc6;
     text-decoration: none;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 220px;
+    background-color: #003366;
+    color: #ffffff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding-top: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.sidebar ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    display: block;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: #00509e;
+    transform: translateX(10px);
+    border-radius: 5px;
 }

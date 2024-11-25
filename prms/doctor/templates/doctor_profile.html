@@ -17,6 +17,18 @@
     </style>
 </head>
 <body>
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'appointments' %}">Appointments</a></li>
+                <li><a href="{% url 'patients' %}">Patients</a></li>
+                <li><a href="{% url 'activities' %}">Recent Activities</a></li>
+                <li><a href="{% url 'doctor_profile' %}">Profile</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+        
     <div class="profile-container">
         <header class="profile-header">
             <h1 onclick="window.location.href='http://127.0.0.1:8000/home/';">PRMS</h1>
