@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'home.css' %}">
+    <!-- Font Awesome CDN for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>{% block title %}Patient Record Management System{% endblock %}</title>
     <style>
         body {
@@ -24,17 +26,17 @@
         <h1>Patient Record Management System (PRMS)</h1>
     </header>
 
-<!-- Sidebar -->
-<nav class="sidebar">
-    <ul>
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'appointments' %}">Appointments</a></li>
-        <li><a href="{% url 'patients' %}">Patients</a></li>
-        <li><a href="{% url 'activities' %}">Recent Activities</a></li>
-        <li><a href="{% url 'doctor_profile' %}">Profile</a></li>
-        <li><a href="{% url 'logout' %}">Logout</a></li>
-    </ul>
-</nav>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <ul>
+            <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{% url 'appointments' %}"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+            <li><a href="{% url 'patients' %}"><i class="fas fa-user-injured"></i> Patients</a></li>
+            <li><a href="{% url 'activities' %}"><i class="fas fa-clipboard-list"></i> Recent Activities</a></li>
+            <li><a href="{% url 'doctor_profile' %}"><i class="fas fa-user-md"></i> Profile</a></li>
+            <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </nav>
 
     <!-- Profile Section -->
     {% block profile %}
@@ -52,20 +54,19 @@
     </section>
     {% endblock %}
 
-    <!-- Main Content -->
     <main class="content-container">
         {% now "Y" as year %}
         {% block content %}
         <!-- Default content for home.html -->
         <article class="card appointments-card">
-            <h3>Appointments</h3>
+            <h3><i class="fas fa-calendar-check"></i> Appointments</h3>
             <p>No Appointments for today</p>
             <p>Upcoming Appointment: September 9, 2024</p>
             <a href="{% url 'appointments' %}" class="view-link">VIEW ALL APPOINTMENTS</a>
         </article>
-
+    
         <article class="card patients-card">
-            <h3>Patients</h3>
+            <h3><i class="fas fa-user-injured"></i> Patients</h3>
             <ul>
                 {% for patient in patients|slice:":4" %}
                     <li>{{ patient.first_name }} {{ patient.middle_name }} {{ patient.last_name }}</li>
@@ -75,9 +76,9 @@
             </ul>
             <a href="{% url 'patients' %}" class="view-link">VIEW ALL PATIENTS</a>
         </article>
-
+    
         <article class="card activities-card">
-            <h3>Recent Activities</h3>
+            <h3><i class="fas fa-clipboard-list"></i> Recent Activities</h3>
             <ul>
                 {% for activity in activities %}
                     <li>{{ activity.description }} <br><small>{{ activity.timestamp|date:"M d, Y H:i" }}</small></li>
@@ -90,7 +91,7 @@
         
         {% endblock %}
     </main>
-
+    
     <!-- Add Button -->
     {% block add_button %}
     <div class="add-button-container">
@@ -98,9 +99,9 @@
     </div>
     {% endblock %}
 
-<!-- Footer -->
-<footer>
-    <p>&copy; {{ year }} Patient Record Management System. All Rights Reserved.</p>
-</footer>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; {{ year }} Patient Record Management System. All Rights Reserved.</p>
+    </footer>
 </body>
 </html>
