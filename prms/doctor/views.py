@@ -5,6 +5,7 @@ from django.urls import reverse
 from .models import Doctor, Patient, Appointment, Activity
 from .forms import DoctorProfileEditForm
 from datetime import datetime
+from django.db.models import Q
 
 # Helper function to ensure a doctor is logged in
 def doctor_logged_in(request):
@@ -143,13 +144,61 @@ def appointments_view(request):
 def patient_list_view(request):
     doctor_id = doctor_logged_in(request)  # Ensure doctor is logged in
     doctor = get_object_or_404(Doctor, id=doctor_id)
+
+    # Get search and filter parameters
+    search_query = request.GET.get('search', '')
+    sex_filter = request.GET.get('sex', '')
+    start_date = request.GET.get('start_date', '')
+    end_date = request.GET.get('end_date', '')
+
+    # Base query
     patients = doctor.patients.all()
+
+    # Apply search filter
+    if search_query:
+        patients = patients.filter(
+            Q(first_name__icontains=search_query) |
+            Q(last_name__icontains=search_query) |
+            Q(phone_number__icontains=search_query)
+        )
+
+    # Apply sex filter
+    if sex_filter:
+        patients = patients.filter(sex=sex_filter)
+
+    # Apply date range filter
+    if start_date and end_date:
+        patients = patients.filter(
+            created_at__date__gte=start_date,
+            created_at__date__lte=end_date
+        )
+
     return render(request, 'patient_list.html', {'doctor': doctor, 'patients': patients})
 
 def activities_view(request):
     doctor_id = doctor_logged_in(request)
     doctor = get_object_or_404(Doctor, id=doctor_id)
-    activities = doctor.activities.order_by('-timestamp')
+
+    # Get search and filter parameters
+    search_query = request.GET.get('search', '')
+    start_date = request.GET.get('start_date', '')
+    end_date = request.GET.get('end_date', '')
+
+    # Base query
+    activities = doctor.activities.all()
+
+    # Apply search filter
+    if search_query:
+        activities = activities.filter(description__icontains=search_query)
+
+    # Apply date range filter
+    if start_date and end_date:
+        activities = activities.filter(
+            timestamp__date__gte=start_date,
+            timestamp__date__lte=end_date
+        )
+
+    activities = activities.order_by('-timestamp')  # Sort activities by latest first
     return render(request, 'activities.html', {'activities': activities})
 
 def edit_doctor_profile_view(request):
