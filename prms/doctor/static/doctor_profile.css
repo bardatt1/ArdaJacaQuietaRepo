@@ -1,18 +1,38 @@
-/* static/css/profile.css */
+/* General body and layout */
+html, body {
+    height: 100%; /* Ensure full height for the page */
+    margin: 0; /* Remove default margins */
+}
 
 body {
     font-family: Arial, sans-serif;
     background-color: #e5f4fb;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Profile container updated to handle sidebar width and centering */
 .profile-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    margin-left: 220px; /* Offset to account for the sidebar */
+    flex-grow: 1; /* This will allow it to take available space */
+    margin-left: 220px; /* Adjust for sidebar width */
+    padding-bottom: 225px; /* Ensure some bottom space for footer */
+    width: calc(100% - 220px); /* Adjust width to not overlap with the sidebar */
 }
 
+/* For smaller screens, adjust the left margin to fit the content */
+@media (max-width: 768px) {
+    .profile-container {
+        margin-left: 0; /* Remove the sidebar offset */
+        padding-bottom: 100px; /* Adjust bottom padding for smaller screens */
+        width: 100%; /* Make the container take full width on smaller screens */
+    }
+}
+
+/* Profile header and other styles */
 .profile-header {
     font-size: 24px;
     font-weight: bold;
@@ -35,6 +55,7 @@ body {
 
 .left-panel h1 {
     color: #1a4bc6;
+    margin-left: 30px;
 }
 
 .specialization {
@@ -108,6 +129,26 @@ a {
     font-weight: bold;
 }
 
+/* Footer Styles */
+footer {
+    position: relative; /* Allows positioning relative to the content */
+    clear: both; /* Ensures it stays below all floated elements */
+    padding: 15px 50px;
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center;
+    background-color: #003366;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: auto; /* Ensures the footer sticks to the bottom */
+    margin-left: 200px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Sidebar Styles - Mobile */
 @media (max-width: 768px) {
     .sidebar {
         width: 180px;
@@ -121,5 +162,10 @@ a {
     .sidebar ul li a.active {
         background-color: #004080;
         font-weight: bold;
+    }
+
+    .profile-container {
+        margin-left: 0; /* Remove the sidebar offset */
+        padding-bottom: 100px; /* Adjust bottom padding for smaller screens */
     }
 }
