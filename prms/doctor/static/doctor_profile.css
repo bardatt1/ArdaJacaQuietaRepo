@@ -102,3 +102,24 @@ a {
     transform: translateX(10px);
     border-radius: 5px;
 }
+
+.sidebar ul li a.active {
+    background-color: #004080;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 180px;
+    }
+
+    .sidebar ul li a {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+
+    .sidebar ul li a.active {
+        background-color: #004080;
+        font-weight: bold;
+    }
+}

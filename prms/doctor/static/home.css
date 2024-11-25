@@ -243,4 +243,12 @@ footer p {
         font-size: 14px;
         padding: 10px 15px;
     }
+
+    .sidebar ul li a.active {
+        background-color: #004080;
+        font-weight: bold;
+    }
+    
 }
+
+
