@@ -1,95 +1,242 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Appointments</title>
-  <link rel="stylesheet" href="{% static 'appointments.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments Calendar</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'appointments.css' %}">
+    <style>
+      body {
+          margin: 0;
+          padding: 0;
+          background: url("{% static 'images/bg.gif' %}") no-repeat center center fixed;
+          background-size: cover;
+          font-family: Arial, sans-serif;
+          display: flex;
+          flex-direction: column; /* Keeps the header at the top and other content below */
+          align-items: center;
+          min-height: 100vh;
+      }
+  
+      .prms-header {
+          background-color: rgba(255, 255, 255, 0.9);
+          padding: 10px 20px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          position: fixed; /* Fix the header at the top */
+          top: 0;
+          left: 0;
+          width: 100%; /* Full-width header */
+          z-index: 1000;
+      }
+  
+      .header-content {
+          display: flex;
+          align-items: center;
+          max-width: 1200px;
+          margin: 0 auto;
+      }
+  
+      .back-btn {
+          width: 30px;
+          height: 30px;
+          cursor: pointer;
+          margin-right: 20px;
+      }
+  
+      .prms-title {
+          color: #333;
+          margin: 0;
+          font-size: 1.5em;
+          cursor: pointer;
+      }
+  
+      .main-container {
+          max-width: 1000px; /* Larger container width */
+          width: 90%;
+          margin: 120px auto 20px; /* Added top margin to avoid overlap with header */
+          background-color: rgba(255, 255, 255, 0.95);
+          border-radius: 10px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          padding: 30px;
+      }
+  
+      .calendar {
+          width: 100%;
+      }
+  
+      .calendar-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 20px; /* Keep space proportional */
+          font-size: 1.2em; /* Larger text for header */
+      }
+  
+      .nav-arrow {
+          background: none;
+          border: none;
+          font-size: 28px; /* Larger navigation arrows */
+          cursor: pointer;
+      }
+  
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 10px; /* Adjust spacing between the days */
+        text-align: center;
+    }
+
+    .calendar-grid div {
+        font-size: 1.5em; /* Make the text larger */
+        color: #333; /* Default text color */
+        padding: 0; /* Remove padding around the numbers */
+        border: none; /* Remove the border box */
+        background: transparent; /* Transparent background */
+    }
+
+    .calendar-grid .weekday {
+        font-weight: bold;
+        color: #0078d4; /* Blue color for weekday headers */
+        font-size: 1.2em;
+        background: transparent; /* Transparent for headers as well */
+        padding-bottom: 10px; /* Space between weekday names and numbers */
+    }
+
+    .calendar-grid .active-day {
+        color: #0078d4; /* Highlight the active day in blue */
+        font-weight: bold;
+        text-decoration: underline; /* Add underline to active day for emphasis */
+    }
+
+    .calendar-grid .current-month {
+        color: #333; /* Ensure current month's numbers are visible */
+    }
+
+    .calendar-grid .other-month {
+        color: rgba(51, 51, 51, 0.5); /* Light gray color for non-current month days */
+    }
+
+    .patient-list {
+        margin-top: 5px;
+        font-size: 0.9em;
+        color: #555;
+    }
+
+    .patient-item {
+        background-color: #eef;
+        padding: 5px;
+        border-radius: 5px;
+        margin-bottom: 3px;
+    }
+</style>
+  
+  
 </head>
 <body>
-  <header class="header">
-    <button class="back-btn" onclick="window.history.back();">⟵</button>
-    <h1 class="title">PRMS</h1>
-    <div class="profile">
-      <img src="profile.jpg" alt="Profile Picture" class="profile-pic">
-      <span class="profile-arrow">▼</span>
+    <header class="prms-header">
+        <div class="header-content">
+            <img src="{% static 'images/back-button.png' %}" alt="Back" class="back-btn" onclick="window.history.back();">
+            <h1 class="prms-title" onclick="window.location.href='http://127.0.0.1:8000/home/';">
+              Patient Record Management System
+          </h1>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calendar">
+            <div class="calendar-header">
+                <button id="prevMonth" class="nav-arrow">‹</button>
+                <h3 id="currentMonth">April 2024</h3>
+                <button id="nextMonth" class="nav-arrow">›</button>
+            </div>
+            <div id="calendarGrid" class="calendar-grid">
+                <!-- Calendar days will be dynamically populated -->
+            </div>
+        </div>
     </div>
-  </header>
 
-  <main>
-    <h2 class="appointments-title">Appointments</h2>
-    
-    <section class="today-section">
-      <h3 class="today-title">Today</h3>
-      {% for patient in patients %}
-      <div class="appointment-card">
-        <div class="patient-info">
-          <span class="patient-name">{{ patient.first_name }} {{ patient.middle_name }} {{ patient.last_name }}</span>
-          <span class="patient-id">{{ patient.phone_number }}</span>
-          <span class="patient-condition">{{ patient.medical_history }}</span>
-        </div>
-        <div class="appointment-details">
-          <p>Time: <span>3:00pm</span></p>
-          <p>Details: <span>Monthly Checkup</span></p>
-        </div>
-      </div>
-      {% empty %}
-      <p>No appointments scheduled for today.</p>
-      {% endfor %}
-    </section>
-    
-    <section class="calendar-section">
-      <div class="calendar-header">
-        <button class="nav-arrow">‹</button>
-        <h3>April 2023</h3>
-        <button class="nav-arrow">›</button>
-      </div>
-      <div class="calendar-grid">
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-        <div>6</div>
-        <div>7</div>
-        <div>8</div>
-        <div>9</div>
-        <div>10</div>
-        <div>11</div>
-        <div class="active-day">18</div>
-        <div>12</div>
-        <div>13</div>
-        <div>14</div>
-        <div>15</div>
-        <div>16</div>
-        <div>17</div>
-        <div>19</div>
-        <div>20</div>
-        <div>21</div>
-        <div>22</div>
-        <div>23</div>
-        <div>24</div>
-        <div>25</div>
-        <div>26</div>
-        <div>27</div>
-        <div>28</div>
-        <div>29</div>
-        <div>30</div>
-      </div>
-    </section>
+    <script>
+        class Calendar {
+            constructor() {
+                this.currentDate = new Date();
+                this.monthNames = [
+                    'January', 'February', 'March', 'April', 
+                    'May', 'June', 'July', 'August', 
+                    'September', 'October', 'November', 'December'
+                ];
+                this.weekdayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                
+                this.prevMonthBtn = document.getElementById('prevMonth');
+                this.nextMonthBtn = document.getElementById('nextMonth');
+                this.monthHeader = document.getElementById('currentMonth');
+                this.calendarGrid = document.getElementById('calendarGrid');
 
-    <section class="patients-section">
-      {% for patient in patients %}
-      <div class="patient-card">
-        <span class="patient-name">{{ patient.first_name }} {{ patient.middle_name }} {{ patient.last_name }}</span>
-        <span class="patient-id">{{ patient.phone_number }}</span>
-        <span class="patient-condition">{{ patient.medical_history }}</span>
-      </div>
-      {% empty %}
-      <p>No patients found.</p>
-      {% endfor %}
-    </section>
-  </main>
+                this.prevMonthBtn.addEventListener('click', () => this.changeMonth(-1));
+                this.nextMonthBtn.addEventListener('click', () => this.changeMonth(1));
+
+                this.renderCalendar();
+            }
+
+            renderCalendar() {
+                // Clear previous calendar
+                this.calendarGrid.innerHTML = '';
+
+                // Add weekday headers
+                this.weekdayNames.forEach(day => {
+                    const dayElement = document.createElement('div');
+                    dayElement.textContent = day;
+                    dayElement.classList.add('weekday');
+                    this.calendarGrid.appendChild(dayElement);
+                });
+
+                // Get first and last day of current month
+                const firstDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
+                const lastDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0);
+
+                // Update month header
+                this.monthHeader.textContent = `${this.monthNames[this.currentDate.getMonth()]} ${this.currentDate.getFullYear()}`;
+
+                // Calculate start of calendar grid (days before first day of month)
+                const startingDay = firstDay.getDay();
+                const totalDays = startingDay + lastDay.getDate();
+
+                // Fill calendar grid
+                for (let i = 0; i < totalDays; i++) {
+                    const dayElement = document.createElement('div');
+                    
+                    if (i >= startingDay) {
+                        const currentDay = i - startingDay + 1;
+                        dayElement.textContent = currentDay;
+                        dayElement.classList.add('current-month');
+
+                        // Mark today's date
+                        const today = new Date();
+                        if (
+                            currentDay === today.getDate() && 
+                            this.currentDate.getMonth() === today.getMonth() && 
+                            this.currentDate.getFullYear() === today.getFullYear()
+                        ) {
+                            dayElement.classList.add('active-day');
+                        }
+                    } else {
+                        dayElement.classList.add('other-month');
+                    }
+
+                    this.calendarGrid.appendChild(dayElement);
+                }
+            }
+
+            changeMonth(direction) {
+                this.currentDate.setMonth(this.currentDate.getMonth() + direction);
+                this.renderCalendar();
+            }
+        }
+
+        // Initialize calendar on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            new Calendar();
+        });
+    </script>
 </body>
 </html>
