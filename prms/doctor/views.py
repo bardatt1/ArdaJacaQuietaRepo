@@ -226,10 +226,27 @@ def delete_all_activities_view(request):
     if request.method == "POST":
         # Delete all activities for the logged-in doctor
         doctor.activities.all().delete()
-        messages.success(request, "All activities have been deleted.")
         return redirect('activities')
 
     return JsonResponse({"error": "Invalid request method."}, status=400)
+
+
+def delete_all_patients_view(request):
+    doctor_id = doctor_logged_in(request)  # Ensure doctor is logged in
+    doctor = get_object_or_404(Doctor, id=doctor_id)
+
+    if request.method == 'POST':
+        # Delete all patients for the logged-in doctor
+        doctor.patients.all().delete()  # This deletes all associated patients
+        # Log the deletion activity
+        Activity.objects.create(
+            doctor=doctor,
+            description="Deleted all patients."
+        )
+        return redirect('patients')  # Redirect to the patient list page
+
+    return JsonResponse({"error": "Invalid request method."}, status=400)
+
 
 def edit_doctor_profile_view(request):
     doctor_id = doctor_logged_in(request)
@@ -356,8 +373,6 @@ def create_appointment_view(request, patient_id):
                 doctor=doctor,
                 description=f"Scheduled an appointment for {patient.first_name} {patient.last_name} on {appointment_date}."
             )
-
-            messages.success(request, "Appointment successfully created.")
             return redirect('appointments')  # Redirect to appointments view
 
     return render(request, 'create_appointment.html', {'patient': patient, 'doctor': doctor})

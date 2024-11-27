@@ -13,7 +13,7 @@
         <a href="{% url 'patients' %}" class="back-button">Back to Patients</a>
     </div>
     <div class="main-container">
-        <h1 class="section-title">Set Appointment for {{ patient.first_name }} {{ patient.last_name }}</h1>
+        <h1 class="section-title">Set Appointment for {{ patient.first_name|capfirst }} {{ patient.last_name|capfirst }}</h1>
         <form method="POST" class="form-container">
             {% csrf_token %}
             <div class="form-row">

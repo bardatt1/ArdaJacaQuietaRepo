@@ -45,11 +45,11 @@
         
         {% now "H" as current_hour %}
         {% if current_hour < 12 %}
-        <h2>{{ greeting }}, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Ready to make a difference today?</h2>
+        <h2>{{ greeting }}, Dr. {{ doctor.first_name|capfirst }} {{ doctor.last_name|capfirst }}! Ready to make a difference today?</h2>
         {% elif current_hour < 18 %}
-        <h2>{{ greeting }}, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Let's continue to provide excellent care!</h2>
+        <h2>{{ greeting }}, Dr. {{ doctor.first_name|capfirst }} {{ doctor.last_name|capfirst }}! Let's continue to provide excellent care!</h2>
         {% else %}
-        <h2>{{ greeting }}, Dr. {{ doctor.first_name }} {{ doctor.last_name }}! Reflect on today's achievements!</h2>
+        <h2>{{ greeting }}, Dr. {{ doctor.first_name|capfirst }} {{ doctor.last_name|capfirst }}! Reflect on today's achievements!</h2>
         {% endif %}
     </section>
     {% endblock %}
@@ -63,7 +63,7 @@
               <p>Appointments for today:</p>
               {% for appointment in today_appointments %}
                 <div class="appointment-item">
-                  <span class="patient-name">{{ appointment.patient.first_name }} {{ appointment.patient.middle_name }} {{ appointment.patient.last_name }}</span>
+                  <span class="patient-name">{{ appointment.patient.first_name|capfirst }} {{ appointment.patient.middle_name|capfirst }} {{ appointment.patient.last_name|capfirst }}</span>
                   <span class="appointment-time">{{ appointment.time }}</span>
                 </div>
               {% endfor %}
@@ -82,7 +82,7 @@
             <h3><i class="fas fa-user-injured"></i> Patients</h3>
             <ul>
                 {% for patient in patients|slice:":4" %}
-                    <li>{{ patient.first_name }} {{ patient.middle_name }} {{ patient.last_name }}</li>
+                    <li>{{ patient.first_name|capfirst }} {{ patient.middle_name|capfirst }} {{ patient.last_name|capfirst }}</li>
                 {% empty %}
                     <p>No Patients Found.</p>
                 {% endfor %}

@@ -25,9 +25,9 @@
     <div class="left-section">
         <h2>Edit Profile</h2>
         <div class="profile-info">
-            <h3>Dr. {{ doctor.first_name }} {{ doctor.last_name }}</h3>
-            <p class="role">{{ doctor.specialization }}</p>
-            <p class="hospital">{{ doctor.hospital_assigned }}</p>
+            <h3>Dr. {{ doctor.first_name|capfirst }} {{ doctor.last_name|capfirst }}</h3>
+            <p class="role">{{ doctor.specialization|capfirst }}</p>
+            <p class="hospital">{{ doctor.hospital_assigned|capfirst }}</p>
             <div class="profile-picture">
                 {% if doctor.profile_picture %}
                     <img src="{{ doctor.profile_picture.url }}" alt="Profile Picture">

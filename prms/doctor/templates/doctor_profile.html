@@ -37,9 +37,9 @@
 
         <section class="profile-info">
             <div class="left-panel">
-                <h1>Dr. {{ doctor.first_name }} {{ doctor.last_name }}</h1>
-                <p class="specialization">specialization: {{ doctor.specialization }}</p>
-                <p class="hospital_assigned">Hospital: {{ doctor.hospital_assigned }}</p>
+                <h1>Dr. {{ doctor.first_name|capfirst }} {{ doctor.last_name|capfirst }}</h1>
+                <p class="specialization">specialization: {{ doctor.specialization|capfirst }}</p>
+                <p class="hospital_assigned">Hospital: {{ doctor.hospital_assigned|capfirst }}</p>
                 
                 <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture" class="profile-picture">
                 <!--<img src="{{ doctor.profile_picture.url }}" alt="Profile Picture" class="profile-picture">-->
