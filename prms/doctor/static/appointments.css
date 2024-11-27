@@ -112,3 +112,23 @@ body {
     color: #aaa;
     pointer-events: none;
 }
+
+/* Calendar Specific Styles */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.weekday {
+    font-weight: bold;
+    padding: 8px;
+    color: #555;
+}
+
+.calendar-grid div {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
