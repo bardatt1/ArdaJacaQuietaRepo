@@ -103,10 +103,13 @@ body {
 /* Table styles */
 table {
     width: 100%;
+    min-width: 600px; /* Set a minimum width to prevent it from shrinking too much */
     border-collapse: collapse;
     margin-top: 10px;
     font-size: 16px;
+    table-layout: auto; /* Allow the table to adjust based on content */
 }
+
 
 table th, table td {
     border: 1px solid #ddd;
@@ -144,9 +147,16 @@ table td a:hover {
     color: #004080;
 }
 
+table td .appointment-btn {
+    margin: 5px 0; /* Add spacing around the button within the cell */
+    display: inline-block; /* Ensure the button doesn’t stretch inside the cell */
+}
+
+
 /* Form Container */
 .form-container {
     overflow-x: auto;
+    gap: 20px;
 }
 
 /* Save Button Enhancements */
@@ -207,17 +217,20 @@ input:focus, select:focus, textarea:focus {
     text-decoration: underline;
 }
 
-/* Button Styles */
-.edit-btn, .delete-btn {
-    display: inline-block;
+/* General Button Styles for Inline Placement */
+.edit-btn, .delete-btn, .appointment-btn {
+    display: inline-block; /* Ensure buttons are inline */
+    margin-right: 10px; /* Add spacing between buttons */
     padding: 8px 12px;
     border-radius: 5px;
     font-weight: bold;
     text-align: center;
     text-decoration: none;
-    margin-right: 5px; /* Space between buttons */
+    cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 14px;
 }
+
 
 /* Edit Button Styles */
 .edit-btn {
@@ -239,6 +252,17 @@ input:focus, select:focus, textarea:focus {
     background-color: #c82333; /* Darker red on hover */
 }
 
+.appointment-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+
+.appointment-btn:hover {
+    background-color: #218838;
+}
+
+
 footer {
     position: relative; /* Allows positioning relative to the content */
     clear: both; /* Ensures it stays below all floated elements */
@@ -254,4 +278,15 @@ footer {
 footer p {
     margin: 0;
     font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    table {
+        font-size: 14px; /* Adjust font size for smaller screens */
+    }
+
+    .appointment-btn {
+        font-size: 14px; /* Smaller button text for mobile */
+        padding: 8px 16px; /* Reduce padding for mobile */
+    }
 }

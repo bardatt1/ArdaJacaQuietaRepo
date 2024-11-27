@@ -35,9 +35,10 @@ class Patient(models.Model):
         return f"{self.first_name} {self.last_name}"
 
 class Appointment(models.Model):
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='appointments')
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     appointment_date = models.DateTimeField()
+    appointment_type = models.CharField(max_length=50, default='consultation')
+    location = models.CharField(max_length=100, default="Unknown Location")
     details = models.TextField()
 
     def __str__(self):

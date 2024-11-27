@@ -153,6 +153,7 @@ input:focus, select:focus {
                             <td class="action-buttons">
                                 <a href="{% url 'edit_patient' patient.id %}" class="edit-btn" title="Edit {{ patient.first_name }}">Edit</a>
                                 <a href="{% url 'delete_patient' patient.id %}" class="delete-btn" title="Delete {{ patient.first_name }}">Delete</a>
+                                <a href="{% url 'create_appointment' patient.id %}" class="appointment-btn" title="Set Appointment for {{ patient.first_name }}">Set Appointment</a>
                             </td>
                         </tr>
                         {% empty %}

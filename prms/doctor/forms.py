@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from .models import Doctor
 from django.contrib.auth.hashers import make_password
+from .models import Appointment
 
 class DoctorProfileEditForm(forms.ModelForm):
     class Meta:
@@ -52,3 +53,9 @@ class DoctorRegistrationForm(forms.ModelForm):
         if commit:
             doctor.save()
         return doctor
+    
+
+class AppointmentForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ['appointment_date', 'appointment_type', 'location', 'details']

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Appointment</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'create_appointment.css' %}">
+</head>
+<body>
+    <div class="prms-header">
+        <span class="prms-title">Patient Management System</span>
+        <a href="{% url 'patients' %}" class="back-button">Back to Patients</a>
+    </div>
+    <div class="main-container">
+        <h1 class="section-title">Set Appointment for {{ patient.first_name }} {{ patient.last_name }}</h1>
+        <form method="POST" class="form-container">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="appointment_date" class="required">Appointment Date & Time:</label>
+                    <input type="datetime-local" id="appointment_date" name="appointment_date" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="appointment_type" class="required">Type of Appointment:</label>
+                    <select id="appointment_type" name="appointment_type" required aria-required="true">
+                        <option value="" disabled selected>Select type</option>
+                        <option value="consultation">Consultation</option>
+                        <option value="follow-up">Follow-Up</option>
+                        <option value="diagnostic">Diagnostic</option>
+                        <option value="treatment">Treatment</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="location" class="required">Appointment Location:</label>
+                <input type="text" id="location" name="location" placeholder="e.g., Room 101, General Hospital" required aria-required="true">
+            </div>
+            <div class="form-group">
+                <label for="details" class="required">Additional Details:</label>
+                <textarea id="details" name="details" placeholder="Enter any specific instructions or details..." required aria-required="true"></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="submit">Save Appointment</button>
+                <a href="{% url 'patients' %}" class="logout-link">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -2,11 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 from .models import Doctor, Patient, Appointment, Activity
 from .forms import DoctorProfileEditForm
 from datetime import datetime
 from django.db.models import Q
 from django.http import JsonResponse
+import calendar
+import json
 
 
 # Helper function to ensure a doctor is logged in
@@ -137,11 +140,24 @@ def doctor_logout_view(request):
         messages.success(request, 'You have been logged out successfully.')
     return redirect('login')
 
+@login_required
 def appointments_view(request):
-    doctor_id = doctor_logged_in(request)  # Ensure doctor is logged in
-    doctor = get_object_or_404(Doctor, id=doctor_id)
-    appointments = doctor.appointments.all()
-    return render(request, 'appointments.html', {'doctor': doctor, 'appointments': appointments})
+    doctor = get_object_or_404(Doctor, user=request.user)  # Assuming logged-in user is a doctor
+    appointments = Appointment.objects.filter(doctor=doctor).select_related('patient')  # Fetch appointments for this doctor
+
+    # Extract appointment dates and corresponding patients
+    appointment_data = [
+        {
+            'date': appointment.appointment_date,
+            'patient': appointment.patient,
+            'patient_name': f"{appointment.patient.first_name} {appointment.patient.last_name}"
+        }
+        for appointment in appointments
+    ]
+    
+    return render(request, 'appointments.html', {
+        'appointments': appointment_data,
+    })
 
 def patient_list_view(request):
     doctor_id = doctor_logged_in(request)  # Ensure doctor is logged in
@@ -277,3 +293,71 @@ def edit_patient_view(request, patient_id):
     
     return render(request, 'edit_patient.html', {'patient': patient})
 
+
+def appointments_view(request):
+    doctor_id = doctor_logged_in(request)  # Get logged-in doctor's ID
+    doctor = get_object_or_404(Doctor, id=doctor_id)
+
+    # Fetch all appointments for the doctor
+    appointments = Appointment.objects.filter(patient__doctor=doctor).select_related('patient')
+
+    # Prepare appointments data for rendering
+    appointment_data = [
+        {
+            'date': appointment.appointment_date.strftime('%Y-%m-%d %H:%M'),
+            'type': appointment.appointment_type,
+            'location': appointment.location,
+            'details': appointment.details,
+            'patient_name': f"{appointment.patient.first_name} {appointment.patient.last_name}"
+        }
+        for appointment in appointments
+    ]
+
+    return render(request, 'appointments.html', {'appointments': appointment_data})
+
+
+
+def create_appointment_view(request, patient_id):
+    # Get the logged-in doctor
+    doctor_id = doctor_logged_in(request)  # Assuming you have a method to get the logged-in doctor
+    doctor = get_object_or_404(Doctor, id=doctor_id)
+
+    # Get the patient assigned to this doctor
+    patient = get_object_or_404(Patient, id=patient_id, doctor=doctor)
+
+    if request.method == 'POST':
+        # Extract form data
+        appointment_date = request.POST.get('appointment_date')
+        appointment_type = request.POST.get('appointment_type')
+        location = request.POST.get('location')
+        details = request.POST.get('details')
+
+        # Validation
+        if not appointment_date or not appointment_type or not location:
+            messages.error(request, "All fields are required.")
+        else:
+            try:
+                appointment_date = datetime.strptime(appointment_date, '%Y-%m-%dT%H:%M')
+            except ValueError:
+                messages.error(request, "Invalid date and time format.")
+                return render(request, 'create_appointment.html', {'patient': patient, 'doctor': doctor})
+
+            # Create appointment
+            Appointment.objects.create(
+                patient=patient,
+                appointment_date=appointment_date,
+                appointment_type=appointment_type,
+                location=location,
+                details=details,
+            )
+
+            # Log activity
+            Activity.objects.create(
+                doctor=doctor,
+                description=f"Scheduled an appointment for {patient.first_name} {patient.last_name} on {appointment_date}."
+            )
+
+            messages.success(request, "Appointment successfully created.")
+            return redirect('appointments')  # Redirect to appointments view
+
+    return render(request, 'create_appointment.html', {'patient': patient, 'doctor': doctor})
