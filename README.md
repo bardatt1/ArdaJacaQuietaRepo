@@ -121,10 +121,6 @@ Link: https://online.visual-paradigm.com/share.jsp?id=333534383939322d31
 
 
 
-## Functional Requirements
-
-Link: https://docs.google.com/document/d/13RZnyNKqr1mL-kNR-INykyKSOTDruZDBoEm8RC0F2cY/edit?usp=sharing
-
 ## Gannt Chart
 Link: https://cebuinstituteoftechnology-my.sharepoint.com/:x:/g/personal/angelo_quieta_cit_edu/Ee6RDhXs7u1FvVxjdS4Up_MBmye3_MB2JnvckHyP__cj8g?e=g8jlOg
 
