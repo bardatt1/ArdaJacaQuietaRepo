@@ -12,9 +12,31 @@ class Doctor(models.Model):
     gender = models.CharField(max_length=10, null=True, blank=True)
     specialization = models.CharField(max_length=100)
     hospital_assigned = models.CharField(max_length=255, blank=True, default="")
-    
+    profile_picture = models.ImageField(
+        upload_to='doctor_profile_pics/', 
+        blank=True, 
+        null=True, 
+        help_text="Upload a profile picture for the doctor."
+    )
+
     def __str__(self):
         return f"Dr. {self.first_name} {self.last_name} ({self.specialization})"
+
+
+class Document(models.Model):
+    doctor = models.ForeignKey(
+        Doctor, 
+        on_delete=models.CASCADE, 
+        related_name='documents'
+    )
+    file = models.FileField(
+        upload_to='doctor_documents/', 
+        help_text="Upload a document (e.g., certificates)."
+    )
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Document for {self.doctor.first_name} {self.doctor.last_name}"
 
 class Patient(models.Model):
     SEX_CHOICES = [

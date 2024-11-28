@@ -1,0 +1,237 @@
+/* static/css/profile.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e5f4fb;
+}
+
+body, html {
+    overflow-x: hidden;
+}
+
+/* Header Styles */
+.prms-header {
+    background-color: #0045d1;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px 20px;
+    top: 0;
+    z-index: 1000;
+    margin-left: 220px; /* Offset to account for the sidebar */
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+.prms-title {
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0;
+}
+
+.prms-title:hover {
+    text-decoration: underline;
+}
+
+.back-btn {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    cursor: pointer;
+    filter: brightness(0) invert(1); /* Ensures icon looks good on dark backgrounds */
+    transition: transform 0.2s;
+}
+
+.back-btn:hover {
+    transform: scale(1.1);
+}
+
+
+/* Profile Info Section */
+.profile-info {
+    display: flex;
+    flex-wrap: wrap; /* Allow content to wrap for smaller screens */
+    justify-content: space-between; /* Distribute items evenly */
+    align-items: flex-start;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 800px; /* Set a maximum width for the profile section */
+    box-sizing: border-box; /* Ensure padding is part of width calculation */
+}
+
+/* Profile Info Container */
+.profile-container {
+    margin-left: 220px; /* Account for the sidebar width */
+    display: flex;
+    justify-content: center; /* Center the profile section horizontally */
+    align-items: flex-start; /* Align the profile info vertically at the top */
+    padding: 20px;
+    width: calc(100% - 220px); /* Adjust width to avoid horizontal overflow */
+    box-sizing: border-box; /* Ensure padding is included in width calculation */
+}
+
+
+/* Left Panel Styling */
+.left-panel {
+    flex: 1;
+    min-width: 300px;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.left-panel h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.left-panel .specialization,
+.left-panel .hospital_assigned {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.left-panel .profile-picture {
+    margin: 20px auto;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #0078d4;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.left-panel .profile-picture:hover {
+    transform: scale(1.1);
+}
+
+.left-panel h3 {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #0078d4;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.2s ease-in-out;
+}
+
+.left-panel h3:hover {
+    color: #0056a3;
+}
+
+/* Right Panel Styling */
+.right-panel {
+    flex: 1;
+    min-width: 300px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.right-panel h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.right-panel p {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.right-panel p a {
+    color: #0078d4;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.right-panel p a:hover {
+    color: #0056a3;
+    text-decoration: underline;
+}
+
+/* Responsive Design for Profile Section */
+@media (max-width: 768px) {
+    .profile-info {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+    }
+
+    .left-panel, .right-panel {
+        min-width: 100%;
+        text-align: center;
+    }
+
+    .left-panel h3 {
+        margin-top: 10px;
+    }
+}
+/* Sidebar Styling */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 220px;
+    background-color: #003366;
+    color: #ffffff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding-top: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.sidebar ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    display: block;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: #00509e;
+    transform: translateX(10px);
+    border-radius: 5px;
+}
+
+/* Footer Styling */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center;
+    width: 100%;
+    background-color: #003366;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: 100px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}

@@ -9,12 +9,13 @@ class DoctorProfileEditForm(forms.ModelForm):
         model = Doctor
         fields = [
             'first_name', 'middle_name', 'last_name', 'birthday',
-            'gender', 'specialization', 'email', 'hospital_assigned'
+            'gender', 'specialization', 'email', 'hospital_assigned', 'profile_picture'
         ]
         widgets = {
             'birthday': forms.DateInput(attrs={'type': 'date'}),
             'gender': forms.Select(choices=[('Male', 'Male'), ('Female', 'Female')]),
         }
+
 
 
 class DoctorRegistrationForm(forms.ModelForm):

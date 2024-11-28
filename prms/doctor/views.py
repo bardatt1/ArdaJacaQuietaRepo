@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import Doctor, Patient, Appointment, Activity
+from .models import Doctor, Patient, Appointment, Activity, Document
 from .forms import DoctorProfileEditForm
 from datetime import datetime
 from django.db.models import Q
@@ -253,17 +253,27 @@ def edit_doctor_profile_view(request):
     doctor = get_object_or_404(Doctor, id=doctor_id)
 
     if request.method == 'POST':
-        form = DoctorProfileEditForm(request.POST, instance=doctor)
+        form = DoctorProfileEditForm(request.POST, request.FILES, instance=doctor)
         if form.is_valid():
-            form.save()
+            doctor = form.save()
+            # Save profile picture
+            if 'profile_picture' in request.FILES:
+                doctor.profile_picture = request.FILES['profile_picture']
+                doctor.save()
+
+            # Save documents
+            for file in request.FILES.getlist('documents'):
+                Document.objects.create(doctor=doctor, file=file)
+
             Activity.objects.create(
                 doctor=doctor,
-                description="Updated profile information."
+                description="Updated profile information and uploaded documents."
             )
             return redirect('doctor_profile')
     else:
         form = DoctorProfileEditForm(instance=doctor)
     return render(request, 'edit_doctor_profile.html', {'form': form, 'doctor': doctor})
+
 
 def delete_patient_view(request, patient_id):
     patient = get_object_or_404(Patient, id=patient_id)

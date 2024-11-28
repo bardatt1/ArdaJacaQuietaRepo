@@ -17,37 +17,52 @@
 </head>
 <body>
 
-<div class="profile-header">
-    <h1>PRMS</h1>
-</div>
+    <!-- Header Section -->
+    <header class="prms-header">
+        <div class="header-content">
+            <img src="{% static 'images/back-button.png' %}" alt="Back" class="back-btn" onclick="window.history.back();">
+            <h1 class="prms-title" onclick="window.location.href='http://127.0.0.1:8000/home/';">
+                Patient Record Management System
+            </h1>
+        </div>
+    </header>
 
-<div class="profile-container">
-    <div class="left-section">
-        <h2>Edit Profile</h2>
-        <div class="profile-info">
-            <h3>Dr. {{ doctor.first_name|capfirst }} {{ doctor.last_name|capfirst }}</h3>
-            <p class="role">{{ doctor.specialization|capfirst }}</p>
-            <p class="hospital">{{ doctor.hospital_assigned|capfirst }}</p>
-            <div class="profile-picture">
-                {% if doctor.profile_picture %}
-                    <img src="{{ doctor.profile_picture.url }}" alt="Profile Picture">
-                {% else %}
-                    <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture">
-                {% endif %}
+    <div class="profile-container">
+        <!-- Left Section -->
+        <div class="left-section">
+            <h2>Edit Profile</h2>
+            <div class="profile-info">
+                <h3>Dr. {{ doctor.first_name|capfirst }} {{ doctor.last_name|capfirst }}</h3>
+                <p class="role">{{ doctor.specialization|capfirst }}</p>
+                <p class="hospital">{{ doctor.hospital_assigned|capfirst }}</p>
+                <div class="profile-picture">
+                    {% if doctor.profile_picture %}
+                        <img src="{{ doctor.profile_picture.url }}" alt="Profile Picture" id="profile-img">
+                    {% else %}
+                        <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture" id="profile-img">
+                    {% endif %}
+                    <input type="file" name="profile_picture" id="upload-profile-picture" style="display:none;">
+                </div>
+                <p><a href="#" class="upload-link" onclick="document.getElementById('upload-profile-picture').click();">Change Profile Picture</a></p>
             </div>
         </div>
-    </div>
 
-    <div class="right-section">
-        <h4>PROFILE DETAILS:</h4>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="save-btn">Save Changes</button>
-            <a href="{% url 'doctor_profile' %}" class="cancel-btn">Cancel</a>
-        </form>
+        <!-- Right Section -->
+        <div class="right-section">
+            <h4>PROFILE DETAILS:</h4>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                
+                <!-- File Upload for Certificates -->
+                <h5>Upload Certificates:</h5>
+                <input type="file" name="documents" multiple>
+                
+                <button type="submit" class="save-btn">Save Changes</button>
+                <a href="{% url 'doctor_profile' %}" class="cancel-btn">Cancel</a>
+            </form>
+        </div>
     </div>
-</div>
 
 </body>
 </html>
