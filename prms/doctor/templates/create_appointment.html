@@ -6,6 +6,15 @@
     <title>Set Appointment</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'create_appointment.css' %}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url("{% static 'images/bg.gif' %}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+    </style>
 </head>
 <body>
     <div class="prms-header">
@@ -14,7 +23,7 @@
     </div>
     <div class="main-container">
         <h1 class="section-title">Set Appointment for {{ patient.first_name|capfirst }} {{ patient.last_name|capfirst }}</h1>
-        <form method="POST" class="form-container">
+        <form method="POST" class="form-container" id="appointmentForm">
             {% csrf_token %}
             <div class="form-row">
                 <div class="form-group">
@@ -40,11 +49,47 @@
                 <label for="details" class="required">Additional Details:</label>
                 <textarea id="details" name="details" placeholder="Enter any specific instructions or details..." required aria-required="true"></textarea>
             </div>
+            <input type="hidden" id="patient_id" name="patient_id" value="{{ patient.id }}">
             <div class="form-actions">
                 <button type="submit">Save Appointment</button>
                 <a href="{% url 'patients' %}" class="logout-link">Cancel</a>
             </div>
         </form>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('appointmentForm');
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            // Collect form data
+            const appointmentDate = document.getElementById('appointment_date').value;
+            const appointmentType = document.getElementById('appointment_type').value;
+            const location = document.getElementById('location').value;
+            const details = document.getElementById('details').value;
+            const patientId = document.getElementById('patient_id').value;
+            
+            // Create appointment object
+            const appointment = {
+                patient_id: patientId,
+                date: new Date(appointmentDate),
+                type: appointmentType,
+                location: location,
+                details: details
+            };
+            
+            // Store appointment in localStorage
+            let appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+            appointments.push(appointment);
+            localStorage.setItem('appointments', JSON.stringify(appointments));
+            
+            // Submit the form via AJAX or allow default submission
+            // This part depends on your Django view implementation
+            form.submit();
+        });
+    });
+    </script>
 </body>
 </html>

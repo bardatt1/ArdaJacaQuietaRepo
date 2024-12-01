@@ -386,3 +386,6 @@ def create_appointment_view(request, patient_id):
             return redirect('appointments')  # Redirect to appointments view
 
     return render(request, 'create_appointment.html', {'patient': patient, 'doctor': doctor})
+
+def appointment_details(request):
+    return render(request, 'appointment_details.html')

@@ -134,10 +134,27 @@
       }
 
       .calendar-grid .active-day {
-          color: white;
-          background-color: #0078d4;
+          color: white !important;
+          background-color: #ff4500 !important; /* Bright orange-red for urgency */
           font-weight: bold;
-          box-shadow: 0 4px 6px rgba(0, 120, 212, 0.3);
+          box-shadow: 0 0 15px rgba(255, 69, 0, 0.5), 
+                      0 0 0 4px rgba(255, 69, 0, 0.2);
+          transform: scale(1.05);
+          animation: pulse 1.5s infinite;
+          position: relative;
+          z-index: 10;
+      }
+
+      @keyframes pulse {
+          0% {
+              transform: scale(1.05);
+          }
+          50% {
+              transform: scale(1.08);
+          }
+          100% {
+              transform: scale(1.05);
+          }
       }
 
       .calendar-grid .current-month {
@@ -227,118 +244,130 @@
 
     <script>
         class Calendar {
-            constructor(appointments) {
-                this.currentDate = new Date();
-                this.monthNames = [
-                    'January', 'February', 'March', 'April', 
-                    'May', 'June', 'July', 'August', 
-                    'September', 'October', 'November', 'December'
-                ];
-                this.weekdayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    constructor(appointments) {
+        this.currentDate = new Date();
+        this.monthNames = [
+            'January', 'February', 'March', 'April', 
+            'May', 'June', 'July', 'August', 
+            'September', 'October', 'November', 'December'
+        ];
+        this.weekdayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        
+        this.prevMonthBtn = document.getElementById('prevMonth');
+        this.nextMonthBtn = document.getElementById('nextMonth');
+        this.monthHeader = document.getElementById('currentMonth');
+        this.calendarGrid = document.getElementById('calendarGrid');
+
+        // Store appointments
+        this.appointments = appointments || [];
+
+        this.prevMonthBtn.addEventListener('click', () => this.changeMonth(-1));
+        this.nextMonthBtn.addEventListener('click', () => this.changeMonth(1));
+
+        this.renderCalendar();
+    }
+
+    isAppointmentDay(day, month, year) {
+        return this.appointments.some(appt => {
+            const appointmentDate = new Date(appt.date);
+            return appointmentDate.getDate() === day &&
+                   appointmentDate.getMonth() === month &&
+                   appointmentDate.getFullYear() === year;
+        });
+    }
+
+    getAppointmentsForDay(day, month, year) {
+        return this.appointments.filter(appt => {
+            const appointmentDate = new Date(appt.date);
+            return appointmentDate.getDate() === day &&
+                   appointmentDate.getMonth() === month &&
+                   appointmentDate.getFullYear() === year;
+        });
+    }
+
+    renderCalendar() {
+    // Clear previous calendar
+    this.calendarGrid.innerHTML = '';
+
+    // Add weekday headers
+    this.weekdayNames.forEach(day => {
+        const dayElement = document.createElement('div');
+        dayElement.textContent = day;
+        dayElement.classList.add('weekday');
+        this.calendarGrid.appendChild(dayElement);
+    });
+
+    // Get first and last day of current month
+    const firstDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
+    const lastDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0);
+
+    // Update month header
+    this.monthHeader.textContent = `${this.monthNames[this.currentDate.getMonth()]} ${this.currentDate.getFullYear()}`;
+
+    // Calculate start of calendar grid (days before first day of month)
+    const startingDay = firstDay.getDay();
+    const totalDays = startingDay + lastDay.getDate();
+
+    // Fill calendar grid
+    for (let i = 0; i < totalDays; i++) {
+        const dayElement = document.createElement('div');
+        
+        if (i >= startingDay) {
+            const currentDay = i - startingDay + 1;
+            dayElement.textContent = currentDay;
+            dayElement.classList.add('current-month');
+
+            // Check for appointments on this day
+            const dayAppointments = this.getAppointmentsForDay(
+                currentDay, 
+                this.currentDate.getMonth(), 
+                this.currentDate.getFullYear()
+            );
+
+            if (dayAppointments.length > 0) {
+                dayElement.classList.add('has-appointment');
                 
-                this.prevMonthBtn = document.getElementById('prevMonth');
-                this.nextMonthBtn = document.getElementById('nextMonth');
-                this.monthHeader = document.getElementById('currentMonth');
-                this.calendarGrid = document.getElementById('calendarGrid');
-
-                // Store appointments
-                this.appointments = appointments || [];
-
-                this.prevMonthBtn.addEventListener('click', () => this.changeMonth(-1));
-                this.nextMonthBtn.addEventListener('click', () => this.changeMonth(1));
-
-                this.renderCalendar();
-            }
-
-            isAppointmentDay(day, month, year) {
-                return this.appointments.some(appt => {
-                    const appointmentDate = new Date(appt.date);
-                    return appointmentDate.getDate() === day &&
-                           appointmentDate.getMonth() === month &&
-                           appointmentDate.getFullYear() === year;
-                });
-            }
-
-            renderCalendar() {
-                // Clear previous calendar
-                this.calendarGrid.innerHTML = '';
-
-                // Add weekday headers
-                this.weekdayNames.forEach(day => {
-                    const dayElement = document.createElement('div');
-                    dayElement.textContent = day;
-                    dayElement.classList.add('weekday');
-                    this.calendarGrid.appendChild(dayElement);
-                });
-
-                // Get first and last day of current month
-                const firstDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
-                const lastDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0);
-
-                // Update month header
-                this.monthHeader.textContent = `${this.monthNames[this.currentDate.getMonth()]} ${this.currentDate.getFullYear()}`;
-
-                // Calculate start of calendar grid (days before first day of month)
-                const startingDay = firstDay.getDay();
-                const totalDays = startingDay + lastDay.getDate();
-
-                // Fill calendar grid
-                for (let i = 0; i < totalDays; i++) {
-                    const dayElement = document.createElement('div');
+                // Add click event to show appointment details
+                dayElement.addEventListener('click', () => {
+                    // Store the clicked day's appointments in localStorage
+                    localStorage.setItem('selectedAppointments', JSON.stringify(dayAppointments));
                     
-                    if (i >= startingDay) {
-                        const currentDay = i - startingDay + 1;
-                        dayElement.textContent = currentDay;
-                        dayElement.classList.add('current-month');
-
-                        // Check for appointments on this day
-                        if (this.isAppointmentDay(
-                            currentDay, 
-                            this.currentDate.getMonth(), 
-                            this.currentDate.getFullYear()
-                        )) {
-                            dayElement.classList.add('has-appointment');
-                        }
-
-                        // Mark today's date
-                        const today = new Date();
-                        if (
-                            currentDay === today.getDate() && 
-                            this.currentDate.getMonth() === today.getMonth() && 
-                            this.currentDate.getFullYear() === today.getFullYear()
-                        ) {
-                            dayElement.classList.add('active-day');
-                        }
-                    } else {
-                        dayElement.classList.add('other-month');
-                    }
-
-                    this.calendarGrid.appendChild(dayElement);
-                }
+                    // Redirect to appointment details page
+                    window.location.href = '/appointment_details/';
+                });
             }
 
-            changeMonth(direction) {
-                this.currentDate.setMonth(this.currentDate.getMonth() + direction);
-                this.renderCalendar();
+            // Mark today's date
+            const today = new Date();
+            if (
+                currentDay === today.getDate() && 
+                this.currentDate.getMonth() === today.getMonth() && 
+                this.currentDate.getFullYear() === today.getFullYear()
+            ) {
+                dayElement.classList.add('active-day');
             }
+        } else {
+            dayElement.classList.add('other-month');
         }
 
-        // Initialize calendar on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            // Fetch appointments from server or use static data
-            const appointments = [
-                // Example appointment dates
-                { date: '2024-04-15' },
-                { date: '2024-04-22' },
-                { date: '2024-04-30' }
-            ];
+        this.calendarGrid.appendChild(dayElement);
+    }
+}
 
-            // Initialize calendar with appointments
-            new Calendar(appointments);
-        });
+    changeMonth(direction) {
+        this.currentDate.setMonth(this.currentDate.getMonth() + direction);
+        this.renderCalendar();
+    }
+}
+
+// Initialize calendar on page load
+document.addEventListener('DOMContentLoaded', () => {
+    // Fetch appointments from localStorage
+    const storedAppointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+    
+    // Initialize calendar with stored appointments
+    new Calendar(storedAppointments);
+});
     </script>
 </body>
 </html>
-
-
-

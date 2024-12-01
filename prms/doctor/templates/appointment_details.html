@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Details</title>
+    <link rel="stylesheet" href="{% static 'appointments.css' %}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url("{% static 'images/bg.gif' %}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .details-container {
+            max-width: 600px;
+            width: 90%;
+            margin: 120px auto 20px;
+            background-color: rgba(255, 255, 255, 0.98);
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .details-header {
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .details-header h1 {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 1.8em;
+        }
+
+        .details-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .detail-item {
+            background-color: #f4f8ff;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #0078d4;
+        }
+
+        .detail-item label {
+            font-weight: bold;
+            color: #0078d4;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .detail-item p {
+            margin: 0;
+            color: #2c3e50;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #0078d4;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .no-appointments {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header class="prms-header">
+        <div class="header-content">
+            <img src="{% static 'images/back-button.png' %}" alt="Back" class="back-btn" onclick="window.history.back();">
+            <h1 class="prms-title" onclick="window.location.href='http://127.0.0.1:8000/home/';">
+                Patient Record Management System
+            </h1>
+        </div>
+    </header>
+
+    <div class="details-container" id="appointmentsContainer">
+        <div class="details-header">
+            <h1>Appointments on Selected Date</h1>
+        </div>
+        <div id="appointmentsList" class="details-content">
+            <!-- Appointments will be dynamically loaded here -->
+        </div>
+        <a href="{% url 'appointments' %}" class="back-link">Back to Appointments</a>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Retrieve selected appointments from localStorage
+        const selectedAppointments = JSON.parse(localStorage.getItem('selectedAppointments') || '[]');
+        const appointmentsList = document.getElementById('appointmentsList');
+
+        if (selectedAppointments.length === 0) {
+            appointmentsList.innerHTML = `
+                <div class="no-appointments">
+                    <p>No appointments found for this date.</p>
+                </div>
+            `;
+        } else {
+            // Generate HTML for each appointment
+            selectedAppointments.forEach(appointment => {
+                const appointmentElement = document.createElement('div');
+                appointmentElement.classList.add('detail-item');
+                
+                appointmentElement.innerHTML = `
+                    <div class="detail-item">
+                        <label>Date & Time</label>
+                        <p>${new Date(appointment.date).toLocaleString()}</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Appointment Type</label>
+                        <p>${appointment.type.charAt(0).toUpperCase() + appointment.type.slice(1)}</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Location</label>
+                        <p>${appointment.location}</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Additional Details</label>
+                        <p>${appointment.details}</p>
+                    </div>
+                `;
+
+                appointmentsList.appendChild(appointmentElement);
+            });
+        }
+
+        // Clear the stored appointments after displaying
+        localStorage.removeItem('selectedAppointments');
+    });
+    </script>
+</body>
+</html>
