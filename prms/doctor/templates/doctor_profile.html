@@ -49,10 +49,14 @@
         <section class="profile-info">
             <div class="left-panel">
                 <h1>Dr. {{ doctor.first_name|capfirst }} {{ doctor.last_name|capfirst }}</h1>
-                <p class="specialization">specialization: {{ doctor.specialization|capfirst }}</p>
+                <p class="specialization">Specialization: {{ doctor.specialization|capfirst }}</p>
                 <p class="hospital_assigned">Hospital: {{ doctor.hospital_assigned|capfirst }}</p>
                 
-                <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture" class="profile-picture">
+                {% if doctor.profile_picture %}
+                    <img src="{{ doctor.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
+                {% else %}
+                    <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture" class="profile-picture">
+                {% endif %}
                 
                 <h3 onclick="window.location.href='http://127.0.0.1:8000/edit-profile/';">Edit Profile</h3>
             </div>

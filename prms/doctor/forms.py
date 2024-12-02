@@ -1,8 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import Doctor
+from .models import Doctor, Appointment, Document
 from django.contrib.auth.hashers import make_password
-from .models import Appointment
 
 class DoctorProfileEditForm(forms.ModelForm):
     class Meta:
@@ -15,6 +14,11 @@ class DoctorProfileEditForm(forms.ModelForm):
             'birthday': forms.DateInput(attrs={'type': 'date'}),
             'gender': forms.Select(choices=[('Male', 'Male'), ('Female', 'Female')]),
         }
+
+class DocumentUploadForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ['file']
 
 
 

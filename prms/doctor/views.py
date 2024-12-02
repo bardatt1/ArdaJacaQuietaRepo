@@ -274,6 +274,13 @@ def edit_doctor_profile_view(request):
         form = DoctorProfileEditForm(instance=doctor)
     return render(request, 'edit_doctor_profile.html', {'form': form, 'doctor': doctor})
 
+def delete_document(request, document_id):
+    if request.method == 'POST':
+        document = get_object_or_404(Document, id=document_id)
+        document.delete()
+        return JsonResponse({'success': True})
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
 
 def delete_patient_view(request, patient_id):
     patient = get_object_or_404(Patient, id=patient_id)

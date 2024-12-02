@@ -17,6 +17,18 @@
 </head>
 <body>
 
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3 class="modal-title">Delete Document</h3>
+            <p class="modal-warning"><strong>Are you sure you want to delete this document?</strong></p>
+            <div class="modal-actions">
+                <button id="confirm-delete" class="modal-btn delete-btn">Yes, Delete</button>
+                <button id="cancel-delete" class="modal-btn cancel-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Header Section -->
     <header class="prms-header">
         <div class="header-content">
@@ -43,9 +55,9 @@
                     {% endif %}
                     <input type="file" name="profile_picture" id="upload-profile-picture" style="display:none;">
                 </div>
-                <p><a href="#" class="upload-link" onclick="document.getElementById('upload-profile-picture').click();">Change Profile Picture</a></p>
             </div>
         </div>
+
 
         <!-- Right Section -->
         <div class="right-section">
@@ -53,14 +65,64 @@
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
-                
-                <!-- File Upload for Certificates -->
-                <h5>Upload Certificates:</h5>
+            
+                <!-- Display Existing Documents -->
+                <h5>Uploaded Documents:</h5>
+                <ul>
+                    {% for document in doctor.documents.all %}
+                        <li id="document-{{ document.id }}">
+                            <a href="{{ document.file.url }}" target="_blank">{{ document.file.name }}</a>
+                            <button type="button" class="delete-btn" onclick="showDeleteModal({{ document.id }})">Delete</button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            
+                <!-- File Upload for New Documents -->
+                <h5>Attach New Documents:</h5>
                 <input type="file" name="documents" multiple>
-                
+            
                 <button type="submit" class="save-btn">Save Changes</button>
                 <a href="{% url 'doctor_profile' %}" class="cancel-btn">Cancel</a>
             </form>
+            
+            <script>
+                let documentToDelete = null;
+            
+                function showDeleteModal(documentId) {
+                    documentToDelete = documentId;
+                    const modal = document.getElementById('delete-modal');
+                    modal.style.display = 'flex'; // Ensure flex is used for centering
+
+                }
+            
+                function hideDeleteModal() {
+                    documentToDelete = null;
+                    const modal = document.getElementById('delete-modal');
+                    modal.style.display = 'none';
+                }
+            
+                document.getElementById('confirm-delete').addEventListener('click', () => {
+                    if (documentToDelete) {
+                        fetch(`/delete-document/${documentToDelete}/`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}',
+                            }
+                        }).then(response => {
+                            if (response.ok) {
+                                document.getElementById(`document-${documentToDelete}`).remove();
+                                hideDeleteModal();
+                            } else {
+                                alert("Failed to delete the document. Please try again.");
+                            }
+                        }).catch(error => {
+                            alert("An error occurred. Please try again.");
+                        });
+                    }
+                });
+            
+                document.getElementById('cancel-delete').addEventListener('click', hideDeleteModal);
+            </script>            
         </div>
     </div>
 

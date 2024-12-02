@@ -19,24 +19,42 @@ class Doctor(models.Model):
         help_text="Upload a profile picture for the doctor."
     )
 
+    def save(self, *args, **kwargs):
+        # Check if the instance already exists in the database
+        if self.pk:
+            old_instance = Doctor.objects.get(pk=self.pk)
+            # If a new profile picture is uploaded, delete the old one
+            if old_instance.profile_picture and old_instance.profile_picture != self.profile_picture:
+                old_instance.profile_picture.delete(save=False)
+
+        # Call the original save method
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # Delete the profile picture file when the Doctor instance is deleted
+        if self.profile_picture:
+            self.profile_picture.delete(save=False)
+        super().delete(*args, **kwargs)
+
     def __str__(self):
         return f"Dr. {self.first_name} {self.last_name} ({self.specialization})"
 
 
 class Document(models.Model):
     doctor = models.ForeignKey(
-        Doctor, 
-        on_delete=models.CASCADE, 
+        Doctor,
+        on_delete=models.CASCADE,
         related_name='documents'
     )
     file = models.FileField(
-        upload_to='doctor_documents/', 
+        upload_to='doctor_documents/',
         help_text="Upload a document (e.g., certificates)."
     )
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Document for {self.doctor.first_name} {self.doctor.last_name}"
+
 
 class Patient(models.Model):
     SEX_CHOICES = [
