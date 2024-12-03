@@ -220,17 +220,22 @@ body, html {
 
 /* Footer Styling */
 footer {
-    margin-top: 40px;
+    position: fixed;   /* Fixes the footer at the bottom */
+    bottom: 0;         /* Positions the footer at the bottom of the screen */
+    left: 0;           /* Aligns the footer to the left */
+    width: 100%;       /* Ensures the footer takes up the full width of the screen */
     padding: 20px;
     font-size: 14px;
     color: #ffffff;
     text-align: center;
-    width: 100%;
     background-color: #003366;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;     /* Ensures the footer stays above other elements */
     margin-left: 100px;
+
 }
 
+/* Additional styling for the footer paragraph */
 footer p {
     margin: 0;
     font-size: 14px;

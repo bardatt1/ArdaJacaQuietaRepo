@@ -73,9 +73,23 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="required">Phone Number</label>
-                                <input type="text" name="phone_number" required>
+                                <input type="text" name="phone_number" required pattern="\d{4}-\d{3}-\d{4}" title="Format: 0123-456-7891" placeholder="0123-456-7891" inputmode="numeric" oninput="restrictInput(this, /^\d{0,4}(-\d{0,3}(-\d{0,4})?)?$/)">
+                            </div>
                             </div>
                         </div>
+
+                        <script>
+                            /**
+                             * Restricts the input to match the given regex pattern.
+                             * @param {HTMLInputElement} input - The input element being typed into.
+                             * @param {RegExp} pattern - The regex pattern to match.
+                             */
+                            function restrictInput(input, pattern) {
+                                if (!pattern.test(input.value)) {
+                                    input.value = input.value.slice(0, -1); // Remove the last character if invalid.
+                                }
+                            }
+                            </script>
 
                         <div class="form-row">
                             <div class="form-group">
