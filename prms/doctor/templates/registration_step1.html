@@ -5,82 +5,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'registration.css' %}">
+    <link rel="stylesheet" href="{% static 'add_patient.css' %}">
     <title>Doctor Registration - Step 1</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url("{% static 'images/bg.gif' %}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+    </style>
 </head>
 <body>
-    <div class="registration-card">
-        <form action="{% url 'registration_step1' %}" method="post">
-            {% csrf_token %}
-            
-            <!-- Header Section -->
-            <div class="header-section">
-                <img src="{% static 'images/register_img.png' %}" alt="Registration Image">
-                <h2>Doctor Registration - Step 1</h2>
-            </div>
-            
-            <!-- Personal Information -->
-            <div class="form-group two-column">
-                <div>
-                    <label for="first_name">First Name</label>
-                    <input type="text" name="first_name" id="first_name" required placeholder="Enter first name">
-                </div>
-                <div>
-                    <label for="middle_name">Middle Name</label>
-                    <input type="text" name="middle_name" id="middle_name" placeholder="Enter middle name (optional)">
-                </div>
-                <div>
-                    <label for="last_name">Last Name</label>
-                    <input type="text" name="last_name" id="last_name" required placeholder="Enter last name">
-                </div>
-            </div>
+    <header class="prms-header">
+        <div class="header-left">
+            <img src="{% static 'images/back-button.png' %}" alt="back" class="back-button" onclick="window.history.back();">
+        </div>
+        <div class="header-center prms-title" onclick="window.location.href='http://127.0.0.1:8000/';">
+            Doctor Registration System
+        </div>
+    </header>
 
-            <!-- Date of Birth -->
-            <div class="form-group">
-                <label for="date_of_birth">Date of Birth</label>
-                <input type="date" name="date_of_birth" id="date_of_birth" required>
+    <div class="main-container">
+        <div class="patient-container">
+            <div class="image-section">
+                <img src="{% static 'images/register_img.png' %}" alt="Registration Image" class="nurse-image">
             </div>
-            
-            <!-- Gender -->
-            <div class="form-group">
-                <label for="gender">Sex</label>
-                <select name="gender" id="gender" required>
-                    <option value="" disabled selected>Select Sex</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
-            </div>
-            
-            <!-- Email Address -->
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" required placeholder="Enter your email">
-            </div>
-            
-            <!-- Username -->
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" required placeholder="Choose a username">
-            </div>
-            
-            <!-- Password -->
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" required placeholder="Choose a password">
-            </div>
+            <div class="patient-details">
+                <h2 class="section-title">Doctor Registration - Step 1</h2>
+                <div class="form-container">
+                    <form action="{% url 'registration_step1' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="required">First Name:</label>
+                                <input type="text" name="first_name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Middle Name:</label>
+                                <input type="text" name="middle_name">
+                            </div>
+                            <div class="form-group">
+                                <label class="required">Last Name:</label>
+                                <input type="text" name="last_name" required>
+                            </div>
+                        </div>
 
-            <!-- Hospital Assigned -->
-            <div class="form-group">
-                <label for="hospital_assigned">Hospital Assigned</label>
-                <input type="text" name="hospital_assigned" id="hospital_assigned" required placeholder="Enter hospital name">
-            </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="required">Date of Birth:</label>
+                                <input type="date" name="date_of_birth" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="required">Sex:</label>
+                                <select name="gender" required>
+                                    <option value="" disabled selected>Select Sex</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
 
-            <!-- Buttons -->
-            <div class="button-group">
-                <button type="submit">Next</button>
-                <button type="button" class="back-button" onclick="history.back()">Back</button>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="required">Email:</label>
+                                <input type="email" name="email" value="{{ form_data.email|default:'' }}" required>
+                                {% if errors.email_error %}
+                                    <p class="error-message">{{ errors.email_error }}</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label class="required">Username:</label>
+                                <input type="text" name="username" value="{{ form_data.username|default:'' }}" required>
+                                {% if errors.username_error %}
+                                    <p class="error-message">{{ errors.username_error }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="required">Password:</label>
+                                <input type="password" name="password" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="required">Hospital Assigned:</label>
+                                <input type="text" name="hospital_assigned" required>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit">Next</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
 </body>
 </html>
