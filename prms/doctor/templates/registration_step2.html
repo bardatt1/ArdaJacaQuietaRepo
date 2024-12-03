@@ -5,68 +5,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'registration.css' %}">
+    <link rel="stylesheet" href="{% static 'add_patient.css' %}">
     <title>Doctor Registration - Step 2</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url("{% static 'images/bg.gif' %}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+    </style>
 </head>
 <body>
-    <div class="registration-card">
-        <form action="{% url 'registration_step2' %}" method="post">
-            {% csrf_token %}
-            
-            <!-- Header Section -->
-            <div class="header-section">
-                <img src="{% static 'images/register_img.png' %}" alt="Registration Image">
-                <h2>Doctor Registration - Step 2</h2>
-            </div>
+    <header class="prms-header">
+        <div class="header-left">
+            <img src="{% static 'images/back-button.png' %}" alt="back" class="back-button" onclick="window.history.back();">
+        </div>
+        <div class="header-center prms-title" onclick="window.location.href='http://127.0.0.1:8000/';">
+            Doctor Registration System
+        </div>
+    </header>
 
-            <!-- Specialization -->
-            <div class="form-group">
-                <label for="specialization">Specialization</label>
-                <input type="text" name="specialization" id="specialization" required placeholder="Enter specialization">
+    <div class="main-container">
+        <div class="patient-container">
+            <div class="image-section">
+                <img src="{% static 'images/register_img.png' %}" alt="Registration Image" class="nurse-image">
             </div>
+            <div class="patient-details">
+                <h2 class="section-title">Doctor Registration - Step 2</h2>
+                <div class="form-container">
+                    <form action="{% url 'registration_step2' %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="required">Specialization</label>
+                                <input type="text" name="specialization" required>
+                            </div>
+                        </div>
 
-            <!-- Chart Number -->
-            <div class="form-group">
-                <label for="chart_number">Chart Number</label>
-                <input type="text" name="chart_number" id="chart_number" required placeholder="Enter chart number">
-            </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="required">Health Care Number:</label>
+                                <input type="text" name="health_care_number" required pattern="\d{4}-\d{3}-\d{3}" title="Format: 1234-567-891 "placeholder="1234-567-891" inputmode="numeric" oninput="restrictInput(this, /^\d{0,4}(-\d{0,3}(-\d{0,3})?)?$/)">
+                            </div>
+                            <div class="form-group">
+                                <label class="required">Current Address:</label>
+                                <input type="text" name="current_address" required placeholder="e.g., 123 Main St, City" placeholder="123-45-6789">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="required">Social Security Number:</label>
+                                <input type="text" name="social_security_number" required pattern="\d{3}-\d{2}-\d{4}" title="Format: 123-45-6789" placeholder="123-45-6789" inputmode="numeric" oninput="restrictInput(this, /^\d{0,3}(-\d{0,2}(-\d{0,4})?)?$/)">
+                            </div>
+                            <div class="form-group">
+                                <label class="required">Contact Number:</label>
+                                <input type="text" name="phone_number_home" required pattern="\d{4}-\d{3}-\d{4}" title="Format: 0123-456-7891" placeholder="0123-456-7891" inputmode="numeric" oninput="restrictInput(this, /^\d{0,4}(-\d{0,3}(-\d{0,4})?)?$/)">
+                            </div>
 
-            <!-- Health Care Number -->
-            <div class="form-group">
-                <label for="health_care_number">Health Care Number</label>
-                <input type="text" name="health_care_number" id="health_care_number" required placeholder="Enter health care number">
-            </div>
+                            <script>
+                                /**
+                                 * Restricts the input to match the given regex pattern.
+                                 * @param {HTMLInputElement} input - The input element being typed into.
+                                 * @param {RegExp} pattern - The regex pattern to match.
+                                 */
+                                function restrictInput(input, pattern) {
+                                    if (!pattern.test(input.value)) {
+                                        input.value = input.value.slice(0, -1); // Remove the last character if invalid.
+                                    }
+                                }
+                                </script>
 
-            <!-- Current Address -->
-            <div class="form-group">
-                <label for="current_address">Current Address</label>
-                <input type="text" name="current_address" id="current_address" required placeholder="Enter current address">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit">Complete Registration</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <!-- Social Security Number -->
-            <div class="form-group">
-                <label for="social_security_number">Social Security Number</label>
-                <input type="text" name="social_security_number" id="social_security_number" required placeholder="Enter SSN">
-            </div>
-
-            <!-- Home Phone Number -->
-            <div class="form-group">
-                <label for="phone_number_home">Home Phone Number</label>
-                <input type="text" name="phone_number_home" id="phone_number_home" required placeholder="Enter home phone number">
-            </div>
-
-            <!-- Work Phone Number -->
-            <div class="form-group">
-                <label for="phone_number_work">Work Phone Number</label>
-                <input type="text" name="phone_number_work" id="phone_number_work" required placeholder="Enter work phone number">
-            </div>
-
-            <!-- Buttons -->
-            <div class="button-group">
-                <button type="submit">Complete Registration</button>
-                <button type="button" class="back-button" onclick="history.back()">Back</button>
-            </div>
-        </form>
+        </div>
     </div>
 </body>
 </html>

@@ -31,6 +31,21 @@ def registration_step1(request):
         request.session['username'] = request.POST.get('username')
         request.session['password'] = request.POST.get('password')
         request.session['hospital_assigned'] = request.POST.get('hospital_assigned')
+
+        # Retrieve email and username for validation
+        email = request.session['email']
+        username = request.session['username']
+
+        # Check for existing email or username
+        errors = {}
+        if Doctor.objects.filter(email=email).exists():
+            errors['email_error'] = "Email is already used."
+        if Doctor.objects.filter(username=username).exists():
+            errors['username_error'] = "Username is already taken."
+
+        if errors:
+            return render(request, 'registration_step1.html', {'errors': errors, 'form_data': request.POST})
+        
         return redirect(reverse('registration_step2'))
     return render(request, 'registration_step1.html')
 

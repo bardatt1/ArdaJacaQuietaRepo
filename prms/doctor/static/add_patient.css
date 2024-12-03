@@ -56,9 +56,9 @@ body {
 
 /* Main content container */
 .main-container {
-    padding: 70px;
+    padding: 50px 20px;
     display: flex;
-    gap: 70px;
+    gap: 50px;
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -70,15 +70,16 @@ body {
     gap: 40px;
     background-color: white;
     border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    flex-wrap: wrap;
 }
 
 /* Image section */
 .image-section {
     flex: 1;
     position: relative;
-    min-width: 400px;
+    min-width: 300px;
 }
 
 .nurse-image {
@@ -89,7 +90,7 @@ body {
 
 /* Patient Details section */
 .patient-details {
-    flex: 1.5;
+    flex: 2;
     padding: 30px;
     background-color: white;
 }
@@ -111,10 +112,12 @@ body {
     margin-bottom: 20px;
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .form-group {
     flex: 1;
+    min-width: 200px;
 }
 
 label {
@@ -132,6 +135,9 @@ label {
 
 input[type="text"],
 input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
 textarea,
 select {
     width: 100%;
@@ -144,11 +150,14 @@ select {
 
 input[type="text"]:focus,
 input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
 textarea:focus,
 select:focus {
     outline: none;
     border-color: #0045d1;
-    box-shadow: 0 0 0 2px rgba(0,69,209,0.1);
+    box-shadow: 0 0 0 2px rgba(0, 69, 209, 0.1);
 }
 
 textarea {
@@ -220,5 +229,13 @@ button[type="submit"]:hover {
     .header-left,
     .header-right {
         margin-bottom: 10px;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-group {
+        min-width: 100%;
     }
 }
