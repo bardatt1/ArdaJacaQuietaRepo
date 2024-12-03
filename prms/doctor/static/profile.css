@@ -54,28 +54,26 @@ body, html {
 
 /* Profile Info Section */
 .profile-info {
-    display: flex;
-    flex-wrap: wrap; /* Allow content to wrap for smaller screens */
-    justify-content: space-between; /* Distribute items evenly */
-    align-items: flex-start;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    max-width: 800px; /* Wider width */
     width: 100%;
-    max-width: 800px; /* Set a maximum width for the profile section */
-    box-sizing: border-box; /* Ensure padding is part of width calculation */
+    background-color: #ffffff;
+    padding: 30px; /* Increased padding */
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    display: flex; /* Make the container horizontal */
+    align-items: center; /* Center the content vertically */
+    margin-left: 200px;
 }
 
 /* Profile Info Container */
 .profile-container {
-    margin-left: 220px; /* Account for the sidebar width */
     display: flex;
-    justify-content: center; /* Center the profile section horizontally */
-    align-items: flex-start; /* Align the profile info vertically at the top */
+    justify-content: center;
+    align-items: center;
     padding: 20px;
-    width: calc(100% - 220px); /* Adjust width to avoid horizontal overflow */
-    box-sizing: border-box; /* Ensure padding is included in width calculation */
+    min-height: calc(100vh - 120px); /* Adjust for header and footer height */
+    box-sizing: border-box;
 }
 
 
@@ -220,15 +218,17 @@ body, html {
 
 /* Footer Styling */
 footer {
-    margin-top: 40px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     padding: 20px;
     font-size: 14px;
     color: #ffffff;
     text-align: center;
-    width: 100%;
     background-color: #003366;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-    margin-left: 100px;
+    margin-left: 70px;
 }
 
 footer p {
