@@ -335,16 +335,16 @@
                     // Redirect to appointment details page
                     window.location.href = '/appointment_details/';
                 });
-            }
 
-            // Mark today's date
-            const today = new Date();
-            if (
-                currentDay === today.getDate() && 
-                this.currentDate.getMonth() === today.getMonth() && 
-                this.currentDate.getFullYear() === today.getFullYear()
-            ) {
-                dayElement.classList.add('active-day');
+                // Only add active-day class if this day matches both current date AND has an appointment
+                const today = new Date();
+                if (
+                    currentDay === today.getDate() && 
+                    this.currentDate.getMonth() === today.getMonth() && 
+                    this.currentDate.getFullYear() === today.getFullYear()
+                ) {
+                    dayElement.classList.add('active-day');
+                }
             }
         } else {
             dayElement.classList.add('other-month');
