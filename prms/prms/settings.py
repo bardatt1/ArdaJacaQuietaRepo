@@ -123,6 +123,14 @@ USE_TZ = True
 
 APPEND_SLASH = True
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587  # Gmail uses 587 for TLS
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'quietaangelo@gmail.com'  # Your Gmail email address
+EMAIL_HOST_PASSWORD = 'dffd dsmd vtxi smae'  # Your Gmail password (or app password)
+DEFAULT_FROM_EMAIL = 'quietaangelo@gmail.com'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/

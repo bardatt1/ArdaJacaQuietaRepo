@@ -8,9 +8,10 @@ from .forms import DoctorProfileEditForm
 from datetime import datetime
 from django.db.models import Q
 from django.http import JsonResponse
-import calendar
-import json
-
+from django.core.mail import send_mail
+from django.conf import settings
+import random
+import string
 
 # Helper function to ensure a doctor is logged in
 def doctor_logged_in(request):
@@ -411,3 +412,43 @@ def create_appointment_view(request, patient_id):
 
 def appointment_details(request):
     return render(request, 'appointment_details.html')
+
+
+def forgot_username_view(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        try:
+            doctor = Doctor.objects.get(email=email)
+            # Send an email with the username
+            send_mail(
+                subject="Your Username",
+                message=f"Dear {doctor.first_name},\n\nYour username is: {doctor.username}",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[email],
+            )
+            messages.success(request, "An email with your username has been sent.")
+        except Doctor.DoesNotExist:
+            messages.error(request, "Email not found.")
+    return render(request, 'forgot_username.html')
+
+
+def forgot_password_view(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        try:
+            doctor = Doctor.objects.get(email=email)
+            # Generate a temporary password
+            temp_password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+            doctor.password = make_password(temp_password)
+            doctor.save()
+            # Send an email with the temporary password
+            send_mail(
+                subject="Password Reset",
+                message=f"Dear {doctor.first_name},\n\nYour temporary password is: {temp_password}\nPlease log in and change your password immediately.",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[email],
+            )
+            messages.success(request, "A temporary password has been sent to your email.")
+        except Doctor.DoesNotExist:
+            messages.error(request, "Email not found.")
+    return render(request, 'forgot_password.html')
