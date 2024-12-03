@@ -235,3 +235,40 @@ footer p {
     margin: 0;
     font-size: 14px;
 }
+
+/* Uploaded Documents Styling */
+.uploaded-documents {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.uploaded-documents li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #f1f7ff;
+    transition: box-shadow 0.3s ease;
+}
+
+.uploaded-documents li:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.document-link {
+    text-decoration: none;
+    color: #285ac7;
+    font-size: 14px;
+    flex: 1;
+    transition: color 0.3s ease;
+}
+
+.document-link:hover {
+    color: #1a3e85;
+    text-decoration: underline;
+}
+
