@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 class Doctor(models.Model):
     username = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
@@ -14,23 +15,19 @@ class Doctor(models.Model):
     hospital_assigned = models.CharField(max_length=255, blank=True, default="")
     profile_picture = models.ImageField(
         upload_to='doctor_profile_pics/',
-        blank=True, 
-        null=True, 
+        blank=True,
+        null=True,
     )
 
     def save(self, *args, **kwargs):
-        # Check if the instance already exists in the database
         if self.pk:
             old_instance = Doctor.objects.get(pk=self.pk)
-            # If a new profile picture is uploaded, delete the old one
             if old_instance.profile_picture and old_instance.profile_picture != self.profile_picture:
                 old_instance.profile_picture.delete(save=False)
 
-        # Call the original save method
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        # Delete the profile picture file when the Doctor instance is deleted
         if self.profile_picture:
             self.profile_picture.delete(save=False)
         super().delete(*args, **kwargs)
@@ -70,11 +67,24 @@ class Patient(models.Model):
     phone_number = models.CharField(max_length=255, blank=True, default="Not provided")
     medical_history = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
+
+    def get_appointment(self):
+        """
+        Return the single appointment associated with this patient if it exists.
+        """
+        return Appointment.objects.filter(patient=self).first()
+    
+    def delete(self, *args, **kwargs):
+        # Ensure related appointments are also deleted
+        Appointment.objects.filter(patient=self).delete()
+        super().delete(*args, **kwargs)
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+
 class Appointment(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name="appointments")
     appointment_date = models.DateTimeField()
     appointment_type = models.CharField(max_length=50, default='consultation')
     location = models.CharField(max_length=100, default="Unknown Location")
@@ -82,7 +92,13 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f"Appointment with {self.patient} on {self.appointment_date.strftime('%Y-%m-%d %H:%M')}"
-    
+
+    @property
+    def doctor(self):
+        """Get the doctor associated with this appointment via the patient."""
+        return self.patient.doctor
+
+
 class Activity(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='activities')
     description = models.TextField()
@@ -90,4 +106,3 @@ class Activity(models.Model):
 
     def __str__(self):
         return f"Activity by {self.doctor.first_name} on {self.timestamp.strftime('%Y-%m-%d %H:%M')}"
-

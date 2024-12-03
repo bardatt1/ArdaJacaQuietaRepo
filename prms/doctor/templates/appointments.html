@@ -1,221 +1,106 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointments Calendar</title>
-    {% load static %}
+    <title>Appointments</title>
     <link rel="stylesheet" href="{% static 'appointments.css' %}">
     <style>
-      body {
-          margin: 0;
-          padding: 0;
-          background: url("{% static 'images/bg.gif' %}") no-repeat center center fixed;
-          background-size: cover;
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          min-height: 100vh;
-          color: #333;
-      }
-  
-      .prms-header {
-          background-color: rgba(255, 255, 255, 0.95);
-          padding: 15px 20px;
-          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          z-index: 1000;
-          border-bottom: 1px solid #e0e0e0;
-      }
-  
-      .header-content {
-          display: flex;
-          align-items: center;
-          max-width: 1200px;
-          margin: 0 auto;
-      }
-  
-      .back-btn {
-          width: 35px;
-          height: 35px;
-          cursor: pointer;
-          margin-right: 20px;
-          transition: transform 0.2s ease;
-      }
+        body {
+            font-family: Arial, sans-serif;
+            background: url("{% static 'images/bg.gif' %}") no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
 
-      .back-btn:hover {
-          transform: scale(1.1);
-      }
-  
-      .prms-title {
-          color: #2c3e50;
-          margin: 0;
-          font-size: 1.6em;
-          font-weight: 600;
-          cursor: pointer;
-          transition: color 0.3s ease;
-      }
+        .main-container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
 
-      .prms-title:hover {
-          color: #0078d4;
-      }
-  
-      .main-container {
-          max-width: 1000px;
-          width: 90%;
-          margin: 120px auto 20px;
-          background-color: rgba(255, 255, 255, 0.98);
-          border-radius: 12px;
-          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-          padding: 30px;
-          border: 1px solid #f0f0f0;
-      }
-  
-      .calendar {
-          width: 100%;
-      }
-  
-      .calendar-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 20px;
-          border-bottom: 2px solid #f0f0f0;
-          margin-bottom: 15px;
-      }
-  
-      .nav-arrow {
-          background: none;
-          border: none;
-          font-size: 32px;
-          cursor: pointer;
-          color: #0078d4;
-          transition: color 0.3s ease;
-      }
+        .actions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-      .nav-arrow:hover {
-          color: #005a9c;
-      }
-  
-      #currentMonth {
-          font-size: 1.5em;
-          font-weight: 600;
-          color: #2c3e50;
-          margin: 0;
-      }
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0045d1;
+        }
 
-      .calendar-grid {
-          display: grid;
-          grid-template-columns: repeat(7, 1fr);
-          gap: 10px;
-          text-align: center;
-      }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-      .calendar-grid div {
-          font-size: 1.2em;
-          color: #333;
-          padding: 15px;
-          border-radius: 8px;
-          transition: all 0.3s ease;
-      }
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
 
-      .calendar-grid .weekday {
-          font-weight: bold;
-          color: #0078d4;
-          font-size: 1em;
-          background-color: #f4f8ff;
-          padding: 10px;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-      }
+        table th {
+            background-color: #0045d1;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
 
-      .calendar-grid .active-day {
-          color: white !important;
-          background-color: #ff4500 !important; /* Bright orange-red for urgency */
-          font-weight: bold;
-          box-shadow: 0 0 15px rgba(255, 69, 0, 0.5), 
-                      0 0 0 4px rgba(255, 69, 0, 0.2);
-          transform: scale(1.05);
-          animation: pulse 1.5s infinite;
-          position: relative;
-          z-index: 10;
-      }
+        table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
 
-      @keyframes pulse {
-          0% {
-              transform: scale(1.05);
-          }
-          50% {
-              transform: scale(1.08);
-          }
-          100% {
-              transform: scale(1.05);
-          }
-      }
+        table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
 
-      .calendar-grid .current-month {
-          color: #2c3e50;
-          border: 1px solid transparent;
-          cursor: pointer;
-      }
-
-      .calendar-grid .current-month:hover {
-          background-color: #e6f2ff;
-          border-color: #0078d4;
-          transform: scale(1.02);
-      }
-
-      .calendar-grid .other-month {
-          color: rgba(51, 51, 51, 0.4);
-          background-color: #f9f9f9;
-      }
-
-      .patient-list {
-          margin-top: 10px;
-          font-size: 0.9em;
-          color: #555;
-      }
-
-      .patient-item {
-          background-color: #f0f4ff;
-          padding: 8px;
-          border-radius: 6px;
-          margin-bottom: 5px;
-          border-left: 4px solid #0078d4;
-      }
-
-      @media (max-width: 768px) {
-          .main-container {
-              width: 95%;
-              padding: 20px;
-          }
-
-          .calendar-grid div {
-              font-size: 1em;
-              padding: 10px;
-          }
-      }
-
-      /* Add styles for appointment days */
-      .calendar-grid .has-appointment {
-            position: relative;
-            background-color: #e6f2ff;
-            border: 2px solid #0078d4;
+        table td a {
+            color: #0066cc;
+            text-decoration: none;
             font-weight: bold;
         }
 
-        .calendar-grid .has-appointment::after {
-            content: '•';
-            position: absolute;
-            bottom: 3px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #0078d4;
-            font-size: 20px;
+        table td a:hover {
+            text-decoration: underline;
+        }
+
+        .no-data {
+            text-align: center;
+            font-size: 16px;
+            color: gray;
+            padding: 20px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #0045d1;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background-color: #003399;
+        }
+
+        footer {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #0045d1;
+            color: white;
+            text-align: center;
+            border-radius: 0 0 8px 8px;
         }
     </style>
 </head>
@@ -224,150 +109,111 @@
         <div class="header-content">
             <img src="{% static 'images/back-button.png' %}" alt="Back" class="back-btn" onclick="window.history.back();">
             <h1 class="prms-title" onclick="window.location.href='http://127.0.0.1:8000/home/';">
-              Patient Record Management System
-          </h1>
+                Patient Record Management System
+            </h1>
         </div>
     </header>
 
     <div class="main-container">
-        <div class="calendar">
-            <div class="calendar-header">
-                <button id="prevMonth" class="nav-arrow">‹</button>
-                <h3 id="currentMonth">April 2024</h3>
-                <button id="nextMonth" class="nav-arrow">›</button>
+        <section>
+            <div class="actions-header">
+                <h2 class="section-title">All Appointments</h2>
+                <a href="{% url 'home' %}" class="button">Back to Home</a>
             </div>
-            <div id="calendarGrid" class="calendar-grid">
-                <!-- Calendar days will be dynamically populated -->
+
+            {% if appointments %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Patient</th>
+                        <th>Type</th>
+                        <th>Location</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr>
+                        <td>{{ appointment.date }}</td>
+                        <td>{{ appointment.patient_name }}</td>
+                        <td>{{ appointment.type }}</td>
+                        <td>{{ appointment.location }}</td>
+                        <td>{{ appointment.details|default:"No details provided" }}</td>
+                        <td id="appointment-{{ appointment.id }}">
+                            <button type="button" class="delete-btn" onclick="showAppointmentDeleteModal({{ appointment.id }})">Delete</button>
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="no-data">No appointments scheduled.</p>
+            {% endif %}
+        </section>
+    </div>
+
+    <!-- Delete Appointment Modal -->
+    <div id="delete-appointment-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3 class="modal-title">Delete Appointment</h3>
+            <p class="modal-warning"><strong>Are you sure you want to delete this appointment?</strong></p>
+            <div class="modal-actions">
+                <button id="confirm-delete-appointment" class="modal-btn delete-btn">Yes, Delete</button>
+                <button id="cancel-delete-appointment" class="modal-btn cancel-btn">Cancel</button>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <p>&copy; {{ year }} Patient Record Management System. All Rights Reserved.</p>
+    </footer>
+
     <script>
-        class Calendar {
-    constructor(appointments) {
-        this.currentDate = new Date();
-        this.monthNames = [
-            'January', 'February', 'March', 'April', 
-            'May', 'June', 'July', 'August', 
-            'September', 'October', 'November', 'December'
-        ];
-        this.weekdayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        
-        this.prevMonthBtn = document.getElementById('prevMonth');
-        this.nextMonthBtn = document.getElementById('nextMonth');
-        this.monthHeader = document.getElementById('currentMonth');
-        this.calendarGrid = document.getElementById('calendarGrid');
-
-        // Store appointments
-        this.appointments = appointments || [];
-
-        this.prevMonthBtn.addEventListener('click', () => this.changeMonth(-1));
-        this.nextMonthBtn.addEventListener('click', () => this.changeMonth(1));
-
-        this.renderCalendar();
-    }
-
-    isAppointmentDay(day, month, year) {
-        return this.appointments.some(appt => {
-            const appointmentDate = new Date(appt.date);
-            return appointmentDate.getDate() === day &&
-                   appointmentDate.getMonth() === month &&
-                   appointmentDate.getFullYear() === year;
-        });
-    }
-
-    getAppointmentsForDay(day, month, year) {
-        return this.appointments.filter(appt => {
-            const appointmentDate = new Date(appt.date);
-            return appointmentDate.getDate() === day &&
-                   appointmentDate.getMonth() === month &&
-                   appointmentDate.getFullYear() === year;
-        });
-    }
-
-    renderCalendar() {
-    // Clear previous calendar
-    this.calendarGrid.innerHTML = '';
-
-    // Add weekday headers
-    this.weekdayNames.forEach(day => {
-        const dayElement = document.createElement('div');
-        dayElement.textContent = day;
-        dayElement.classList.add('weekday');
-        this.calendarGrid.appendChild(dayElement);
-    });
-
-    // Get first and last day of current month
-    const firstDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
-    const lastDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0);
-
-    // Update month header
-    this.monthHeader.textContent = `${this.monthNames[this.currentDate.getMonth()]} ${this.currentDate.getFullYear()}`;
-
-    // Calculate start of calendar grid (days before first day of month)
-    const startingDay = firstDay.getDay();
-    const totalDays = startingDay + lastDay.getDate();
-
-    // Fill calendar grid
-    for (let i = 0; i < totalDays; i++) {
-        const dayElement = document.createElement('div');
-        
-        if (i >= startingDay) {
-            const currentDay = i - startingDay + 1;
-            dayElement.textContent = currentDay;
-            dayElement.classList.add('current-month');
-
-            // Check for appointments on this day
-            const dayAppointments = this.getAppointmentsForDay(
-                currentDay, 
-                this.currentDate.getMonth(), 
-                this.currentDate.getFullYear()
-            );
-
-            if (dayAppointments.length > 0) {
-                dayElement.classList.add('has-appointment');
-                
-                // Add click event to show appointment details
-                dayElement.addEventListener('click', () => {
-                    // Store the clicked day's appointments in localStorage
-                    localStorage.setItem('selectedAppointments', JSON.stringify(dayAppointments));
-                    
-                    // Redirect to appointment details page
-                    window.location.href = '/appointment_details/';
-                });
-
-                // Only add active-day class if this day matches both current date AND has an appointment
-                const today = new Date();
-                if (
-                    currentDay === today.getDate() && 
-                    this.currentDate.getMonth() === today.getMonth() && 
-                    this.currentDate.getFullYear() === today.getFullYear()
-                ) {
-                    dayElement.classList.add('active-day');
-                }
-            }
-        } else {
-            dayElement.classList.add('other-month');
-        }
-
-        this.calendarGrid.appendChild(dayElement);
-    }
-}
-
-    changeMonth(direction) {
-        this.currentDate.setMonth(this.currentDate.getMonth() + direction);
-        this.renderCalendar();
-    }
-}
-
-// Initialize calendar on page load
-document.addEventListener('DOMContentLoaded', () => {
-    // Fetch appointments from localStorage
-    const storedAppointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+        let appointmentToDelete = null;
     
-    // Initialize calendar with stored appointments
-    new Calendar(storedAppointments);
-});
+        // Show the modal and set the appointment ID
+        function showAppointmentDeleteModal(appointmentId) {
+            appointmentToDelete = appointmentId;
+            document.getElementById('delete-appointment-modal').style.display = 'flex'; // Show the modal
+        }
+    
+        // Hide the modal
+        function hideAppointmentDeleteModal() {
+            appointmentToDelete = null;
+            document.getElementById('delete-appointment-modal').style.display = 'none'; // Hide the modal
+        }
+    
+        // Confirm deletion and send request to delete the appointment
+        document.getElementById('confirm-delete-appointment').addEventListener('click', () => {
+            if (appointmentToDelete) {
+                fetch(`/delete-appointment/${appointmentToDelete}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Remove the appointment from the UI
+                        document.getElementById(`appointment-${appointmentToDelete}`).remove();
+                        hideAppointmentDeleteModal();
+                    } else {
+                        alert('Failed to delete the appointment. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
+            }
+        });
+    
+        // Cancel button handler
+        document.getElementById('cancel-delete-appointment').addEventListener('click', hideAppointmentDeleteModal);
     </script>
+
 </body>
 </html>

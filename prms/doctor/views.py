@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from .models import Doctor, Patient, Appointment, Activity, Document
 from .forms import DoctorProfileEditForm
-from datetime import datetime
+from datetime import datetime, timedelta
+from django.utils.timezone import now
 from django.db.models import Q
 from django.http import JsonResponse
 from django.core.mail import send_mail
@@ -106,7 +108,8 @@ def doctor_login_view(request):
 def doctor_home_view(request):
     doctor_id = doctor_logged_in(request)
     doctor = get_object_or_404(Doctor, id=doctor_id)
-        # Determine the greeting message based on the current hour
+
+    # Determine the greeting message based on the current hour
     current_hour = datetime.now().hour
     if current_hour < 12:
         greeting = "Good Morning"
@@ -114,10 +117,38 @@ def doctor_home_view(request):
         greeting = "Good Afternoon"
     else:
         greeting = "Good Evening"
-        
+
+    # Fetch patients and activities
     patients = doctor.patients.all()
     activities = doctor.activities.order_by('-timestamp')[:3]  # Fetch the latest 3 activities
-    return render(request, 'home.html', {'doctor': doctor, 'patients': patients, 'activities': activities, 'greeting':greeting})
+
+    # Filter appointments
+    today_start = now().replace(hour=0, minute=0, second=0, microsecond=0)
+    today_end = today_start + timedelta(days=1)
+
+    today_appointments = Appointment.objects.filter(
+        patient__doctor=doctor,
+        appointment_date__gte=today_start,
+        appointment_date__lt=today_end
+    ).order_by('appointment_date')[:3]
+
+    upcoming_appointments = Appointment.objects.filter(
+        patient__doctor=doctor,
+        appointment_date__gte=today_end
+    ).order_by('appointment_date')[:3]
+
+    return render(
+        request,
+        'home.html',
+        {
+            'doctor': doctor,
+            'patients': patients,
+            'activities': activities,
+            'greeting': greeting,
+            'today_appointments': today_appointments,
+            'upcoming_appointments': upcoming_appointments,
+        }
+    )
 
 def add_patient_view(request):
     doctor_id = doctor_logged_in(request)
@@ -290,6 +321,18 @@ def edit_doctor_profile_view(request):
         form = DoctorProfileEditForm(instance=doctor)
     return render(request, 'edit_doctor_profile.html', {'form': form, 'doctor': doctor})
 
+
+
+def delete_appointment(request, appointment_id):
+    if request.method == "POST":
+        try:
+            appointment = Appointment.objects.get(id=appointment_id)
+            appointment.delete()
+            return JsonResponse({'status': 'success'}, status=200)
+        except Appointment.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Appointment not found.'}, status=404)
+    return JsonResponse({'status': 'error', 'message': 'Invalid request.'}, status=400)
+
 def delete_document(request, document_id):
     if request.method == 'POST':
         document = get_object_or_404(Document, id=document_id)
@@ -365,7 +408,26 @@ def appointments_view(request):
 
     return render(request, 'appointments.html', {'appointments': appointment_data})
 
+def edit_appointment_view(request, appointment_id):
+    appointment = get_object_or_404(Appointment, id=appointment_id)
 
+    if request.method == 'POST':
+        # Update appointment details
+        appointment.appointment_date = request.POST.get('appointment_date', appointment.appointment_date)
+        appointment.appointment_type = request.POST.get('appointment_type', appointment.appointment_type)
+        appointment.location = request.POST.get('location', appointment.location)
+        appointment.details = request.POST.get('details', appointment.details)
+        appointment.save()
+
+        # Optionally log activity for this change
+        Activity.objects.create(
+            doctor=appointment.doctor,
+            description=f"Updated appointment details for {appointment.patient} on {appointment.appointment_date}."
+        )
+
+        return redirect('appointments')  # Redirect to the appointments list or another page
+
+    return render(request, 'edit_appointment.html', {'appointment': appointment})
 
 def create_appointment_view(request, patient_id):
     # Get the logged-in doctor

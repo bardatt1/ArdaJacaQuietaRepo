@@ -1,181 +1,357 @@
+/* General Styles */
 body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
     margin: 0;
     padding: 0;
-    background: url("../images/bg.gif") no-repeat center center fixed;
-    background-size: cover;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    color: #333;
+    min-height: 100vh; /* Ensures body takes at least full viewport height */
 }
 
-/* Header styles */
+/* Header Styles */
 .prms-header {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: #0045d1;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 15px 20px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
-    width: 100%;
     z-index: 1000;
-    border-bottom: 1px solid #e0e0e0;
 }
 
 .header-content {
     display: flex;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
+    justify-content: flex-start;
+}
+
+.prms-title {
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0;
+}
+
+.prms-title:hover {
+    text-decoration: underline;
 }
 
 .back-btn {
-    width: 35px;
-    height: 35px;
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
     cursor: pointer;
-    margin-right: 20px;
-    transition: transform 0.2s ease;
+    filter: brightness(0) invert(1);
+    transition: transform 0.2s;
 }
 
 .back-btn:hover {
     transform: scale(1.1);
 }
 
-.prms-title {
-    color: #2c3e50;
-    margin: 0;
-    font-size: 1.6em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.prms-title:hover {
-    color: #0078d4;
-}
-
-/* Calendar container */
+/* Main Container */
 .main-container {
-    max-width: 1000px;
-    width: 90%;
-    margin: 120px auto 20px;
-    background-color: rgba(255, 255, 255, 0.98);
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: 20px auto;
+    background: white;
     padding: 30px;
-    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    flex-grow: 1; /* Ensures the main content grows to fill space */
 }
 
-.calendar {
-    width: 100%;
-}
-
-/* Calendar header and grid */
-.calendar-header {
+/* Section Title and Actions */
+.actions-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    border-bottom: 2px solid #f0f0f0;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-.nav-arrow {
-    background: none;
-    border: none;
-    font-size: 32px;
-    cursor: pointer;
-    color: #0078d4;
-    transition: color 0.3s ease;
-}
-
-.nav-arrow:hover {
-    color: #005a9c;
-}
-
-#currentMonth {
-    font-size: 1.5em;
-    font-weight: 600;
-    color: #2c3e50;
+.section-title {
+    color: #0045d1;
+    font-size: 24px;
+    font-weight: bold;
     margin: 0;
 }
 
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
+.no-data {
+    text-align: center;
+    font-size: 16px;
+    color: gray;
+    padding: 20px;
+}
+
+.button {
+    background-color: #0066cc;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
     text-align: center;
 }
 
-.calendar-grid div {
-    font-size: 1.2em;
-    color: #333;
-    padding: 15px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+.button:hover {
+    background-color: #004080;
+    transition: background-color 0.3s ease;
 }
 
-.calendar-grid .weekday {
-    font-weight: bold;
-    color: #0078d4;
-    font-size: 1em;
-    background-color: #f4f8ff;
-    padding: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+/* Table styles */
+table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 16px;
+    table-layout: auto;
 }
 
-.calendar-grid .active-day {
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+table th {
+    background-color: #003399;
     color: white;
-    background-color: #0078d4;
     font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 120, 212, 0.3);
+    text-transform: uppercase;
 }
 
-.calendar-grid .current-month {
-    color: #2c3e50;
-    border: 1px solid transparent;
+table td {
+    color: #333;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tbody tr:hover {
+    background-color: #e6f7ff;
+}
+
+table td a {
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+table td a:hover {
+    text-decoration: underline;
+    color: #004080;
+}
+
+table td .appointment-btn {
+    margin: 5px 0;
+    display: inline-block;
+}
+
+/* Form Container */
+.form-container {
+    overflow-x: auto;
+    gap: 20px;
+}
+
+/* Save Button Enhancements */
+.button.save-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+}
+
+.button.save-button:hover {
+    background-color: #218838;
+    transition: background-color 0.3s ease;
+}
+
+/* Form Field Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 5px rgba(0, 102, 204, 0.5);
+}
+
+/* Cancel Link */
+.cancel-link {
+    margin-left: 15px;
+    font-size: 16px;
+    color: #ff4d4d;
+    text-decoration: none;
+}
+
+.cancel-link:hover {
+    color: #d63636;
+    text-decoration: underline;
+}
+
+/* General Button Styles for Inline Placement */
+.edit-btn, .delete-btn, .appointment-btn {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
     cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 14px;
 }
 
-.calendar-grid .current-month:hover {
-    background-color: #e6f2ff;
-    border-color: #0078d4;
-    transform: scale(1.02);
+/* Edit Button Styles */
+.edit-btn {
+    background-color: #007bff;
+    color: white;
 }
 
-.calendar-grid .other-month {
-    color: rgba(51, 51, 51, 0.4);
-    background-color: #f9f9f9;
+.edit-btn:hover {
+    background-color: #0056b3;
 }
 
-.calendar-grid .has-appointment {
+/* Delete Button Styles */
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+.appointment-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.appointment-btn:hover {
+    background-color: #218838;
+}
+
+/* Footer Styling */
+footer {
     position: relative;
-    background-color: #e6f2ff;
-    border: 2px solid #0078d4;
-    font-weight: bold;
+    clear: both;
+    padding: 15px 20px;
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center;
+    background-color: #003366;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: auto; /* This ensures footer stays at the bottom */
 }
 
-.calendar-grid .has-appointment::after {
-    content: '•';
-    position: absolute;
-    bottom: 3px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #0078d4;
-    font-size: 20px;
+footer p {
+    margin: 0;
+    font-size: 14px;
 }
 
 @media (max-width: 768px) {
-    .main-container {
-        width: 95%;
-        padding: 20px;
+    table {
+        font-size: 14px;
     }
 
-    .calendar-grid div {
-        font-size: 1em;
-        padding: 10px;
+    .appointment-btn {
+        font-size: 14px;
+        padding: 8px 16px;
     }
+}
+
+/*delete modal*/
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.modal-title {
+    color: #285ac7;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.modal-warning {
+    color: #cc0000;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.modal-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-btn.delete-btn {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.modal-btn.delete-btn:hover {
+    background-color: #cc0000;
+}
+
+.modal-btn.cancel-btn {
+    background-color: #285ac7;
+    color: white;
+}
+
+.modal-btn.cancel-btn:hover {
+    background-color: #1a3e85;
 }
