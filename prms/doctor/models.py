@@ -13,10 +13,9 @@ class Doctor(models.Model):
     specialization = models.CharField(max_length=100)
     hospital_assigned = models.CharField(max_length=255, blank=True, default="")
     profile_picture = models.ImageField(
-        upload_to='doctor_profile_pics/', 
+        upload_to='doctor_profile_pics/',
         blank=True, 
         null=True, 
-        help_text="Upload a profile picture for the doctor."
     )
 
     def save(self, *args, **kwargs):

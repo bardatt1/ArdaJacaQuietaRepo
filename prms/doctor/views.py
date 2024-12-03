@@ -284,7 +284,7 @@ def edit_doctor_profile_view(request):
                 doctor=doctor,
                 description="Updated profile information and uploaded documents."
             )
-            return redirect('doctor_profile')
+            return redirect('edit_doctor_profile')
     else:
         form = DoctorProfileEditForm(instance=doctor)
     return render(request, 'edit_doctor_profile.html', {'form': form, 'doctor': doctor})

@@ -1,130 +1,161 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Profile</title>
-    <link rel="stylesheet" href="{% static 'edit_doctor_profile.css' %}">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: url("{% static 'images/bg.gif' %}") no-repeat center center fixed;
-            background-size: cover;
-            font-family: Arial, sans-serif;
-        }
-    </style>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Edit Profile</title>
+        <link rel="stylesheet" href="{% static 'edit_doctor_profile.css' %}">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background: url("{% static 'images/bg.gif' %}") no-repeat center center fixed;
+                background-size: cover;
+                font-family: Arial, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
 
-    <!-- Delete Confirmation Modal -->
-    <div id="delete-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <h3 class="modal-title">Delete Document</h3>
-            <p class="modal-warning"><strong>Are you sure you want to delete this document?</strong></p>
-            <div class="modal-actions">
-                <button id="confirm-delete" class="modal-btn delete-btn">Yes, Delete</button>
-                <button id="cancel-delete" class="modal-btn cancel-btn">Cancel</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Header Section -->
-    <header class="prms-header">
-        <div class="header-content">
-            <img src="{% static 'images/back-button.png' %}" alt="Back" class="back-btn" onclick="window.history.back();">
-            <h1 class="prms-title" onclick="window.location.href='http://127.0.0.1:8000/home/';">
-                Patient Record Management System
-            </h1>
-        </div>
-    </header>
-
-    <div class="profile-container">
-        <!-- Left Section -->
-        <div class="left-section">
-            <h2>Edit Profile</h2>
-            <div class="profile-info">
-                <h3>Dr. {{ doctor.first_name|capfirst }} {{ doctor.last_name|capfirst }}</h3>
-                <p class="role">{{ doctor.specialization|capfirst }}</p>
-                <p class="hospital">{{ doctor.hospital_assigned|capfirst }}</p>
-                <div class="profile-picture">
-                    {% if doctor.profile_picture %}
-                        <img src="{{ doctor.profile_picture.url }}" alt="Profile Picture" id="profile-img">
-                    {% else %}
-                        <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture" id="profile-img">
-                    {% endif %}
-                    <input type="file" name="profile_picture" id="upload-profile-picture" style="display:none;">
+        <!-- Delete Confirmation Modal -->
+        <div id="delete-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h3 class="modal-title">Delete Document</h3>
+                <p class="modal-warning"><strong>Are you sure you want to delete this document?</strong></p>
+                <div class="modal-actions">
+                    <button id="confirm-delete" class="modal-btn delete-btn">Yes, Delete</button>
+                    <button id="cancel-delete" class="modal-btn cancel-btn">Cancel</button>
                 </div>
             </div>
         </div>
 
+        <!-- Header Section -->
+        <header class="prms-header">
+            <div class="header-content">
+                <img src="{% static 'images/back-button.png' %}" alt="Back" class="back-btn" onclick="window.location.href='http://127.0.0.1:8000/profile/';">
+                <h1 class="prms-title" onclick="window.location.href='http://127.0.0.1:8000/home/';">
+                    Patient Record Management System
+                </h1>
+            </div>
+        </header>
 
-        <!-- Right Section -->
-        <div class="right-section">
-            <h4>PROFILE DETAILS:</h4>
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-            
-                <!-- Display Existing Documents -->
-                <h5>Uploaded Documents:</h5>
-                <ul>
-                    {% for document in doctor.documents.all %}
-                        <li id="document-{{ document.id }}">
-                            <a href="{{ document.file.url }}" target="_blank">{{ document.file.name }}</a>
-                            <button type="button" class="delete-btn" onclick="showDeleteModal({{ document.id }})">Delete</button>
-                        </li>
-                    {% endfor %}
-                </ul>
-            
-                <!-- File Upload for New Documents -->
-                <h5>Attach New Documents:</h5>
-                <input type="file" name="documents" multiple>
-            
-                <button type="submit" class="save-btn">Save Changes</button>
-                <a href="{% url 'doctor_profile' %}" class="cancel-btn">Cancel</a>
-            </form>
-            
-            <script>
-                let documentToDelete = null;
-            
-                function showDeleteModal(documentId) {
-                    documentToDelete = documentId;
-                    const modal = document.getElementById('delete-modal');
-                    modal.style.display = 'flex'; // Ensure flex is used for centering
+        <div class="profile-container">
+            <!-- Left Section -->
+            <div class="left-section">
+                <h2>Edit Profile</h2>
+                <div class="profile-info">
+                    <h3>Dr. {{ doctor.first_name|capfirst }} {{ doctor.last_name|capfirst }}</h3>
+                    <div class="profile-picture">
+                        {% if doctor.profile_picture %}
+                            <img src="{{ doctor.profile_picture.url }}" alt="Profile Picture" id="profile-img">
+                        {% else %}
+                            <img src="{% static 'images/profile-placeholder.png' %}" alt="Profile Picture" id="profile-img">
+                        {% endif %}
+                        <input type="file" name="profile_picture" id="upload-profile-picture" style="display:none;">
+                    </div>
+                    <p class="role">{{ doctor.specialization|capfirst }}</p>
+                    <p class="hospital">{{ doctor.hospital_assigned|capfirst }}</p>
+                </div>
+            </div>
 
-                }
-            
-                function hideDeleteModal() {
-                    documentToDelete = null;
-                    const modal = document.getElementById('delete-modal');
-                    modal.style.display = 'none';
-                }
-            
-                document.getElementById('confirm-delete').addEventListener('click', () => {
-                    if (documentToDelete) {
-                        fetch(`/delete-document/${documentToDelete}/`, {
-                            method: 'POST',
-                            headers: {
-                                'X-CSRFToken': '{{ csrf_token }}',
-                            }
-                        }).then(response => {
-                            if (response.ok) {
-                                document.getElementById(`document-${documentToDelete}`).remove();
-                                hideDeleteModal();
-                            } else {
-                                alert("Failed to delete the document. Please try again.");
-                            }
-                        }).catch(error => {
-                            alert("An error occurred. Please try again.");
-                        });
+
+            <!-- Right Section -->
+            <div class="right-section">
+                <h4>PROFILE DETAILS:</h4>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <!-- Profile Picture -->
+                    <div class="custom-file-upload">
+                        <label for="profile-picture-upload" id="profile-label" class="file-label">
+                            Attach Profile Picture
+                        </label>
+                        <input type="file" name="profile_picture" id="profile-picture-upload" onchange="updateFileButton('profile-picture-upload', 'profile-label')">
+                    </div>
+                    
+                    <!-- Display Existing Documents -->
+                    <h5>Uploaded Documents:</h5>
+                    <ul class="uploaded-documents">
+                        {% for document in doctor.documents.all %}
+                            <li id="document-{{ document.id }}">
+                                <a href="{{ document.file.url }}" class="document-link" target="_blank">
+                                    {{ document.file.name|slice:":-4"|capfirst }} <!-- Display only the file name -->
+                                </a>
+                                <button type="button" class="delete-btn" onclick="showDeleteModal({{ document.id }})">Delete</button>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                
+                    <!-- File Upload for New Documents -->
+                    <div class="custom-file-upload">
+                        <label for="documents-upload" id="documents-label" class="file-label">
+                            Attach Documents
+                        </label>
+                        <input type="file" name="documents" id="documents-upload" multiple onchange="updateFileButton('documents-upload', 'documents-label')">
+                    </div>
+                
+                    <button type="submit" class="save-btn">Save Changes</button>
+                    <a href="{% url 'doctor_profile' %}" class="cancel-btn">Back to Profile</a>
+                </form>
+                
+                <script>
+                    let documentToDelete = null;
+                
+                    function showDeleteModal(documentId) {
+                        documentToDelete = documentId;
+                        const modal = document.getElementById('delete-modal');
+                        modal.style.display = 'flex'; // Ensure flex is used for centering
+
                     }
-                });
-            
-                document.getElementById('cancel-delete').addEventListener('click', hideDeleteModal);
-            </script>            
+                
+                    function hideDeleteModal() {
+                        documentToDelete = null;
+                        const modal = document.getElementById('delete-modal');
+                        modal.style.display = 'none';
+                    }
+                
+                    document.getElementById('confirm-delete').addEventListener('click', () => {
+                        if (documentToDelete) {
+                            fetch(`/delete-document/${documentToDelete}/`, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRFToken': '{{ csrf_token }}',
+                                }
+                            }).then(response => {
+                                if (response.ok) {
+                                    document.getElementById(`document-${documentToDelete}`).remove();
+                                    hideDeleteModal();
+                                } else {
+                                    alert("Failed to delete the document. Please try again.");
+                                }
+                            }).catch(error => {
+                                alert("An error occurred. Please try again.");
+                            });
+                        }
+                    });
+                    document.getElementById('cancel-delete').addEventListener('click', hideDeleteModal);
+                
+                    function updateFileButton(inputId, labelId) {
+                        const fileInput = document.getElementById(inputId);
+                        const fileLabel = document.getElementById(labelId);
+                
+                        if (fileInput.files && fileInput.files.length > 0) {
+                            fileLabel.classList.add('green');
+                            const fileCount = fileInput.files.length;
+                            fileLabel.textContent = fileCount > 1 
+                                ? `${fileCount} Files Attached` 
+                                : `${fileInput.files[0].name} Attached`;
+                        } else {
+                            fileLabel.classList.remove('green');
+                            fileLabel.textContent = inputId === 'profile-picture-upload' 
+                                ? 'Attach Profile Picture' 
+                                : 'Attach Documents';
+                        }
+                    }
+                </script>            
+            </div>
         </div>
-    </div>
 
-</body>
+    </body>
 </html>

@@ -8,7 +8,7 @@ class DoctorProfileEditForm(forms.ModelForm):
         model = Doctor
         fields = [
             'first_name', 'middle_name', 'last_name', 'birthday',
-            'gender', 'specialization', 'email', 'hospital_assigned', 'profile_picture'
+            'gender', 'specialization', 'email', 'hospital_assigned'
         ]
         widgets = {
             'birthday': forms.DateInput(attrs={'type': 'date'}),
