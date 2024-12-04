@@ -2,7 +2,7 @@
 
 ### About The Project**
 
-![prms home](https://github.com/user-attachments/assets/a1292461-cfbe-495d-ba1a-76f588a69e1a)
+![homescreen](https://github.com/user-attachments/assets/fe83bc92-7e89-4d70-a67a-f22fc9ec6b34)
 
 PRMS is a Patient Record Management System designed to streamline the process of managing patient appointments, records, and recent activities within a healthcare setting. With a user-friendly interface, PRMS helps healthcare professionals organize daily tasks, track patient information, and manage schedules efficiently.
 
