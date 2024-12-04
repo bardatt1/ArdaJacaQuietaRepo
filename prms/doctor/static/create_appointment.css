@@ -6,10 +6,14 @@
     font-family: Arial, sans-serif;
 }
 
+html, body {
+    height: 100%; /* Ensures the height fills the viewport */
+}
+
 body {
+    display: flex;
+    flex-direction: column; /* Makes the body a flex container */
     background-color: #f0f8ff;
-    min-height: 100vh;
-    padding: 20px; /* Adds spacing around the main body content */
 }
 
 /* Header Styles */
@@ -18,7 +22,6 @@ body {
     color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 15px 20px;
-    top: 0;
     z-index: 1000;
 }
 
@@ -27,7 +30,6 @@ body {
     align-items: center;
     justify-content: flex-start;
 }
-
 
 .prms-title {
     font-size: 20px;
@@ -45,7 +47,7 @@ body {
     height: 24px;
     margin-right: 15px;
     cursor: pointer;
-    filter: brightness(0) invert(1); /* Ensures icon looks good on dark backgrounds */
+    filter: brightness(0) invert(1);
     transition: transform 0.2s;
 }
 
@@ -59,12 +61,13 @@ body {
     margin: 30px auto;
     background: white;
     border-radius: 10px;
-    padding: 40px; /* Increased padding for a more spacious look */
+    padding: 40px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    flex-grow: 1; /* Ensures the container expands to fill available space */
 }
 
 .section-title {
-    font-size: 26px; /* Slightly larger for better readability */
+    font-size: 26px;
     color: #0045d1;
     margin-bottom: 25px;
     text-align: center;
@@ -72,13 +75,13 @@ body {
 
 /* Form Styles */
 .form-container {
-    margin-top: 30px; /* Adds space above the form */
+    margin-top: 30px;
 }
 
 .form-row {
     display: flex;
-    gap: 30px; /* Increased gap for more breathing space */
-    margin-bottom: 25px; /* Consistent spacing between rows */
+    gap: 30px;
+    margin-bottom: 25px;
 }
 
 .form-group {
@@ -89,7 +92,7 @@ label {
     display: block;
     font-weight: bold;
     color: #0045d1;
-    margin-bottom: 10px; /* Adds space between label and input */
+    margin-bottom: 10px;
 }
 
 .required::after {
@@ -102,12 +105,12 @@ input[type="datetime-local"],
 textarea,
 select {
     width: 100%;
-    padding: 14px; /* Slightly larger padding for more comfortable inputs */
+    padding: 14px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 8px;
     transition: border-color 0.3s;
-    margin-bottom: 15px; /* Adds space between inputs */
+    margin-bottom: 15px;
 }
 
 input:focus,
@@ -118,21 +121,21 @@ select:focus {
 }
 
 textarea {
-    min-height: 120px; /* Slightly larger for better usability */
+    min-height: 120px;
     resize: vertical;
 }
 
 .form-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 15px; /* Increased gap for better button separation */
-    margin-top: 20px; /* Adds space above the buttons */
+    gap: 15px;
+    margin-top: 20px;
 }
 
 button {
     background-color: #0045d1;
     color: white;
-    padding: 12px 25px; /* Increased padding for larger buttons */
+    padding: 12px 25px;
     border: none;
     border-radius: 8px;
     font-size: 16px;
@@ -142,7 +145,7 @@ button {
 
 button:hover {
     background-color: #0033a1;
-    transform: scale(1.03); /* Subtle hover effect */
+    transform: scale(1.03);
 }
 
 .logout-link {
@@ -169,32 +172,30 @@ button:hover {
     .prms-header {
         flex-direction: column;
         text-align: center;
-        padding: 20px; /* Adjust header padding for smaller screens */
+        padding: 20px;
     }
 
     .section-title {
-        font-size: 22px; /* Slightly smaller for smaller screens */
+        font-size: 22px;
     }
 
     .form-actions {
         flex-direction: column;
-        gap: 10px; /* Reduce gap for stacked buttons */
+        gap: 10px;
     }
 }
 
 /* Footer Styling */
 footer {
-    margin-top: 40px;
+    margin-top: auto; /* Ensures the footer is pushed to the bottom */
     padding: 20px;
     font-size: 14px;
     color: #ffffff;
     text-align: center;
     background-color: #003366;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-
 }
 
-/* Additional styling for the footer paragraph */
 footer p {
     margin: 0;
     font-size: 14px;
