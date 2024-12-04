@@ -5,11 +5,13 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
-
-body {
-    background-color: #f0f8ff;
-    min-height: 100vh;
-}
+        body {
+            font-family: Arial, sans-serif;
+            background: url("{% static 'images/bg.gif' %}") no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
 
 /* Header Styles */
 .prms-header {

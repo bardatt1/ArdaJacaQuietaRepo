@@ -2,6 +2,9 @@ from django import forms
 from django.core.exceptions import ValidationError
 from .models import Doctor, Appointment, Document
 from django.contrib.auth.hashers import make_password
+from django.utils import timezone  # Import timezone
+from .models import Appointment
+
 
 class DoctorProfileEditForm(forms.ModelForm):
     class Meta:
@@ -59,8 +62,39 @@ class DoctorRegistrationForm(forms.ModelForm):
             doctor.save()
         return doctor
     
-
 class AppointmentForm(forms.ModelForm):
+    APPOINTMENT_TYPE_CHOICES = [
+        ('Consultation', 'Consultation'),
+        ('Follow-up', 'Follow-up'),
+        ('Diagnostic', 'Diagnostic'),
+        ('Treatment', 'Treatment'),
+    ]
+
+    appointment_type = forms.ChoiceField(choices=APPOINTMENT_TYPE_CHOICES)
+
     class Meta:
         model = Appointment
-        fields = ['appointment_date', 'appointment_type', 'location', 'details']
+        fields = ['appointment_date', 'appointment_type', 'location', 'details', 'patient_name']
+        widgets = {
+            'appointment_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        }
+        labels = {
+            'appointment_date': 'Date & Time',
+            'appointment_type': 'Type',
+            'location': 'Location',
+            'details': 'Details',
+            'patient_name': 'Patient Name',
+        }
+        help_texts = {
+            'appointment_date': 'Please select the date and time for the appointment.',
+            'appointment_type': 'Select the type of appointment.',
+            'location': 'Specify the location of the appointment.',
+            'details': 'Provide any additional details for the appointment.',
+            'patient_name': 'Enter the full name of the patient.',
+        }
+
+    def clean_appointment_date(self):
+        appointment_date = self.cleaned_data.get('appointment_date')
+        if appointment_date and appointment_date <= timezone.now():
+            raise forms.ValidationError("The appointment date must be in the future.")
+        return appointment_date

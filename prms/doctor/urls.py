@@ -28,6 +28,8 @@ urlpatterns = [
     path('forgot-username/', views.forgot_username_view, name='forgot_username'),
     path('forgot-password/', views.forgot_password_view, name='forgot_password'),
     path('change-password/', views.change_password_view, name='change_password'),
+    path("appointments/edit/<int:appointment_id>/", views.edit_appointment_view, name="edit_appointment"),
+    path("appointments/delete/<int:appointment_id>/", views.delete_appointment_view, name="delete_appointment"),    
 ]
 
 if settings.DEBUG:

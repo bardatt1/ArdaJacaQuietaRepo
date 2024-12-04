@@ -101,6 +101,8 @@ class Appointment(models.Model):
     appointment_type = models.CharField(max_length=50, default='consultation')
     location = models.CharField(max_length=100, default="Unknown Location")
     details = models.TextField()
+    patient_name = models.CharField(max_length=100, null=True)  # Add this field
+
 
     def __str__(self):
         return f"Appointment with {self.patient} on {self.appointment_date.strftime('%Y-%m-%d %H:%M')}"

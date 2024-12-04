@@ -82,7 +82,7 @@
                                 <a href="{{ document.file.url }}" class="document-link" target="_blank">
                                     {{ document.file.name|slice:":-4"|capfirst }} <!-- Display only the file name -->
                                 </a>
-                                <button type="button" class="delete-btn" onclick="showDeleteModal({{ document.id }})">Delete</button>
+                                <button type="button" class="delete-btn" onclick="showDeleteModal('{{ document.id }}')">Delete</button>
                             </li>
                         {% endfor %}
                     </ul>

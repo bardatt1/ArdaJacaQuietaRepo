@@ -12,6 +12,8 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.core.mail import send_mail
 from django.conf import settings
+from .forms import AppointmentForm  # Ensure you have a form for editing
+
 import random
 import string
 
@@ -154,6 +156,7 @@ def doctor_home_view(request):
         appointment_date__lt=today_end
     ).order_by('appointment_date')[:3]
 
+    # Filter upcoming appointments (appointments after today)
     upcoming_appointments = Appointment.objects.filter(
         patient__doctor=doctor,
         appointment_date__gte=today_end
@@ -208,25 +211,6 @@ def doctor_logout_view(request):
         del request.session['doctor_id']
         messages.success(request, 'You have been logged out successfully.')
     return redirect('login')
-
-@login_required
-def appointments_view(request):
-    doctor = get_object_or_404(Doctor, user=request.user)  # Assuming logged-in user is a doctor
-    appointments = Appointment.objects.filter(doctor=doctor).select_related('patient')  # Fetch appointments for this doctor
-
-    # Extract appointment dates and corresponding patients
-    appointment_data = [
-        {
-            'date': appointment.appointment_date,
-            'patient': appointment.patient,
-            'patient_name': f"{appointment.patient.first_name} {appointment.patient.last_name}"
-        }
-        for appointment in appointments
-    ]
-    
-    return render(request, 'appointments.html', {
-        'appointments': appointment_data,
-    })
 
 def patient_list_view(request):
     doctor_id = doctor_logged_in(request)  # Ensure doctor is logged in
@@ -410,43 +394,102 @@ def appointments_view(request):
     doctor_id = doctor_logged_in(request)  # Get logged-in doctor's ID
     doctor = get_object_or_404(Doctor, id=doctor_id)
 
-    # Fetch all appointments for the doctor
-    appointments = Appointment.objects.filter(patient__doctor=doctor).select_related('patient')
+    # Get search and filter parameters
+    search_query = request.GET.get('search', '')  # Search query for patient name or other fields
+    start_date = request.GET.get('start_date', '')  # Start date for date range filter
+    end_date = request.GET.get('end_date', '')  # End date for date range filter
+    sort_order = request.GET.get('sort_order', 'asc')  # Sort order, default to ascending
 
-    # Prepare appointments data for rendering
-    appointment_data = [
-        {
-            'date': appointment.appointment_date.strftime('%Y-%m-%d %H:%M'),
-            'type': appointment.appointment_type,
-            'location': appointment.location,
-            'details': appointment.details,
-            'patient_name': f"{appointment.patient.first_name} {appointment.patient.last_name}"
-        }
-        for appointment in appointments
-    ]
+    # Base query: Filter appointments based on the logged-in doctor
+    appointments = Appointment.objects.filter(patient__doctor=doctor)
 
-    return render(request, 'appointments.html', {'appointments': appointment_data})
-
-def edit_appointment_view(request, appointment_id):
-    appointment = get_object_or_404(Appointment, id=appointment_id)
-
-    if request.method == 'POST':
-        # Update appointment details
-        appointment.appointment_date = request.POST.get('appointment_date', appointment.appointment_date)
-        appointment.appointment_type = request.POST.get('appointment_type', appointment.appointment_type)
-        appointment.location = request.POST.get('location', appointment.location)
-        appointment.details = request.POST.get('details', appointment.details)
-        appointment.save()
-
-        # Optionally log activity for this change
-        Activity.objects.create(
-            doctor=appointment.doctor,
-            description=f"Updated appointment details for {appointment.patient} on {appointment.appointment_date}."
+    # Apply search filter (by patient name, or any other field you want to search)
+    if search_query:
+        appointments = appointments.filter(
+            Q(patient__first_name__icontains=search_query) |
+            Q(patient__last_name__icontains=search_query)
         )
 
-        return redirect('appointments')  # Redirect to the appointments list or another page
+    # Apply date range filter
+    if start_date and end_date:
+        appointments = appointments.filter(
+            appointment_date__date__gte=start_date,
+            appointment_date__date__lte=end_date
+        )
 
-    return render(request, 'edit_appointment.html', {'appointment': appointment})
+    # Apply sort order
+    if sort_order == 'desc':
+        appointments = appointments.order_by('-appointment_date')
+    else:
+        appointments = appointments.order_by('appointment_date')
+
+    return render(request, 'appointments.html', {
+        'appointments': appointments,
+        'search_query': search_query,
+        'start_date': start_date,
+        'end_date': end_date,
+        'sort_order': sort_order,
+    })
+
+# View to edit an appointment
+def edit_appointment_view(request, appointment_id):
+    # Retrieve the appointment object by ID
+    appointment = get_object_or_404(Appointment, id=appointment_id)
+    
+    if request.method == 'POST':
+        # Bind the form to the submitted data, including the patient ID
+        form = AppointmentForm(request.POST, instance=appointment)
+        
+        if form.is_valid():
+            # Get the patient from the hidden field and set it in the form before saving
+            patient_id = request.POST.get('patient')
+            patient = get_object_or_404(Patient, id=patient_id)
+            appointment.patient = patient  # Set the patient to the appointment
+
+            # Save the form and the associated data
+            form.save()
+
+             # Log the activity
+            Activity.objects.create(
+                doctor=appointment.doctor,
+                description=f"Edited appointment for patient {appointment.patient.first_name} {appointment.patient.last_name} on {appointment.appointment_date.strftime('%Y-%m-%d')}."
+            )
+            return redirect('appointments')
+    else:
+        form = AppointmentForm(instance=appointment)
+
+    # Render the form, passing the appointment for display purposes
+    return render(request, 'edit_appointment.html', {'form': form, 'appointment': appointment})
+
+# View to delete an appointment
+def delete_appointment_view(request, appointment_id):
+    # Get the appointment object based on the provided ID
+    appointment = get_object_or_404(Appointment, id=appointment_id)
+
+    # Get the patient associated with the appointment for display
+    patient = appointment.patient
+
+    if request.method == 'POST':
+        # Log the deletion activity
+        Activity.objects.create(
+            doctor=appointment.doctor,
+            description=f"Deleted appointment for patient {appointment.patient.first_name} {appointment.patient.last_name} on {appointment.appointment_date.strftime('%Y-%m-%d')}."
+        )
+
+        # Delete the appointment
+        appointment.delete()
+        
+        # Redirect back to the appointments list after deletion
+        return redirect(reverse('appointments'))  # Adjust this URL name as needed
+
+    context = {
+        'appointment': appointment,
+        'patient_name': f"{patient.first_name} {patient.last_name}",  # Include patient's name
+        'patient': patient,
+    }
+
+    return render(request, 'confirm_delete_appointment.html', context)
+
 
 def create_appointment_view(request, patient_id):
     # Get the logged-in doctor
@@ -557,7 +600,6 @@ def change_password_view(request):
         # Update the password
         doctor.password = make_password(new_password)
         doctor.save()
-        messages.success(request, "Your password has been updated successfully.")
         return redirect('doctor_profile')  # Redirect to the profile page or another appropriate page
 
     return render(request, 'change_password.html', {'doctor': doctor})
