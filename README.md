@@ -27,7 +27,7 @@ Clone the repository:
 git clone https://github.com/yourusername/PRMS.git
 
 Navigate to the project directory:
-cd PRMS
+cd PRMS/prms
 
 Start the application:
 py manage.py runserver
@@ -82,7 +82,6 @@ This document outlines the key functions and descriptions of the system.
 ### Medical History and Documentation
 - **Description**: Enables users to document and retrieve a patient’s medical history and associated documents.
   - **Medical History Input**: Add and update a patient’s medical history, including diagnoses, treatments, medications, and allergies.
-  - **Document Upload**: Upload and store medical documents such as lab results, X-rays, and prescriptions.
   - **Chronological Organization**: Organize medical history entries chronologically for easy reference.
   - **Summary Report**: Create a summary report of a patient’s medical history for quick review.
 
@@ -93,14 +92,6 @@ This document outlines the key functions and descriptions of the system.
   - **Basic Search**: Search for patient records using identifiers like patient ID, name, or contact information.
   - **Advanced Filtering**: Filter search results by parameters such as date range, medical condition, or treatment type.
   - **Result Display**: Display search results in a list with relevant details and options to access the full record.
-
----
-
-### Data Security and Privacy
-- **Description**: Ensures that patient data is secured and handled in compliance with relevant privacy regulations.
-  - **Data Encryption**: Encrypt data at rest and in transit to protect patient information.
-  - **Security Policies**: Enforce secure password policies and implement multi-factor authentication.
-  - **Backup and Recovery**: Conduct regular data backups and provide recovery options to prevent data loss.
 
 
 
