@@ -129,6 +129,14 @@
                             <option value="Female" {% if request.GET.sex == "Female" %}selected{% endif %}>Female</option>
                         </select>
                     </div>
+                    
+                    <div class="input-group">
+                        <select name="sort_order" onchange="this.form.submit()">
+                            <option value="asc" {% if request.GET.sort_order == "asc" %}selected{% endif %}>Date Added (Ascending)</option>
+                            <option value="desc" {% if request.GET.sort_order == "desc" %}selected{% endif %}>Date Added (Descending)</option>
+                        </select>
+                    </div>
+                    
                     <div class="input-group">
                         <input type="date" name="start_date" placeholder="Start Date" value="{{ request.GET.start_date|default:'' }}">
                         <input type="date" name="end_date" placeholder="End Date" value="{{ request.GET.end_date|default:'' }}">

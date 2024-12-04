@@ -92,7 +92,7 @@
                 <ul>
                     {% for appointment in upcoming_appointments %}
                         <li>
-                            <span class="patient-name">{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</span>
+                            <span class="patient-name">{{ appointment.patient.first_name|capfirst }} {{ appointment.patient.last_name|capfirst }}</span>
                             <span class="appointment-date">{{ appointment.appointment_date|date:"Y-m-d" }}</span>
                             <span class="appointment-time">{{ appointment.appointment_date|date:"H:i" }}</span>
                         </li>

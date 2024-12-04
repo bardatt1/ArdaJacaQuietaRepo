@@ -410,5 +410,21 @@ body {
     background-color: #218838; /* Darker green on hover */
 }
 
+footer {
+    position: relative; /* Allows positioning relative to the content */
+    clear: both; /* Ensures it stays below all floated elements */
+    padding: 15px 20px;
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center;
+    background-color: #003366;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: auto; /* Ensures the footer sticks to the bottom */
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
 
 
