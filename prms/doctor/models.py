@@ -1,16 +1,23 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.hashers import make_password
 
 
 class Doctor(models.Model):
+    GENDER_CHOICES = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Other', 'Other'),
+    ]
+
     username = models.CharField(max_length=100, unique=True)
-    password = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)  # Should be hashed before saving
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50, blank=True, null=True)
     last_name = models.CharField(max_length=50)
     birthday = models.DateField(null=True, blank=True)
-    gender = models.CharField(max_length=10, null=True, blank=True)
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, null=True, blank=True)
     specialization = models.CharField(max_length=100)
     hospital_assigned = models.CharField(max_length=255, blank=True, default="")
     profile_picture = models.ImageField(
@@ -20,6 +27,11 @@ class Doctor(models.Model):
     )
 
     def save(self, *args, **kwargs):
+        # Ensure password is hashed before saving
+        if not self.pk:  # Only hash password when creating a new instance
+            self.password = make_password(self.password)
+
+        # Delete old profile picture if updated
         if self.pk:
             old_instance = Doctor.objects.get(pk=self.pk)
             if old_instance.profile_picture and old_instance.profile_picture != self.profile_picture:

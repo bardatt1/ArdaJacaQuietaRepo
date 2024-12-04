@@ -22,69 +22,91 @@ def doctor_logged_in(request):
         return redirect('login')
     return doctor_id
 
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.contrib.auth.hashers import make_password
+from .models import Doctor
+from datetime import datetime
+
 def registration_step1(request):
     if request.method == 'POST':
         # Store form data in session
-        request.session['first_name'] = request.POST.get('first_name')
-        request.session['middle_name'] = request.POST.get('middle_name')
-        request.session['last_name'] = request.POST.get('last_name')
-        request.session['birthday'] = request.POST.get('birthday')
-        request.session['gender'] = request.POST.get('gender')
-        request.session['email'] = request.POST.get('email')
-        request.session['username'] = request.POST.get('username')
-        request.session['password'] = request.POST.get('password')
-        request.session['hospital_assigned'] = request.POST.get('hospital_assigned')
+        form_data = {
+            'first_name': request.POST.get('first_name'),
+            'middle_name': request.POST.get('middle_name', ''),
+            'last_name': request.POST.get('last_name'),
+            'birthday': request.POST.get('birthday'),
+            'gender': request.POST.get('gender'),
+            'email': request.POST.get('email'),
+            'username': request.POST.get('username'),
+            'password': request.POST.get('password'),
+            'hospital_assigned': request.POST.get('hospital_assigned', ''),
+        }
 
-        # Retrieve email and username for validation
-        email = request.session['email']
-        username = request.session['username']
-
-        # Check for existing email or username
+        # Validate email and username for uniqueness
         errors = {}
-        if Doctor.objects.filter(email=email).exists():
+        if Doctor.objects.filter(email=form_data['email']).exists():
             errors['email_error'] = "Email is already used."
-        if Doctor.objects.filter(username=username).exists():
+        if Doctor.objects.filter(username=form_data['username']).exists():
             errors['username_error'] = "Username is already taken."
 
+        # Validate the birthday field format
+        try:
+            if form_data['birthday']:  # Only validate if a birthday is provided
+                datetime.strptime(form_data['birthday'], '%Y-%m-%d')  # Check format
+        except ValueError:
+            errors['birthday_error'] = "Invalid date format. Use YYYY-MM-DD."
+
         if errors:
-            return render(request, 'registration_step1.html', {'errors': errors, 'form_data': request.POST})
-        
+            return render(request, 'registration_step1.html', {'errors': errors, 'form_data': form_data})
+
+        # Store validated form data in the session
+        for key, value in form_data.items():
+            request.session[key] = value
+
         return redirect(reverse('registration_step2'))
+
     return render(request, 'registration_step1.html')
 
 def registration_step2(request):
-    # Check if session data exists and process it
-    print(f"Session Data - Username: {request.session.get('username')}, First Name: {request.session.get('first_name')}, Last Name: {request.session.get('last_name')}")
     if request.method == 'POST':
-        # Get session data for doctor registration
-        first_name = request.session.get('first_name')
-        middle_name = request.session.get('middle_name')
-        last_name = request.session.get('last_name')
-        birthday = request.session.get('birthday')
-        gender = request.session.get('gender')
-        email = request.session.get('email')
-        username = request.session.get('username')
-        password = make_password(request.session.get('password'))
-        hospital_assigned = request.session.get('hospital_assigned')
-        
-        if not username:
-            return render(request, 'registration_step1.html', {"error": "Username is required."})
+        # Retrieve session data
+        session_data = {key: request.session.get(key) for key in [
+            'first_name', 'middle_name', 'last_name', 'birthday', 'gender',
+            'email', 'username', 'password', 'hospital_assigned'
+        ]}
 
-        # Register doctor
+        # Parse birthday into a datetime.date object
+        try:
+            birthday = datetime.strptime(session_data['birthday'], '%Y-%m-%d').date() if session_data['birthday'] else None
+        except ValueError:
+            return render(request, 'registration_step1.html', {'error': 'Invalid birthday format. Please use YYYY-MM-DD.'})
+
         specialization = request.POST.get('specialization')
-        Doctor.objects.create(
-            username=username,
-            password=password,
-            email=email,
-            first_name=first_name,
-            middle_name=middle_name,
-            last_name=last_name,
+        if not specialization:
+            return render(request, 'registration_step2.html', {'error': 'Specialization is required.'})
+
+        # Save the doctor
+        doctor = Doctor(
+            username=session_data['username'],
+            password=session_data['password'],  # Will be hashed in model save method
+            email=session_data['email'],
+            first_name=session_data['first_name'],
+            middle_name=session_data['middle_name'],
+            last_name=session_data['last_name'],
             birthday=birthday,
-            gender=gender,
+            gender=session_data['gender'],
             specialization=specialization,
-            hospital_assigned=hospital_assigned,
+            hospital_assigned=session_data['hospital_assigned'],
         )
+        doctor.save()
+
+        # Clear session data after successful registration
+        for key in session_data.keys():
+            del request.session[key]
+
         return redirect('registration_complete')
+
     return render(request, 'registration_step2.html')
 
 def registration_complete(request):
