@@ -2,111 +2,165 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
 }
 
+/* Header Styles */
 .prms-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #fff;
-    border-bottom: 1px solid #ccc;
+    background-color: #0045d1;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px 20px;
+    top: 0;
+    z-index: 1000;
 }
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 
 .prms-title {
-    font-size: 24px;
-    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0;
 }
 
-.back-button {
-    position: absolute;
-    left: 20px;
-    font-size: 14px;
-    color: #666;
-    text-decoration: none;
-}
-
-.back-button:hover {
+.prms-title:hover {
     text-decoration: underline;
-    color: #004080;
 }
+
+.back-btn {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    cursor: pointer;
+    filter: brightness(0) invert(1); /* Ensures icon looks good on dark backgrounds */
+    transition: transform 0.2s;
+}
+
+.back-btn:hover {
+    transform: scale(1.1);
+}
+
 
 /* Main Container */
 .main-container {
-    max-width: 600px;
-    margin: 30px auto;
+    max-width: 700px; /* Increased width for a more spacious layout */
+    margin: 40px auto; /* Added more margin for better positioning */
     background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 30px; /* Increased padding for better spacing inside */
+    border-radius: 8px; /* Slightly more rounded corners for a modern look */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Enhanced shadow for subtle depth */
+    flex: 1; /* Ensures it grows/shrinks based on content */
 }
 
 /* Form Section */
-.section-title {
-    font-size: 20px;
-    color: #0045d1;
-    margin-bottom: 15px;
-}
-
 .simple-form .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px; /* Increased spacing between form groups */
 }
 
 label {
-    font-size: 14px;
+    font-size: 16px; /* Slightly larger font for better readability */
     font-weight: bold;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px; /* More spacing under labels */
     color: #333;
 }
 
 input, select, textarea {
     width: 100%;
-    padding: 8px;
+    padding: 12px; /* Increased padding for a more comfortable input area */
     font-size: 14px;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 5px; /* Slightly rounded corners for input fields */
     box-sizing: border-box;
+    margin-top: 5px; /* Added margin to separate fields vertically */
 }
 
 textarea {
-    resize: none;
-    height: 80px;
+    resize: vertical; /* Allow vertical resizing for better user control */
+    height: 100px; /* Slightly taller default height */
 }
 
 input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: #0066cc;
+    box-shadow: 0 0 3px rgba(0, 102, 204, 0.5); /* Subtle focus indicator */
 }
-
 /* Actions */
 .form-actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end; /* Align buttons to the right */
     align-items: center;
-    margin-top: 15px;
+    margin-top: 25px; /* More spacing above actions */
+    gap: 10px; /* Space between buttons */
 }
 
-.save-button {
+/* Buttons */
+.save-button, .delete-button {
     background-color: #0066cc;
     color: white;
     border: none;
-    padding: 8px 15px;
-    border-radius: 3px;
-    font-size: 14px;
+    padding: 12px 20px; /* Larger padding for more comfortable buttons */
+    border-radius: 5px; /* Slightly more rounded buttons */
+    font-size: 16px; /* Larger font for better readability */
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.save-button:hover {
+.save-button:hover, .delete-button:hover {
     background-color: #004080;
+}
+
+.delete-button {
+    background-color: #d9534f;
+}
+
+.delete-button:hover {
+    background-color: #c9302c;
 }
 
 .cancel-link {
     font-size: 14px;
-    color: #999;
+    color: #666;
     text-decoration: none;
 }
 
 .cancel-link:hover {
-    color: #666;
+    color: #333;
+}
+
+/* Confirmation Section */
+.confirm-message {
+    text-align: center;
+    font-size: 18px; /* Slightly larger font for emphasis */
+    color: #333;
+    margin-bottom: 25px; /* Increased spacing below message */
+}
+.confirm-message strong {
+    color: #0045d1;
+}
+
+/* Footer */
+footer {
+    position: relative;
+    clear: both;
+    padding: 15px 20px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    background-color: #003366;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: auto;
+}
+
+footer p {
+    margin: 0;
 }

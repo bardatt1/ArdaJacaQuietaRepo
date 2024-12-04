@@ -4,28 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Record Management System (PRMS)</title>
+    <title>Delete Patient</title>
+    {% load static %}
     <link rel="stylesheet" href="{% static 'patient_edit_delete.css' %}">
+    <style>
+        .form-container {
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <header class="prms-header">
-        <a href="{% url 'patients' %}" class="back-button">← Back to Patient List</a>
-        <h1 class="prms-title">Delete Patient</h1>
+        <div class="header-content">
+            <img src="{% static 'images/back-button.png' %}" alt="Back" class="back-btn" onclick="window.history.back();">
+            <h1 class="prms-title" onclick="window.location.href='http://127.0.0.1:8000/home/';">
+                Patient Record Management System
+            </h1>
+        </div>
     </header>
-    <div class="main-container">
-        <section class="form-section">
-            <h2 class="section-title">Confirm Deletion</h2>
-            <div class="form-container">
-                <p>Are you sure you want to delete <strong>{{ patient.first_name|capfirst }} {{ patient.middle_name|capfirst }} {{ patient.last_name|capfirst }}</strong>?</p>
-                <form method="post" id="delete-form">
-                    {% csrf_token %}
-                    <div class="form-actions">
-                        <button type="submit" style="background-color: red;">Yes, Delete</button>
-                        <a href="{% url 'patients' %}" class="logout-link">Cancel</a>
-                    </div>
-                </form>
+
+    <div class="form-container">
+        <h2 class="section-title">Confirm Deletion</h2>
+        <p>Are you sure you want to delete <strong>{{ patient.first_name|capfirst }} {{ patient.middle_name|capfirst }} {{ patient.last_name|capfirst }}</strong>?</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-actions">
+                <button type="submit" class="delete-button">Yes, Delete</button>
+                <a href="{% url 'patients' %}" class="cancel-link">Cancel</a>
             </div>
-        </section>
+        </form>
     </div>
+        <!-- Footer -->
+        <footer>
+            <p>&copy; {{ year }} Patient Record Management System. All Rights Reserved.</p>
+        </footer>
 </body>
 </html>
