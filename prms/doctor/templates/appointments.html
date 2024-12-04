@@ -93,6 +93,19 @@
         .button:hover {
             background-color: #003399;
         }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -121,6 +134,7 @@
                         <th>Type</th>
                         <th>Location</th>
                         <th>Details</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -132,9 +146,8 @@
                         <td>{{ appointment.location }}</td>
                         <td>{{ appointment.details|default:"No details provided" }}</td>
                         <td id="appointment-{{ appointment.id }}">
-                            <button type="button" class="delete-btn" onclick="showAppointmentDeleteModal({{ appointment.id }})">Delete</button>
+                            <button type="button" class="delete-btn" onclick="showAppointmentDeleteModal({{ appointment.id }})">Cancel</button>
                         </td>
-                        
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -148,15 +161,14 @@
     <!-- Delete Appointment Modal -->
     <div id="delete-appointment-modal" class="modal" style="display: none;">
         <div class="modal-content">
-            <h3 class="modal-title">Delete Appointment</h3>
-            <p class="modal-warning"><strong>Are you sure you want to delete this appointment?</strong></p>
+            <h3 class="modal-title">Cancel Appointment</h3>
+            <p class="modal-warning"><strong>Are you sure you want to cancel this appointment?</strong></p>
             <div class="modal-actions">
-                <button id="confirm-delete-appointment" class="modal-btn delete-btn">Yes, Delete</button>
+                <button id="confirm-delete-appointment" class="modal-btn delete-btn">Yes, Proceed</button>
                 <button id="cancel-delete-appointment" class="modal-btn cancel-btn">Cancel</button>
             </div>
         </div>
     </div>
-
 
     <script>
         let appointmentToDelete = null;
