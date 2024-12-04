@@ -12,33 +12,45 @@ body {
     padding: 20px; /* Adds spacing around the main body content */
 }
 
-/* Header */
+/* Header Styles */
 .prms-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px; /* Increased padding for better spacing */
     background-color: #0045d1;
     color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px; /* Softens edges */
-    margin-bottom: 30px; /* Adds space below the header */
+    padding: 15px 20px;
+    top: 0;
+    z-index: 1000;
 }
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 
 .prms-title {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
+    cursor: pointer;
+    margin: 0;
 }
 
-.back-button {
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s;
+.prms-title:hover {
+    text-decoration: underline;
 }
 
-.back-button:hover {
-    color: #dcdcdc;
+.back-btn {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    cursor: pointer;
+    filter: brightness(0) invert(1); /* Ensures icon looks good on dark backgrounds */
+    transition: transform 0.2s;
+}
+
+.back-btn:hover {
+    transform: scale(1.1);
 }
 
 /* Main Content */
@@ -168,4 +180,22 @@ button:hover {
         flex-direction: column;
         gap: 10px; /* Reduce gap for stacked buttons */
     }
+}
+
+/* Footer Styling */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center;
+    background-color: #003366;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+/* Additional styling for the footer paragraph */
+footer p {
+    margin: 0;
+    font-size: 14px;
 }

@@ -323,16 +323,6 @@ def edit_doctor_profile_view(request):
 
 
 
-def delete_appointment(request, appointment_id):
-    if request.method == "POST":
-        try:
-            appointment = Appointment.objects.get(id=appointment_id)
-            appointment.delete()
-            return JsonResponse({'status': 'success'}, status=200)
-        except Appointment.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'Appointment not found.'}, status=404)
-    return JsonResponse({'status': 'error', 'message': 'Invalid request.'}, status=400)
-
 def delete_document(request, document_id):
     if request.method == 'POST':
         document = get_object_or_404(Document, id=document_id)

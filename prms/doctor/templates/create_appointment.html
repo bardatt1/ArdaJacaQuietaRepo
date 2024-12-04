@@ -17,10 +17,16 @@
     </style>
 </head>
 <body>
-    <div class="prms-header">
-        <span class="prms-title">Patient Management System</span>
-        <a href="{% url 'patients' %}" class="back-button">Back to Patients</a>
-    </div>
+    <header class="prms-header">
+        <div class="header-content">
+            <img src="{% static 'images/back-button.png' %}" alt="Back" class="back-btn" onclick="window.history.back();">
+            <h1 class="prms-title" onclick="window.location.href='http://127.0.0.1:8000/home/';">
+                Patient Record Management System
+            </h1>
+        </div>
+    </header>
+
+
     <div class="main-container">
         <h1 class="section-title">Set Appointment for {{ patient.first_name|capfirst }} {{ patient.last_name|capfirst }}</h1>
         <form method="POST" class="form-container" id="appointmentForm">
@@ -91,5 +97,9 @@
         });
     });
     </script>
+        <!-- Footer -->
+        <footer>
+            <p>&copy; {{ year }} Patient Record Management System. All Rights Reserved.</p>
+        </footer>
 </body>
 </html>

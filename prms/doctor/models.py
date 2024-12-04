@@ -98,6 +98,14 @@ class Appointment(models.Model):
         """Get the doctor associated with this appointment via the patient."""
         return self.patient.doctor
 
+    def delete(self, *args, **kwargs):
+        # Perform any custom logic before deletion
+        print(f"Deleting appointment: {self}")
+        # Example: Log the deletion (can also be a database log)
+        # AppointmentLog.objects.create(action="delete", appointment=self)
+
+        # Call the superclass delete method to perform the actual deletion
+        super().delete(*args, **kwargs)
 
 class Activity(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='activities')
