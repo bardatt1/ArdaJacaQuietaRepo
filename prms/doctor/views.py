@@ -215,6 +215,7 @@ def patient_list_view(request):
     sex_filter = request.GET.get('sex', '')
     start_date = request.GET.get('start_date', '')
     end_date = request.GET.get('end_date', '')
+    sort_order = request.GET.get('sort_order', 'asc')  # Get sort order, default to ascending
 
     # Base query
     patients = doctor.patients.all()
@@ -237,8 +238,14 @@ def patient_list_view(request):
             created_at__date__gte=start_date,
             created_at__date__lte=end_date
         )
+        
+        # Apply sort order
+    if sort_order == 'desc':
+        patients = patients.order_by('-created_at')
+    else:
+        patients = patients.order_by('created_at')
 
-    return render(request, 'patient_list.html', {'doctor': doctor, 'patients': patients})
+    return render(request, 'patient_list.html', {'doctor': doctor, 'patients': patients, 'sort_order': sort_order})
 
 def activities_view(request):
     doctor_id = doctor_logged_in(request)
