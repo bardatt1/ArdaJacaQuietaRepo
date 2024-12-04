@@ -23,37 +23,39 @@
         <h2 class="section-title">Edit Patient Details</h2>
         <form method="post">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="first_name">First Name</label>
-                <input type="text" id="first_name" name="first_name" value="{{ patient.first_name }}" required>
-            </div>
-            <div class="form-group">
-                <label for="middle_name">Middle Name</label>
-                <input type="text" id="middle_name" name="middle_name" value="{{ patient.middle_name }}">
-            </div>
-            <div class="form-group">
-                <label for="last_name">Last Name</label>
-                <input type="text" id="last_name" name="last_name" value="{{ patient.last_name }}" required>
-            </div>
-            <div class="form-group">
-                <label for="age">Age</label>
-                <input type="number" id="age" name="age" value="{{ patient.age }}" required>
-            </div>
-            <div class="form-group">
-                <label for="sex">Sex</label>
-                <select id="sex" name="sex" required>
-                    <option value="">Select</option>
-                    <option value="Male" {% if patient.sex == "Male" %}selected{% endif %}>Male</option>
-                    <option value="Female" {% if patient.sex == "Female" %}selected{% endif %}>Female</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="phone_number">Phone Number</label>
-                <input type="text" id="phone_number" name="phone_number" value="{{ patient.phone_number }}" required>
-            </div>
-            <div class="form-group">
-                <label for="medical_history">Medical History</label>
-                <textarea id="medical_history" name="medical_history" required>{{ patient.medical_history }}</textarea>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ patient.first_name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="middle_name">Middle Name</label>
+                    <input type="text" id="middle_name" name="middle_name" value="{{ patient.middle_name }}">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ patient.last_name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" value="{{ patient.age }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="sex">Sex</label>
+                    <select id="sex" name="sex" required>
+                        <option value="">Select</option>
+                        <option value="Male" {% if patient.sex == "Male" %}selected{% endif %}>Male</option>
+                        <option value="Female" {% if patient.sex == "Female" %}selected{% endif %}>Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="phone_number">Phone Number</label>
+                    <input type="text" id="phone_number" name="phone_number" value="{{ patient.phone_number }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="medical_history">Medical History</label>
+                    <textarea id="medical_history" name="medical_history" rows="8"required>{{ patient.medical_history }}</textarea>
+                </div>
             </div>
             <div class="form-actions">
                 <button type="submit" class="save-button">Save</button>
@@ -61,6 +63,7 @@
             </div>
         </form>
     </div>
+    
         <!-- Footer -->
         <footer>
             <p>&copy; {{ year }} Patient Record Management System. All Rights Reserved.</p>

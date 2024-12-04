@@ -14,6 +14,7 @@ body {
     color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 15px 20px;
+    position: sticky;
     top: 0;
     z-index: 1000;
 }
@@ -24,7 +25,6 @@ body {
     justify-content: flex-start;
 }
 
-
 .prms-title {
     font-size: 20px;
     font-weight: bold;
@@ -32,16 +32,11 @@ body {
     margin: 0;
 }
 
-.prms-title:hover {
-    text-decoration: underline;
-}
-
 .back-btn {
     width: 24px;
     height: 24px;
     margin-right: 15px;
     cursor: pointer;
-    filter: brightness(0) invert(1); /* Ensures icon looks good on dark backgrounds */
     transition: transform 0.2s;
 }
 
@@ -49,74 +44,104 @@ body {
     transform: scale(1.1);
 }
 
-
-/* Main Container */
-.main-container {
-    max-width: 700px; /* Increased width for a more spacious layout */
-    margin: 40px auto; /* Added more margin for better positioning */
+/* Form Container */
+.form-container {
+    max-width: 600px;
+    margin: 40px auto;
     background: #fff;
-    padding: 30px; /* Increased padding for better spacing inside */
-    border-radius: 8px; /* Slightly more rounded corners for a modern look */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Enhanced shadow for subtle depth */
-    flex: 1; /* Ensures it grows/shrinks based on content */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    flex: 1;
 }
 
-/* Form Section */
-.simple-form .form-group {
-    margin-bottom: 20px; /* Increased spacing between form groups */
-}
-
-label {
-    font-size: 16px; /* Slightly larger font for better readability */
+.section-title {
+    font-size: 24px;
     font-weight: bold;
-    display: block;
-    margin-bottom: 8px; /* More spacing under labels */
+    margin-bottom: 20px;
+    text-align: center;
     color: #333;
 }
 
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+}
+
 input, select, textarea {
-    width: 100%;
-    padding: 12px; /* Increased padding for a more comfortable input area */
+    padding: 10px;
     font-size: 14px;
     border: 1px solid #ccc;
-    border-radius: 5px; /* Slightly rounded corners for input fields */
+    border-radius: 5px;
+    width: 100%;
     box-sizing: border-box;
-    margin-top: 5px; /* Added margin to separate fields vertically */
 }
 
 textarea {
-    resize: vertical; /* Allow vertical resizing for better user control */
-    height: 100px; /* Slightly taller default height */
+    resize: vertical;
 }
 
 input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: #0066cc;
-    box-shadow: 0 0 3px rgba(0, 102, 204, 0.5); /* Subtle focus indicator */
-}
-/* Actions */
-.form-actions {
-    display: flex;
-    justify-content: flex-end; /* Align buttons to the right */
-    align-items: center;
-    margin-top: 25px; /* More spacing above actions */
-    gap: 10px; /* Space between buttons */
+    box-shadow: 0 0 3px rgba(0, 102, 204, 0.5);
 }
 
-/* Buttons */
-.save-button, .delete-button {
-    background-color: #0066cc;
-    color: white;
-    border: none;
-    padding: 12px 20px; /* Larger padding for more comfortable buttons */
-    border-radius: 5px; /* Slightly more rounded buttons */
-    font-size: 16px; /* Larger font for better readability */
+/* Button Actions */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.save-button, .cancel-link {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.save-button:hover, .delete-button:hover {
+.save-button {
+    background-color: #0066cc;
+    border: none;
+}
+
+.save-button:hover {
     background-color: #004080;
+}
+
+.cancel-link {
+    background-color: #d9534f;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+}
+
+.cancel-link:hover {
+    background-color: #c9302c;
+}
+
+/* Footer */
+footer {
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 14px;
+    margin-top: auto;
 }
 
 .delete-button {
@@ -127,40 +152,20 @@ input:focus, select:focus, textarea:focus {
     background-color: #c9302c;
 }
 
-.cancel-link {
-    font-size: 14px;
-    color: #666;
-    text-decoration: none;
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
-.cancel-link:hover {
-    color: #333;
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
-/* Confirmation Section */
-.confirm-message {
-    text-align: center;
-    font-size: 18px; /* Slightly larger font for emphasis */
-    color: #333;
-    margin-bottom: 25px; /* Increased spacing below message */
-}
-.confirm-message strong {
-    color: #0045d1;
-}
-
-/* Footer */
-footer {
-    position: relative;
-    clear: both;
-    padding: 15px 20px;
-    font-size: 14px;
-    color: white;
-    text-align: center;
-    background-color: #003366;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: auto;
-}
-
-footer p {
-    margin: 0;
+textarea {
+    resize: vertical;
+    min-height: 150px; /* Sets a minimum height */
+    height: 200px; /* Default height */
 }
