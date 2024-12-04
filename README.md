@@ -76,7 +76,6 @@ This document outlines the key functions and descriptions of the system.
   - **Appointment Creation**: Schedule new appointments by selecting a patient, date, time, and healthcare provider.
   - **Availability Check**: Display available time slots and prevent double-booking of appointments.
   - **Appointment Management**: Reschedule or cancel appointments as needed.
-  - **Reminder System**: Send appointment reminders to patients via email or SMS to reduce no-shows.
 
 ---
 
