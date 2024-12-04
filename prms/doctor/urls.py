@@ -27,7 +27,7 @@ urlpatterns = [
     path('delete-document/<int:document_id>/', views.delete_document, name='delete_document'),
     path('forgot-username/', views.forgot_username_view, name='forgot_username'),
     path('forgot-password/', views.forgot_password_view, name='forgot_password'),
-
+    path('change-password/', views.change_password_view, name='change_password'),
 ]
 
 if settings.DEBUG:

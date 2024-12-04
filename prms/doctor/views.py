@@ -511,3 +511,31 @@ def forgot_password_view(request):
         except Doctor.DoesNotExist:
             messages.error(request, "Email not found.")
     return render(request, 'forgot_password.html')
+
+@csrf_exempt
+def change_password_view(request):
+    doctor_id = doctor_logged_in(request)
+    doctor = get_object_or_404(Doctor, id=doctor_id)
+
+    if request.method == "POST":
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        # Check if the current password is correct
+        if not check_password(current_password, doctor.password):
+            messages.error(request, "Your current password is incorrect.")
+            return redirect('change_password')
+
+        # Check if new password and confirm password match
+        if new_password != confirm_password:
+            messages.error(request, "New password and confirm password do not match.")
+            return redirect('change_password')
+
+        # Update the password
+        doctor.password = make_password(new_password)
+        doctor.save()
+        messages.success(request, "Your password has been updated successfully.")
+        return redirect('doctor_profile')  # Redirect to the profile page or another appropriate page
+
+    return render(request, 'change_password.html', {'doctor': doctor})

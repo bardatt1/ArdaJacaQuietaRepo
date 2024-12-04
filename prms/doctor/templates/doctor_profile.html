@@ -63,14 +63,23 @@
 
             <div class="right-panel">
                 <h3>Profile Details:</h3>
-                <p>Username: {{ doctor.username }} <a href="#">Change Username</a></p>
-                <p>Password: ******** <a href="#">Change Password</a></p>
+                <p>Username: {{ doctor.username }}
+                <p>Password: ******** <a href="{% url 'change_password' %}">Change Password</a></p>
                 <p>Birthday: {{ doctor.birthday }}</p>
                 <p>Gender: {{ doctor.gender }}</p>
                 <p>Email: {{ doctor.email }}</p>
                 <p>Current Address: {{ doctor.address }}</p>
                 <h3>Documents Provided:</h3>
                 <!-- Add document images here if needed -->
+                <ul class="uploaded-documents">
+                    {% for document in doctor.documents.all %}
+                        <li id="document-{{ document.id }}">
+                            <a href="{{ document.file.url }}" class="document-link" target="_blank">
+                                {{ document.file.name|slice:":-4"|capfirst }} <!-- Display file name -->
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
         </section>
     </div>
