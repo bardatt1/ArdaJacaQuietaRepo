@@ -65,6 +65,10 @@ Track Activities: View recent system activities and changes.
 ------------------------------------------------------------------------------
 
 ## Members: 
+1. Arda, Brett Westley A.
+2. Queita, Angelo C.
+3. Jaca, Luis Miguel A
+
 <a href="https://github.com/bardatt1/PRMS/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=bardatt1/PRMS" />
 </a>
