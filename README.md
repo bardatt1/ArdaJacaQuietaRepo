@@ -24,6 +24,8 @@ PRMS is a Patient Record Management System designed to streamline the process of
     **Ease of Use:** Features a simple, intuitive interface for navigating and managing patient data.
     **Organization:** Provides a comprehensive overview of all appointments, patients, and activities in one convenient location.
 
+<p align="right">(<a href="#prms-top">back to top</a>)</p>
+
 ------------------------------------------------------------------------------
 
 ## Getting Started
