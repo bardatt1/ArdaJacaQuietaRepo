@@ -36,7 +36,10 @@ To get a local copy up and running, follow these steps:
    ```
 2. Navigate to the project directory:
    ```sh
-   cd PRMS/prms
+   cd PRMS
+   ```
+   ```sh
+   cd prms
    ```
 3. Make sure to do the necessary migrations
    ```sh
