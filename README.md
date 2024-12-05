@@ -1,3 +1,5 @@
+<a id="prms-top"></a>
+
 ## PRMS (Patient Record Management System)
 
 ### About The Project
@@ -8,7 +10,7 @@ PRMS is a Patient Record Management System designed to streamline the process of
 
 ### Built With
 
-* [![djangoproject][djangoproject.com]][djangoproject-url]
+
 
 ## **Key Features**
 
@@ -24,22 +26,36 @@ PRMS is a Patient Record Management System designed to streamline the process of
 
 ------------------------------------------------------------------------------
 
-Getting Started
+## Getting Started
+------------------------------------------------------------------------------
 To get a local copy up and running, follow these steps:
 
-Clone the repository:
-git clone https://github.com/yourusername/PRMS.git
-
-Navigate to the project directory:
-cd PRMS/prms
-
-Start the application:
-py manage.py runserver
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/yourusername/PRMS.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd PRMS/prms
+   ```
+3. Make sure to do the necessary migrations
+   ```sh
+   py manage.py makemigrations [app]
+   ```
+   ```sh
+   py manage.py migrate
+   ```
+4. Start the application:
+   ```sh
+   py manage.py runserver
+   ```
 
 Usage:
 View Appointments: See all upcoming and current appointments.
 Manage Patients: Add, edit, or remove patient details.
 Track Activities: View recent system activities and changes.
+
+<p align="right">(<a href="#prms-top">back to top</a>)</p>
 
 ------------------------------------------------------------------------------
 
@@ -49,7 +65,8 @@ Track Activities: View recent system activities and changes.
   Angelo C. Quieta
   
   Luis Miguel A. Jaca
-
+  
+<p align="right">(<a href="#prms-top">back to top</a>)</p>
 
 ------------------------------------------------------------------------------
 
@@ -98,7 +115,7 @@ This document outlines the key functions and descriptions of the system.
   - **Result Display**: Display search results in a list with relevant details and options to access the full record.
 
 
-
+<p align="right">(<a href="#prms-top">back to top</a>)</p>
 
 
 ------------------------------------------------------------------------------
@@ -122,4 +139,6 @@ Link: https://cebuinstituteoftechnology-my.sharepoint.com/:x:/g/personal/angelo_
 ## UI/UX Design
 
 Link: https://www.figma.com/design/2ObeBWDO744dSD4CGJ69ei/Patient-Record-Management-System?node-id=0-1&t=l5ySHfuMT5Ei0BeN-1
+
+<p align="right">(<a href="#prms-top">back to top</a>)</p>
 
