@@ -65,11 +65,10 @@ Track Activities: View recent system activities and changes.
 ------------------------------------------------------------------------------
 
 ## Members: 
-  Brett Westley A. Arda
-  
-  Angelo C. Quieta
-  
-  Luis Miguel A. Jaca
+<a href="https://github.com/othneildrew/Best-README-Template/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=othneildrew/Best-README-Template" alt="contrib.rocks image" />
+</a>
+
   
 <p align="right">(<a href="#prms-top">back to top</a>)</p>
 
